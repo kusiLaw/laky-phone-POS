@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainPages</class>
+ <widget class="QWidget" name="MainPages">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>860</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="main_pages_layout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>5</number>
+   </property>
+   <property name="topMargin">
+    <number>5</number>
+   </property>
+   <property name="rightMargin">
+    <number>5</number>
+   </property>
+   <property name="bottomMargin">
+    <number>5</number>
+   </property>
+   <item>
+    <widget class="QStackedWidget" name="pages">
+     <property name="currentIndex">
+      <number>1</number>
+     </property>
+     <widget class="QWidget" name="page_1">
+      <property name="styleSheet">
+       <string notr="true">font-size: 14pt; background: lightgreen; </string>
+      </property>
+      <layout class="QVBoxLayout" name="page_1_layout">
+       <property name="spacing">
+        <number>5</number>
+       </property>
+       <property name="leftMargin">
+        <number>5</number>
+       </property>
+       <property name="topMargin">
+        <number>5</number>
+       </property>
+       <property name="rightMargin">
+        <number>5</number>
+       </property>
+       <property name="bottomMargin">
+        <number>5</number>
+       </property>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_2">
+      <property name="styleSheet">
+       <string notr="true">font-size: 14pt; background: lightblue; </string>
+      </property>
+      <layout class="QVBoxLayout" name="page_2_layout">
+       <property name="spacing">
+        <number>5</number>
+       </property>
+       <property name="leftMargin">
+        <number>5</number>
+       </property>
+       <property name="topMargin">
+        <number>5</number>
+       </property>
+       <property name="rightMargin">
+        <number>5</number>
+       </property>
+       <property name="bottomMargin">
+        <number>5</number>
+       </property>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="page_3">
+      <property name="styleSheet">
+       <string notr="true">QFrame {
+	font-size: 16pt; background-color:lightyellow;
+}</string>
+      </property>
+      <layout class="QVBoxLayout" name="page_3_layout">
+       <item>
+        <widget class="QLabel" name="empty_page_label">
+         <property name="font">
+          <font>
+           <pointsize>16</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Empty Page</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
