@@ -225,6 +225,38 @@ class SetupMainWindow:
         themes = Themes()
         self.themes = themes.items
 
+        # ADD CUCTOM WIDGETS
+        self.btn_1 = PyPushButton(
+            text = "bt 1",
+            radius = 8,
+            color = self.themes["app_color"]["text_foreground"],
+            bg_color = self.themes["app_color"]["dark_one"],
+            bg_color_hover = self.themes["app_color"]["dark_three"],
+            bg_color_pressed = self.themes["app_color"]["dark_four"]
+        )
+
+        # add custom to widget
+        self.btn_1.setMinimumHeight(40)
+        self.ui.left_column.menus.btn_1_layout.addWidget(self.btn_1)
+
+        # Add pytoggle
+        self.toggle_1 = PyToggle(
+            bg_color=self.themes["app_color"]["dark_one"],
+        )
+
+        self.ui.left_column.menus.btn_2_layout.addWidget(self.toggle_1, Qt.AlignCenter, Qt.AlignRight)
+
+        # add logo to home
+        self.logo = QSvgWidget(Functions.set_svg_image("logo_home.svg"))
+
+        # add logo to layout
+        self.ui.load_pages.logo_layout.addWidget(self.logo,Qt.AlignCenter, Qt.AlignCenter)
+
+        # ADD WIDGET TABLE
+        self.widget = PyTableWidget( )
+
+        self.ui.load_pages.table_layout.addWidget(self.widget)
+
 
         # ///////////////////////////////////////////////////////////////
         # END - EXAMPLE CUSTOM WIDGETS
