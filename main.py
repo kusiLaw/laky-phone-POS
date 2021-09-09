@@ -17,6 +17,7 @@
 # IMPORT PACKAGES AND MODULES
 # ///////////////////////////////////////////////////////////////
 from gui.uis.windows.main_window.functions_main_window import *
+from gui.uis.splashscreen.splash_screen import *
 import sys
 import os
 
@@ -27,7 +28,7 @@ from qt_core import *
 # IMPORT SETTINGS
 # ///////////////////////////////////////////////////////////////
 from gui.core.json_settings import Settings
-
+from gui.core.json_themes import Themes
 # IMPORT PY ONE DARK WINDOWS
 # ///////////////////////////////////////////////////////////////
 # MAIN WINDOW
@@ -41,6 +42,10 @@ from gui.widgets import *
 # ///////////////////////////////////////////////////////////////
 os.environ["QT_FONT_DPI"] = "96"
 # IF IS 4K MONITOR ENABLE 'os.environ["QT_SCALE_FACTOR"] = "2"'
+
+# set splashscreen Counter
+counter = 0
+
 
 # MAIN WINDOW
 # ///////////////////////////////////////////////////////////////
@@ -212,6 +217,72 @@ class MainWindow(QMainWindow):
         self.dragPos = event.globalPos()
 
 
+class SplashScreen(QMainWindow):
+    # Load theme
+    settings = Themes()
+    theme = settings.items
+
+    def __init__(self):
+        QMainWindow.__init__(self)
+        self.ui = Ui_SplashScreen()
+        self.ui.setupUi(self)
+
+
+        # remove the standard tiltle bar
+        self.setWindowFlag(Qt.FramelessWindowHint)
+        self.setAttribute(Qt.WA_TranslucentBackground)
+
+
+        print(self.theme["app_color"]["dark_three"])
+        # import circular progress
+        self.progress = PyCircularProgress(
+            progress_color = self.theme["app_color"]["context_color"],
+            text_color = self.theme["app_color"]["context_color"]
+        )
+        self.progress.width = 250  # 270
+        self.progress.height = 250  # 270
+        self.progress.value = 0
+        self.progress.setFixedSize(self.progress.width, self.progress.height)
+
+        # move definds the distance of widget in relation to parent
+        self.progress.move(25,26)  #(15,15)
+        self.progress.add_shadow(True)
+        self.progress.font_size = 25
+        self.progress.bg_color = QColor(68,71,90,140)
+
+        # set to CircularProgress centralwedgit
+        self.progress.setParent(self.ui.centralwidget)
+        self.progress.show()
+
+        # Drop shadow
+        self.shadow = QGraphicsDropShadowEffect(self)
+        self.shadow.setBlurRadius(15)
+        self.shadow.setXOffset(0)
+        self.shadow.setYOffset(0)
+        self.shadow.setColor(QColor(0, 0, 0, 120))
+        self.setGraphicsEffect(self.shadow)
+
+        # Qtimer
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.update)
+        self.timer.start(25)
+
+        self.show()
+
+
+    def update(self):
+        global counter
+
+        self.progress.set_value(counter)
+
+        counter += 1
+
+        if counter >= 101:
+            self.timer.stop()
+            self.main = MainWindow()
+            self.main.show()
+            self.close()
+
 
 
 # SETTINGS WHEN TO START
@@ -222,8 +293,8 @@ if __name__ == "__main__":
     # ///////////////////////////////////////////////////////////////
     app = QApplication(sys.argv)
     app.setWindowIcon(QIcon("icon.ico"))
-    window = MainWindow()
-
+    # window = MainWindow()
+    window = SplashScreen()
     # EXEC APP
     # ///////////////////////////////////////////////////////////////
     sys.exit(app.exec_())
