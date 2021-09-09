@@ -61,7 +61,7 @@ class SetupMainWindow:
     add_left_menus = [
         {
             "btn_icon" : "icon_home.svg",
-            "btn_id" : "btn_home",
+            "btn_id" : "home_btn",
             "btn_text" : "Home",
             "btn_tooltip" : "Home page",
             "show_top" : True,
@@ -69,33 +69,35 @@ class SetupMainWindow:
         },
         {
             "btn_icon": "icon_file.svg",
-            "btn_id": "btn_page_2",
-            "btn_text": "page 2",
-            "btn_tooltip": "open page 2",
+            "btn_id": "phone_btn",
+            "btn_text": "Phone Sales",
+            "btn_tooltip": "Phone Sales tab",
             "show_top": True,
             "is_active": False
         },
         {
             "btn_icon" : "icon_file.svg",
-            "btn_id" : "btn_page_3",
-            "btn_text" : "Page 3",
-            "btn_tooltip" : "open page 3",
+            "btn_id" : "service_btn",
+            "btn_text" : "Phone Repairs",
+            "btn_tooltip" : "Phone Repairs",
             "show_top" : True,
             "is_active" : False
         },
+
+
         {
-            "btn_icon": "icon_info.svg",
-            "btn_id": "btn_menu_2",
-            "btn_text": "info",
-            "btn_tooltip": "open info page",
-            "show_top": False,
+            "btn_icon": "icon_file.svg",
+            "btn_id": "report_btn",
+            "btn_text": "Reports",
+            "btn_tooltip": "Reports",
+            "show_top": True,
             "is_active": False
         },
         {
-            "btn_icon": "icon_settings.svg",
-            "btn_id": "btn_settings",
-            "btn_text": "setting page",
-            "btn_tooltip": "open setting pag",
+            "btn_icon": "icon_info.svg",
+            "btn_id": "btn_info",
+            "btn_text": "App Info",
+            "btn_tooltip": "application info",
             "show_top": False,
             "is_active": False
         }
@@ -108,7 +110,13 @@ class SetupMainWindow:
     # ///////////////////////////////////////////////////////////////
     add_title_bar_menus = [
         {
-            "btn_icon" : "icon_search.svg",
+            "btn_icon": "icon_add_user.svg",
+            "btn_id": "btn_search",
+            "btn_tooltip": "notification",
+            "is_active": False
+        },
+        {
+            "btn_icon" : "icon_add_user.svg",
             "btn_id" : "btn_search",
             "btn_tooltip" : "Search",
             "is_active" : False
@@ -179,7 +187,7 @@ class SetupMainWindow:
         if self.settings["custom_title_bar"]:
             self.ui.title_bar.set_title(self.settings["app_name"])
         else:
-            self.ui.title_bar.set_title("Welcome to PyOneDark")
+            self.ui.title_bar.set_title("Laky Phone POS")
 
         # LEFT COLUMN SET SIGNALS
         # ///////////////////////////////////////////////////////////////
@@ -188,7 +196,7 @@ class SetupMainWindow:
 
         # SET INITIAL PAGE / SET LEFT AND RIGHT COLUMN MENUS
         # ///////////////////////////////////////////////////////////////
-        MainFunctions.set_page(self, self.ui.load_pages.page_1)
+        MainFunctions.set_page(self, self.ui.load_pages.home_page)
         MainFunctions.set_left_column_menu(
             self,
             menu = self.ui.left_column.menus.menu_1,

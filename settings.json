@@ -1,7 +1,7 @@
 {
-    "app_name": "PyOneDark - Modern GUI",
+    "app_name": "Laky Phone P.O.S",
     "version" : "v1.0.0",
-    "copyright" : "By: Wanderson M. Pimenta",
+    "copyright" : "Powered by: Lawrence Kusi",
     "year" : 2021,
     "theme_name" : "default",
     "custom_title_bar": true,
@@ -29,7 +29,8 @@
     "time_animation" : 500,
     "font" : {
         "family" : "Segoe UI",
-        "title_size" : 10,
-        "text_size" : 9
+        "title_size" : 12,
+        "text_size" : 12
     }
 }
+

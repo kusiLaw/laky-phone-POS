@@ -77,31 +77,31 @@ class MainWindow(QMainWindow):
         btn = SetupMainWindow.setup_btns(self)
 
         # Open Page 1
-        if btn.objectName() == "btn_home":
+        if btn.objectName() == "home_btn":
             self.ui.left_menu.select_only_one(btn.objectName())
 
             # Load page
-            MainFunctions.set_page(self, self.ui.load_pages.page_1)
+            MainFunctions.set_page(self, self.ui.load_pages.home_page)
 
         # Open Page 2
-        if btn.objectName() == "btn_page_2":
+        if btn.objectName() == "phone_btn":
             self.ui.left_menu.select_only_one(btn.objectName())
 
             # Load page
-            MainFunctions.set_page(self, self.ui.load_pages.page_2)
+            MainFunctions.set_page(self, self.ui.load_pages.phone_page)
 
-        if btn.objectName() == "btn_page_3":
+        if btn.objectName() == "services_btn":
             self.ui.left_menu.select_only_one(btn.objectName())
 
             # Load page
-            MainFunctions.set_page(self, self.ui.load_pages.page_3)
+            MainFunctions.set_page(self, self.ui.load_pages.service_page)
 
         # open menu 2 of left colomn stackwiew
 
-        #get top seetings
+        # get top settings
         top_btn_settings = MainFunctions.get_title_bar_btn(self, "btn_top_settings")
 
-        if btn.objectName() == "btn_menu_2" or btn.objectName() == "btn_close_left_column":
+        if btn.objectName() == "report_btn" or btn.objectName() == "btn_close_left_column":
             # disable to btn active
             top_btn_settings.set_active(False)
 
@@ -125,13 +125,13 @@ class MainWindow(QMainWindow):
             if btn.objectName() != "btn_close_left_column":
                 MainFunctions.set_left_column_menu(self,
                                                    menu = self.ui.left_column.menus.menu_2,
-                                                   title = "Info tab",
-                                                   icon_path= Functions.set_svg_icon("icon_info.svg")
+                                                   title = "Report Tab",
+                                                   icon_path= Functions.set_svg_icon("icon_file.svg")
                 )
 
 
             # Open settings
-        if btn.objectName() == "btn_settings" or btn.objectName() == "btn_close_left_column":
+        if btn.objectName() == "btn_info" or btn.objectName() == "btn_close_left_column":
             # disable to btn active
             top_btn_settings.set_active(False)
 
@@ -155,7 +155,7 @@ class MainWindow(QMainWindow):
                 MainFunctions.set_left_column_menu(self,
                                                    menu=self.ui.left_column.menus.menu_1,
                                                    title="Info tab",
-                                                   icon_path=Functions.set_svg_icon("icon_settings.svg")
+                                                   icon_path=Functions.set_svg_icon("icon_info.svg")
                                                    )
 
 
