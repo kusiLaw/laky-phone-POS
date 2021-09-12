@@ -3,14 +3,14 @@
     "version" : "v1.0.0",
     "copyright" : "Powered by: Lawrence Kusi",
     "year" : 2021,
-    "theme_name" : "default",
+    "theme_name" : "dracula",
     "custom_title_bar": true,
     "startup_size": [
         1400,
-        720
+        820
     ],
     "minimum_size": [
-        960,
+        1060,
         540
     ],
     "lef_menu_size" : {
