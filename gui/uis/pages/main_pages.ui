@@ -112,7 +112,7 @@
      </widget>
      <widget class="QWidget" name="phone_page">
       <property name="styleSheet">
-       <string notr="true">font-size: 14pt; background:rgb(255, 110, 243); </string>
+       <string notr="true">font-size: 14pt; background : #21252d; </string>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <property name="spacing">
@@ -198,7 +198,7 @@
                 <property name="minimumSize">
                  <size>
                   <width>934</width>
-                  <height>191</height>
+                  <height>226</height>
                  </size>
                 </property>
                 <property name="maximumSize">
@@ -208,7 +208,7 @@
                  </size>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background: rgb(29, 59, 0)</string>
+                 <string notr="true"/>
                 </property>
                 <property name="frameShape">
                  <enum>QFrame::StyledPanel</enum>
@@ -253,7 +253,7 @@
                     </size>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true">background: rgb(82, 52, 255)</string>
+                    <string notr="true"/>
                    </property>
                    <property name="frameShape">
                     <enum>QFrame::NoFrame</enum>
@@ -266,13 +266,13 @@
                      <number>0</number>
                     </property>
                     <property name="leftMargin">
-                     <number>0</number>
+                     <number>10</number>
                     </property>
                     <property name="topMargin">
                      <number>0</number>
                     </property>
                     <property name="rightMargin">
-                     <number>5</number>
+                     <number>10</number>
                     </property>
                     <property name="bottomMargin">
                      <number>0</number>
@@ -283,6 +283,21 @@
                        <string>Customer</string>
                       </property>
                       <layout class="QFormLayout" name="formLayout">
+                       <property name="verticalSpacing">
+                        <number>12</number>
+                       </property>
+                       <property name="leftMargin">
+                        <number>15</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>20</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>0</number>
+                       </property>
                        <item row="1" column="0">
                         <widget class="QLabel" name="label_3">
                          <property name="text">
@@ -291,16 +306,33 @@
                         </widget>
                        </item>
                        <item row="1" column="1">
-                        <widget class="QFrame" name="frame_10">
+                        <widget class="QFrame" name="customer_name">
                          <property name="styleSheet">
-                          <string notr="true">background: rgb(255, 255, 255)</string>
+                          <string notr="true"/>
                          </property>
                          <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
+                          <enum>QFrame::NoFrame</enum>
                          </property>
                          <property name="frameShadow">
                           <enum>QFrame::Raised</enum>
                          </property>
+                         <layout class="QVBoxLayout" name="customer_name_edit">
+                          <property name="spacing">
+                           <number>0</number>
+                          </property>
+                          <property name="leftMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>0</number>
+                          </property>
+                         </layout>
                         </widget>
                        </item>
                        <item row="2" column="0">
@@ -311,16 +343,33 @@
                         </widget>
                        </item>
                        <item row="2" column="1">
-                        <widget class="QFrame" name="frame_11">
+                        <widget class="QFrame" name="customer_contact">
                          <property name="styleSheet">
-                          <string notr="true">background: rgb(255, 255, 255)</string>
+                          <string notr="true"/>
                          </property>
                          <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
+                          <enum>QFrame::NoFrame</enum>
                          </property>
                          <property name="frameShadow">
                           <enum>QFrame::Raised</enum>
                          </property>
+                         <layout class="QVBoxLayout" name="customer_contact_edit">
+                          <property name="spacing">
+                           <number>0</number>
+                          </property>
+                          <property name="leftMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>0</number>
+                          </property>
+                         </layout>
                         </widget>
                        </item>
                        <item row="3" column="0">
@@ -341,16 +390,33 @@
                         </widget>
                        </item>
                        <item row="3" column="1">
-                        <widget class="QFrame" name="frame_21">
+                        <widget class="QFrame" name="cart_id">
                          <property name="styleSheet">
-                          <string notr="true">background:rgb(255, 255, 255);</string>
+                          <string notr="true"/>
                          </property>
                          <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
+                          <enum>QFrame::NoFrame</enum>
                          </property>
                          <property name="frameShadow">
                           <enum>QFrame::Raised</enum>
                          </property>
+                         <layout class="QVBoxLayout" name="cutomer_cart_id_edit">
+                          <property name="spacing">
+                           <number>0</number>
+                          </property>
+                          <property name="leftMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>0</number>
+                          </property>
+                         </layout>
                         </widget>
                        </item>
                       </layout>
@@ -374,7 +440,7 @@
                     </size>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true">background:rgb(30, 188, 255)</string>
+                    <string notr="true"/>
                    </property>
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
@@ -387,13 +453,13 @@
                      <number>0</number>
                     </property>
                     <property name="leftMargin">
-                     <number>5</number>
+                     <number>10</number>
                     </property>
                     <property name="topMargin">
                      <number>0</number>
                     </property>
                     <property name="rightMargin">
-                     <number>5</number>
+                     <number>10</number>
                     </property>
                     <property name="bottomMargin">
                      <number>0</number>
@@ -404,64 +470,100 @@
                        <string>Phone</string>
                       </property>
                       <layout class="QFormLayout" name="formLayout_2">
+                       <property name="horizontalSpacing">
+                        <number>7</number>
+                       </property>
+                       <property name="verticalSpacing">
+                        <number>12</number>
+                       </property>
+                       <property name="leftMargin">
+                        <number>15</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>5</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>20</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>0</number>
+                       </property>
                        <item row="0" column="0">
                         <widget class="QLabel" name="label_5">
                          <property name="text">
-                          <string>type</string>
+                          <string>type :</string>
                          </property>
                         </widget>
                        </item>
                        <item row="0" column="1">
                         <widget class="QFrame" name="frame_22">
                          <property name="styleSheet">
-                          <string notr="true">background:rgb(255, 255, 255);</string>
+                          <string notr="true"/>
                          </property>
                          <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
+                          <enum>QFrame::NoFrame</enum>
                          </property>
                          <property name="frameShadow">
                           <enum>QFrame::Raised</enum>
                          </property>
+                         <layout class="QVBoxLayout" name="phone_type_edit">
+                          <property name="spacing">
+                           <number>0</number>
+                          </property>
+                          <property name="leftMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>0</number>
+                          </property>
+                          <item>
+                           <widget class="QComboBox" name="comboBox_2">
+                            <item>
+                             <property name="text">
+                              <string>item 1</string>
+                             </property>
+                            </item>
+                            <item>
+                             <property name="text">
+                              <string>item 2</string>
+                             </property>
+                            </item>
+                           </widget>
+                          </item>
+                         </layout>
                         </widget>
                        </item>
                        <item row="1" column="0">
                         <widget class="QLabel" name="label_6">
                          <property name="text">
-                          <string>Model</string>
+                          <string>Model :</string>
                          </property>
                         </widget>
                        </item>
                        <item row="2" column="0">
                         <widget class="QLabel" name="label_7">
                          <property name="text">
-                          <string>Imei</string>
+                          <string>Imei :</string>
                          </property>
                         </widget>
                        </item>
                        <item row="3" column="0">
                         <widget class="QLabel" name="label_8">
                          <property name="text">
-                          <string>SN</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="2" column="1">
-                        <widget class="QFrame" name="frame_23">
-                         <property name="styleSheet">
-                          <string notr="true">background:rgb(255, 255, 255);</string>
-                         </property>
-                         <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
-                         </property>
-                         <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
+                          <string>SN :</string>
                          </property>
                         </widget>
                        </item>
                        <item row="1" column="1">
                         <widget class="QFrame" name="frame_24">
                          <property name="styleSheet">
-                          <string notr="true">background:rgb(255, 255, 255);</string>
+                          <string notr="true"/>
                          </property>
                          <property name="frameShape">
                           <enum>QFrame::StyledPanel</enum>
@@ -469,19 +571,80 @@
                          <property name="frameShadow">
                           <enum>QFrame::Raised</enum>
                          </property>
+                         <layout class="QVBoxLayout" name="phone_model_edit">
+                          <property name="spacing">
+                           <number>0</number>
+                          </property>
+                          <property name="leftMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>0</number>
+                          </property>
+                          <item>
+                           <widget class="QComboBox" name="comboBox_3"/>
+                          </item>
+                         </layout>
+                        </widget>
+                       </item>
+                       <item row="2" column="1">
+                        <widget class="QFrame" name="frame_9">
+                         <property name="frameShape">
+                          <enum>QFrame::StyledPanel</enum>
+                         </property>
+                         <property name="frameShadow">
+                          <enum>QFrame::Raised</enum>
+                         </property>
+                         <layout class="QVBoxLayout" name="phone_imei_edit">
+                          <property name="spacing">
+                           <number>0</number>
+                          </property>
+                          <property name="leftMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>0</number>
+                          </property>
+                         </layout>
                         </widget>
                        </item>
                        <item row="3" column="1">
-                        <widget class="QFrame" name="frame_25">
-                         <property name="styleSheet">
-                          <string notr="true">background:rgb(255, 255, 255);</string>
-                         </property>
+                        <widget class="QFrame" name="frame_10">
                          <property name="frameShape">
                           <enum>QFrame::StyledPanel</enum>
                          </property>
                          <property name="frameShadow">
                           <enum>QFrame::Raised</enum>
                          </property>
+                         <layout class="QVBoxLayout" name="phone_sn_edit">
+                          <property name="spacing">
+                           <number>0</number>
+                          </property>
+                          <property name="leftMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>0</number>
+                          </property>
+                         </layout>
                         </widget>
                        </item>
                       </layout>
@@ -491,7 +654,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QFrame" name="frame_9">
+                  <widget class="QFrame" name="phoneform_cost_section">
                    <property name="minimumSize">
                     <size>
                      <width>318</width>
@@ -505,7 +668,7 @@
                     </size>
                    </property>
                    <property name="styleSheet">
-                    <string notr="true">background:rgb(17, 255, 84);</string>
+                    <string notr="true"/>
                    </property>
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
@@ -518,13 +681,13 @@
                      <number>0</number>
                     </property>
                     <property name="leftMargin">
-                     <number>5</number>
+                     <number>10</number>
                     </property>
                     <property name="topMargin">
                      <number>0</number>
                     </property>
                     <property name="rightMargin">
-                     <number>5</number>
+                     <number>10</number>
                     </property>
                     <property name="bottomMargin">
                      <number>0</number>
@@ -535,6 +698,24 @@
                        <string>Cost</string>
                       </property>
                       <layout class="QFormLayout" name="formLayout_3">
+                       <property name="horizontalSpacing">
+                        <number>7</number>
+                       </property>
+                       <property name="verticalSpacing">
+                        <number>12</number>
+                       </property>
+                       <property name="leftMargin">
+                        <number>15</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>5</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>20</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>0</number>
+                       </property>
                        <item row="0" column="0">
                         <widget class="QLabel" name="label_9">
                          <property name="text">
@@ -566,20 +747,34 @@
                        <item row="0" column="1">
                         <widget class="QFrame" name="frame_26">
                          <property name="styleSheet">
-                          <string notr="true">background:rgb(255, 255, 255);</string>
+                          <string notr="true">\</string>
                          </property>
                          <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
+                          <enum>QFrame::NoFrame</enum>
                          </property>
                          <property name="frameShadow">
                           <enum>QFrame::Raised</enum>
                          </property>
+                         <layout class="QVBoxLayout" name="phone_price_edit">
+                          <property name="leftMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>0</number>
+                          </property>
+                         </layout>
                         </widget>
                        </item>
                        <item row="1" column="1">
                         <widget class="QFrame" name="frame_27">
                          <property name="styleSheet">
-                          <string notr="true">background:rgb(255, 255, 255);</string>
+                          <string notr="true">\</string>
                          </property>
                          <property name="frameShape">
                           <enum>QFrame::StyledPanel</enum>
@@ -587,12 +782,26 @@
                          <property name="frameShadow">
                           <enum>QFrame::Raised</enum>
                          </property>
+                         <layout class="QVBoxLayout" name="phone_discount_edit">
+                          <property name="leftMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>0</number>
+                          </property>
+                         </layout>
                         </widget>
                        </item>
                        <item row="2" column="1">
                         <widget class="QFrame" name="frame_28">
                          <property name="styleSheet">
-                          <string notr="true">background:rgb(255, 255, 255);</string>
+                          <string notr="true">\</string>
                          </property>
                          <property name="frameShape">
                           <enum>QFrame::StyledPanel</enum>
@@ -600,12 +809,26 @@
                          <property name="frameShadow">
                           <enum>QFrame::Raised</enum>
                          </property>
+                         <layout class="QVBoxLayout" name="phone_tax_edit">
+                          <property name="leftMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>0</number>
+                          </property>
+                         </layout>
                         </widget>
                        </item>
                        <item row="3" column="1">
                         <widget class="QFrame" name="frame_29">
                          <property name="styleSheet">
-                          <string notr="true">background:rgb(255, 255, 255);</string>
+                          <string notr="true">\</string>
                          </property>
                          <property name="frameShape">
                           <enum>QFrame::StyledPanel</enum>
@@ -613,6 +836,34 @@
                          <property name="frameShadow">
                           <enum>QFrame::Raised</enum>
                          </property>
+                         <layout class="QVBoxLayout" name="phone_payment_edit">
+                          <property name="leftMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>0</number>
+                          </property>
+                          <item>
+                           <widget class="QComboBox" name="comboBox">
+                            <item>
+                             <property name="text">
+                              <string>Cash</string>
+                             </property>
+                            </item>
+                            <item>
+                             <property name="text">
+                              <string>mobile money</string>
+                             </property>
+                            </item>
+                           </widget>
+                          </item>
+                         </layout>
                         </widget>
                        </item>
                       </layout>
@@ -629,17 +880,17 @@
                 <property name="minimumSize">
                  <size>
                   <width>934</width>
-                  <height>190</height>
+                  <height>156</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
-                  <height>16777215</height>
+                  <height>156</height>
                  </size>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background: rgb(29, 100, 100)</string>
+                 <string notr="true"/>
                 </property>
                 <property name="frameShape">
                  <enum>QFrame::NoFrame</enum>
@@ -656,29 +907,89 @@
                  </property>
                  <item>
                   <widget class="QFrame" name="phone_cart_section">
+                   <property name="maximumSize">
+                    <size>
+                     <width>600</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
                    <property name="styleSheet">
-                    <string notr="true">background:rgb(255, 161, 28)</string>
+                    <string notr="true"/>
                    </property>
                    <property name="frameShape">
-                    <enum>QFrame::StyledPanel</enum>
+                    <enum>QFrame::NoFrame</enum>
                    </property>
                    <property name="frameShadow">
                     <enum>QFrame::Raised</enum>
                    </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_15">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <widget class="QTableWidget" name="tableWidget_2">
+                      <column>
+                       <property name="text">
+                        <string>New Column</string>
+                       </property>
+                      </column>
+                      <column>
+                       <property name="text">
+                        <string>id </string>
+                       </property>
+                      </column>
+                      <column>
+                       <property name="text">
+                        <string>imei</string>
+                       </property>
+                      </column>
+                     </widget>
+                    </item>
+                   </layout>
                   </widget>
                  </item>
                  <item>
                   <widget class="QFrame" name="phone_button_section">
+                   <property name="minimumSize">
+                    <size>
+                     <width>484</width>
+                     <height>0</height>
+                    </size>
+                   </property>
                    <property name="styleSheet">
-                    <string notr="true">background:rgb(194, 39, 255)</string>
+                    <string notr="true"/>
                    </property>
                    <property name="frameShape">
-                    <enum>QFrame::StyledPanel</enum>
+                    <enum>QFrame::NoFrame</enum>
                    </property>
                    <property name="frameShadow">
                     <enum>QFrame::Raised</enum>
                    </property>
                    <layout class="QGridLayout" name="gridLayout">
+                    <property name="leftMargin">
+                     <number>10</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>10</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>10</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>10</number>
+                    </property>
                     <item row="2" column="2">
                      <widget class="QFrame" name="frame_13">
                       <property name="styleSheet">
@@ -729,7 +1040,7 @@
                        <string notr="true">background:rgb(255, 255, 255);</string>
                       </property>
                       <property name="frameShape">
-                       <enum>QFrame::StyledPanel</enum>
+                       <enum>QFrame::NoFrame</enum>
                       </property>
                       <property name="frameShadow">
                        <enum>QFrame::Raised</enum>
@@ -812,24 +1123,32 @@
                      </widget>
                     </item>
                     <item row="0" column="0">
-                     <widget class="QFrame" name="frame_18">
+                     <widget class="QFrame" name="add_to_cart">
                       <property name="styleSheet">
                        <string notr="true">background:rgb(255, 255, 255);</string>
                       </property>
                       <property name="frameShape">
-                       <enum>QFrame::StyledPanel</enum>
+                       <enum>QFrame::NoFrame</enum>
                       </property>
                       <property name="frameShadow">
                        <enum>QFrame::Raised</enum>
                       </property>
-                      <layout class="QVBoxLayout" name="verticalLayout_15">
-                       <item>
-                        <widget class="QPushButton" name="pushButton">
-                         <property name="text">
-                          <string>PushButton</string>
-                         </property>
-                        </widget>
-                       </item>
+                      <layout class="QVBoxLayout" name="phone_addToCart_btn">
+                       <property name="spacing">
+                        <number>0</number>
+                       </property>
+                       <property name="leftMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>0</number>
+                       </property>
                       </layout>
                      </widget>
                     </item>
@@ -894,7 +1213,7 @@
                 <property name="minimumSize">
                  <size>
                   <width>934</width>
-                  <height>191</height>
+                  <height>226</height>
                  </size>
                 </property>
                 <property name="maximumSize">
@@ -904,7 +1223,7 @@
                  </size>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background: rgb(29, 59, 255);</string>
+                 <string notr="true"/>
                 </property>
                 <property name="frameShape">
                  <enum>QFrame::NoFrame</enum>
@@ -924,9 +1243,11 @@
                  </property>
                  <item>
                   <widget class="QTableWidget" name="tableWidget">
-                   <property name="selectionBehavior">
-                    <enum>QAbstractItemView::SelectRows</enum>
-                   </property>
+                   <column>
+                    <property name="text">
+                     <string>New Column</string>
+                    </property>
+                   </column>
                    <column>
                     <property name="text">
                      <string>id</string>
@@ -934,37 +1255,7 @@
                    </column>
                    <column>
                     <property name="text">
-                     <string>name</string>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
-                     <string>col1</string>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
-                     <string>col2</string>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
-                     <string>col3</string>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
-                     <string>col4</string>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
-                     <string>col5</string>
-                    </property>
-                   </column>
-                   <column>
-                    <property name="text">
-                     <string>col6</string>
+                     <string>dd</string>
                     </property>
                    </column>
                   </widget>

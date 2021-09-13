@@ -68,15 +68,25 @@ class SetupMainWindow:
             "is_active" : True
         },
         {
-            "btn_icon": "icon_file.svg",
+            "btn_icon": "android.svg",
             "btn_id": "phone_btn",
             "btn_text": "Phone Sales",
             "btn_tooltip": "Phone Sales tab",
             "show_top": True,
             "is_active": False
         },
+
         {
-            "btn_icon" : "icon_file.svg",
+            "btn_icon": "Accessories2.svg",
+            "btn_id": "accessories_btn",
+            "btn_text": "Phone Accessories",
+            "btn_tooltip": "Phone Accessories",
+            "show_top": True,
+            "is_active": False
+        },
+
+        {
+            "btn_icon" : "repairs.svg",
             "btn_id" : "service_btn",
             "btn_text" : "Phone Repairs",
             "btn_tooltip" : "Phone Repairs",
@@ -232,6 +242,111 @@ class SetupMainWindow:
         # ///////////////////////////////////////////////////////////////
         themes = Themes()
         self.themes = themes.items
+
+
+
+        # ////////////////////////////////////////////////////////////////
+        # ADD CUSTOM WIDGET TO MAIN PAGE
+        # ///////////////////////////////////////////////////////////////
+        # custom py_line_edit
+        self.customerName = PyLineEdit(
+            place_holder_text = "customer name",
+            context_color = self.themes["app_color"]["context_color"],
+            color = self.themes["app_color"]["text_active"],
+            bg_color = self.themes["app_color"]["bg_three"],
+
+            )
+        # add to phone
+        self.customerName.height = 40
+        self.ui.load_pages.customer_name_edit.addWidget(self.customerName)
+
+
+        self.contactName = PyLineEdit(
+            place_holder_text="customer name",
+            context_color=self.themes["app_color"]["context_color"],
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["bg_three"],
+
+        )
+
+        self.ui.load_pages.customer_contact_edit.addWidget(self.contactName)
+
+        self.curt_id = PyLineEdit(
+            context_color=self.themes["app_color"]["context_color"],
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["bg_three"],
+
+        )
+
+        self.ui.load_pages.cutomer_cart_id_edit.addWidget(self.curt_id)
+
+        # phone section
+
+        self.phone_imei = PyLineEdit(
+            context_color=self.themes["app_color"]["context_color"],
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["bg_three"],
+
+        )
+
+        self.ui.load_pages.phone_imei_edit.addWidget(self.phone_imei)
+
+
+
+
+        self.phone_sn = PyLineEdit(
+            context_color=self.themes["app_color"]["context_color"],
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["bg_three"],
+
+        )
+
+        self.ui.load_pages.phone_sn_edit.addWidget(self.phone_sn)
+
+
+        # price section
+
+        self.phone_price = PyLineEdit(
+            context_color=self.themes["app_color"]["context_color"],
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["bg_three"],
+
+        )
+
+        self.ui.load_pages.phone_price_edit.addWidget(self.phone_price)
+
+        self.phone_discount = PyLineEdit(
+            context_color=self.themes["app_color"]["context_color"],
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["bg_three"],
+
+        )
+
+        self.ui.load_pages.phone_discount_edit.addWidget(self.phone_discount)
+
+
+        self.phone_tax = PyLineEdit(
+            context_color=self.themes["app_color"]["context_color"],
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["bg_three"],
+
+        )
+
+        self.ui.load_pages.phone_tax_edit.addWidget(self.phone_tax)
+
+
+        # buttons section
+        self.add_to_cart = PyIconButton(
+          width = 400,
+            height = 40
+        )
+
+        self.ui.load_pages.phone_addToCart_btn.addWidget(self.add_to_cart)
+
+
+
+
+
 
 
         # ///////////////////////////////////////////////////////////////
