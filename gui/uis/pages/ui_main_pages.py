@@ -449,7 +449,7 @@ class Ui_MainPages(object):
         self.phone_cart_button_section = QFrame(self.phone_bg_layout)
         self.phone_cart_button_section.setObjectName(u"phone_cart_button_section")
         self.phone_cart_button_section.setMinimumSize(QSize(934, 156))
-        self.phone_cart_button_section.setMaximumSize(QSize(16777215, 156))
+        self.phone_cart_button_section.setMaximumSize(QSize(16777215, 180))
         self.phone_cart_button_section.setStyleSheet(u"")
         self.phone_cart_button_section.setFrameShape(QFrame.NoFrame)
         self.phone_cart_button_section.setFrameShadow(QFrame.Raised)
@@ -491,9 +491,11 @@ class Ui_MainPages(object):
         self.phone_button_section.setFrameShadow(QFrame.Raised)
         self.gridLayout = QGridLayout(self.phone_button_section)
         self.gridLayout.setObjectName(u"gridLayout")
-        self.gridLayout.setContentsMargins(10, 10, 10, 10)
+        self.gridLayout.setHorizontalSpacing(10)
+        self.gridLayout.setContentsMargins(10, 10, 10, 0)
         self.frame_13 = QFrame(self.phone_button_section)
         self.frame_13.setObjectName(u"frame_13")
+        self.frame_13.setMinimumSize(QSize(150, 30))
         self.frame_13.setStyleSheet(u"")
         self.frame_13.setFrameShape(QFrame.NoFrame)
         self.frame_13.setFrameShadow(QFrame.Raised)
@@ -506,6 +508,7 @@ class Ui_MainPages(object):
 
         self.phone_clear = QFrame(self.phone_button_section)
         self.phone_clear.setObjectName(u"phone_clear")
+        self.phone_clear.setMinimumSize(QSize(150, 30))
         self.phone_clear.setStyleSheet(u"")
         self.phone_clear.setFrameShape(QFrame.StyledPanel)
         self.phone_clear.setFrameShadow(QFrame.Raised)
@@ -516,32 +519,9 @@ class Ui_MainPages(object):
 
         self.gridLayout.addWidget(self.phone_clear, 1, 1, 1, 1)
 
-        self.phone_all_in_one = QFrame(self.phone_button_section)
-        self.phone_all_in_one.setObjectName(u"phone_all_in_one")
-        self.phone_all_in_one.setStyleSheet(u"")
-        self.phone_all_in_one.setFrameShape(QFrame.NoFrame)
-        self.phone_all_in_one.setFrameShadow(QFrame.Raised)
-        self.phone_all_in_one_layout = QVBoxLayout(self.phone_all_in_one)
-        self.phone_all_in_one_layout.setSpacing(0)
-        self.phone_all_in_one_layout.setObjectName(u"phone_all_in_one_layout")
-        self.phone_all_in_one_layout.setContentsMargins(0, 0, 0, 0)
-
-        self.gridLayout.addWidget(self.phone_all_in_one, 1, 2, 1, 1)
-
-        self.phone_delete = QFrame(self.phone_button_section)
-        self.phone_delete.setObjectName(u"phone_delete")
-        self.phone_delete.setStyleSheet(u"")
-        self.phone_delete.setFrameShape(QFrame.StyledPanel)
-        self.phone_delete.setFrameShadow(QFrame.Raised)
-        self.phone_delete_layout = QVBoxLayout(self.phone_delete)
-        self.phone_delete_layout.setSpacing(0)
-        self.phone_delete_layout.setObjectName(u"phone_delete_layout")
-        self.phone_delete_layout.setContentsMargins(0, 0, 0, 0)
-
-        self.gridLayout.addWidget(self.phone_delete, 2, 1, 1, 1)
-
         self.phone_buyme = QFrame(self.phone_button_section)
         self.phone_buyme.setObjectName(u"phone_buyme")
+        self.phone_buyme.setMinimumSize(QSize(150, 30))
         self.phone_buyme.setStyleSheet(u"")
         self.phone_buyme.setFrameShape(QFrame.NoFrame)
         self.phone_buyme.setFrameShadow(QFrame.Raised)
@@ -554,6 +534,7 @@ class Ui_MainPages(object):
 
         self.phone_print = QFrame(self.phone_button_section)
         self.phone_print.setObjectName(u"phone_print")
+        self.phone_print.setMinimumSize(QSize(150, 30))
         self.phone_print.setStyleSheet(u"")
         self.phone_print.setFrameShape(QFrame.NoFrame)
         self.phone_print.setFrameShadow(QFrame.Raised)
@@ -564,20 +545,9 @@ class Ui_MainPages(object):
 
         self.gridLayout.addWidget(self.phone_print, 0, 2, 1, 1)
 
-        self.add_to_cart = QFrame(self.phone_button_section)
-        self.add_to_cart.setObjectName(u"add_to_cart")
-        self.add_to_cart.setStyleSheet(u"")
-        self.add_to_cart.setFrameShape(QFrame.NoFrame)
-        self.add_to_cart.setFrameShadow(QFrame.Raised)
-        self.phone_add_to_cart_layout = QVBoxLayout(self.add_to_cart)
-        self.phone_add_to_cart_layout.setSpacing(0)
-        self.phone_add_to_cart_layout.setObjectName(u"phone_add_to_cart_layout")
-        self.phone_add_to_cart_layout.setContentsMargins(0, 0, 0, 0)
-
-        self.gridLayout.addWidget(self.add_to_cart, 0, 0, 1, 1)
-
         self.remov_from_cart = QFrame(self.phone_button_section)
         self.remov_from_cart.setObjectName(u"remov_from_cart")
+        self.remov_from_cart.setMinimumSize(QSize(150, 30))
         self.remov_from_cart.setStyleSheet(u"")
         self.remov_from_cart.setFrameShape(QFrame.NoFrame)
         self.remov_from_cart.setFrameShadow(QFrame.Raised)
@@ -588,8 +558,48 @@ class Ui_MainPages(object):
 
         self.gridLayout.addWidget(self.remov_from_cart, 1, 0, 1, 1)
 
+        self.add_to_cart = QFrame(self.phone_button_section)
+        self.add_to_cart.setObjectName(u"add_to_cart")
+        self.add_to_cart.setMinimumSize(QSize(150, 30))
+        self.add_to_cart.setStyleSheet(u"")
+        self.add_to_cart.setFrameShape(QFrame.NoFrame)
+        self.add_to_cart.setFrameShadow(QFrame.Raised)
+        self.phone_add_to_cart_layout = QVBoxLayout(self.add_to_cart)
+        self.phone_add_to_cart_layout.setSpacing(0)
+        self.phone_add_to_cart_layout.setObjectName(u"phone_add_to_cart_layout")
+        self.phone_add_to_cart_layout.setContentsMargins(0, 0, 0, 0)
+
+        self.gridLayout.addWidget(self.add_to_cart, 0, 0, 1, 1)
+
+        self.phone_delete = QFrame(self.phone_button_section)
+        self.phone_delete.setObjectName(u"phone_delete")
+        self.phone_delete.setMinimumSize(QSize(150, 30))
+        self.phone_delete.setStyleSheet(u"")
+        self.phone_delete.setFrameShape(QFrame.StyledPanel)
+        self.phone_delete.setFrameShadow(QFrame.Raised)
+        self.phone_delete_layout = QVBoxLayout(self.phone_delete)
+        self.phone_delete_layout.setSpacing(0)
+        self.phone_delete_layout.setObjectName(u"phone_delete_layout")
+        self.phone_delete_layout.setContentsMargins(0, 0, 0, 0)
+
+        self.gridLayout.addWidget(self.phone_delete, 2, 1, 1, 1)
+
+        self.phone_all_in_one = QFrame(self.phone_button_section)
+        self.phone_all_in_one.setObjectName(u"phone_all_in_one")
+        self.phone_all_in_one.setMinimumSize(QSize(150, 30))
+        self.phone_all_in_one.setStyleSheet(u"")
+        self.phone_all_in_one.setFrameShape(QFrame.NoFrame)
+        self.phone_all_in_one.setFrameShadow(QFrame.Raised)
+        self.phone_all_in_one_layout = QVBoxLayout(self.phone_all_in_one)
+        self.phone_all_in_one_layout.setSpacing(0)
+        self.phone_all_in_one_layout.setObjectName(u"phone_all_in_one_layout")
+        self.phone_all_in_one_layout.setContentsMargins(0, 0, 0, 0)
+
+        self.gridLayout.addWidget(self.phone_all_in_one, 1, 2, 1, 1)
+
         self.phone_clear_cart = QFrame(self.phone_button_section)
         self.phone_clear_cart.setObjectName(u"phone_clear_cart")
+        self.phone_clear_cart.setMinimumSize(QSize(150, 30))
         self.phone_clear_cart.setStyleSheet(u"")
         self.phone_clear_cart.setFrameShape(QFrame.NoFrame)
         self.phone_clear_cart.setFrameShadow(QFrame.Raised)
@@ -599,6 +609,45 @@ class Ui_MainPages(object):
         self.phone_clear_cart_layout.setContentsMargins(0, 0, 0, 0)
 
         self.gridLayout.addWidget(self.phone_clear_cart, 2, 0, 1, 1)
+
+        self.frame_12 = QFrame(self.phone_button_section)
+        self.frame_12.setObjectName(u"frame_12")
+        self.frame_12.setMinimumSize(QSize(0, 30))
+        self.frame_12.setStyleSheet(u"")
+        self.frame_12.setFrameShape(QFrame.StyledPanel)
+        self.frame_12.setFrameShadow(QFrame.Raised)
+        self.formLayout_2 = QFormLayout(self.frame_12)
+        self.formLayout_2.setObjectName(u"formLayout_2")
+        self.formLayout_2.setHorizontalSpacing(0)
+        self.formLayout_2.setVerticalSpacing(0)
+        self.formLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.label_23 = QLabel(self.frame_12)
+        self.label_23.setObjectName(u"label_23")
+
+        self.formLayout_2.setWidget(0, QFormLayout.LabelRole, self.label_23)
+
+        self.comboBox_4 = QComboBox(self.frame_12)
+        self.comboBox_4.addItem("")
+        self.comboBox_4.addItem("")
+        self.comboBox_4.addItem("")
+        self.comboBox_4.setObjectName(u"comboBox_4")
+
+        self.formLayout_2.setWidget(0, QFormLayout.FieldRole, self.comboBox_4)
+
+
+        self.gridLayout.addWidget(self.frame_12, 3, 0, 1, 1)
+
+        self.phone_search = QFrame(self.phone_button_section)
+        self.phone_search.setObjectName(u"phone_search")
+        self.phone_search.setMinimumSize(QSize(307, 30))
+        self.phone_search.setFrameShape(QFrame.NoFrame)
+        self.phone_search.setFrameShadow(QFrame.Raised)
+        self.phone_search_layout = QVBoxLayout(self.phone_search)
+        self.phone_search_layout.setSpacing(0)
+        self.phone_search_layout.setObjectName(u"phone_search_layout")
+        self.phone_search_layout.setContentsMargins(0, 0, 0, 0)
+
+        self.gridLayout.addWidget(self.phone_search, 3, 1, 1, 2)
 
 
         self.horizontalLayout_2.addWidget(self.phone_button_section)
@@ -947,6 +996,11 @@ class Ui_MainPages(object):
         ___qtablewidgetitem1.setText(QCoreApplication.translate("MainPages", u"id ", None));
         ___qtablewidgetitem2 = self.tableWidget_2.horizontalHeaderItem(2)
         ___qtablewidgetitem2.setText(QCoreApplication.translate("MainPages", u"imei", None));
+        self.label_23.setText(QCoreApplication.translate("MainPages", u"Search :", None))
+        self.comboBox_4.setItemText(0, QCoreApplication.translate("MainPages", u"Bar / QR code", None))
+        self.comboBox_4.setItemText(1, QCoreApplication.translate("MainPages", u"Cart ID", None))
+        self.comboBox_4.setItemText(2, QCoreApplication.translate("MainPages", u" Imei QR", None))
+
         ___qtablewidgetitem3 = self.tableWidget.horizontalHeaderItem(0)
         ___qtablewidgetitem3.setText(QCoreApplication.translate("MainPages", u"New Column", None));
         ___qtablewidgetitem4 = self.tableWidget.horizontalHeaderItem(1)

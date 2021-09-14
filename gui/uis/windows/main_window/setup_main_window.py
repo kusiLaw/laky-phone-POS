@@ -345,6 +345,7 @@ class SetupMainWindow:
 
 
         # buttons section
+
         self.add_to_cart_btn= PyPushButton(
             text = "Add to Cart",
             radius = 8,
@@ -436,7 +437,16 @@ class SetupMainWindow:
         self.phone_print_btn.setMinimumHeight(30)
         self.ui.load_pages.phone_print_layout.addWidget(self.phone_print_btn)
 
+        # Search
+        self.phone_search_edit = PyLineEdit(
+         
+            context_color=self.themes["app_color"]["context_color"],
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["dark_three"]
 
+        )
+
+        self.ui.load_pages.phone_search_layout.addWidget(self.phone_search_edit)
 
 
 
