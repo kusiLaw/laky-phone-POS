@@ -95,7 +95,7 @@ class MainWindow(QMainWindow):
             # Load page
             MainFunctions.set_page(self, self.ui.load_pages.phone_page)
 
-        if btn.objectName() == "services_btn":
+        if btn.objectName() == "service_btn":
             self.ui.left_menu.select_only_one(btn.objectName())
 
             # Load page

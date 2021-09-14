@@ -250,10 +250,10 @@ class SetupMainWindow:
         # ///////////////////////////////////////////////////////////////
         # custom py_line_edit
         self.customerName = PyLineEdit(
-            place_holder_text = "customer name",
+
             context_color = self.themes["app_color"]["context_color"],
             color = self.themes["app_color"]["text_active"],
-            bg_color = self.themes["app_color"]["bg_three"],
+            bg_color = self.themes["app_color"]["dark_one"],
 
             )
         # add to phone
@@ -262,10 +262,10 @@ class SetupMainWindow:
 
 
         self.contactName = PyLineEdit(
-            place_holder_text="customer name",
+
             context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
-            bg_color=self.themes["app_color"]["bg_three"],
+            bg_color=self.themes["app_color"]["dark_one"],
 
         )
 
@@ -274,7 +274,7 @@ class SetupMainWindow:
         self.curt_id = PyLineEdit(
             context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
-            bg_color=self.themes["app_color"]["bg_three"],
+            bg_color=self.themes["app_color"]["dark_one"],
 
         )
 
@@ -285,19 +285,28 @@ class SetupMainWindow:
         self.phone_imei = PyLineEdit(
             context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
-            bg_color=self.themes["app_color"]["bg_three"],
+            bg_color=self.themes["app_color"]["dark_one"],
 
         )
 
         self.ui.load_pages.phone_imei_edit.addWidget(self.phone_imei)
 
+        self.qr_toggle = PyToggle(
+            width=70,
+            bg_color=self.themes["app_color"]["dark_one"],
+            circle_color=self.themes["app_color"]["icon_color"],
+            active_color=self.themes["app_color"]["context_color"],
+            animation_curve=QEasingCurve.OutCirc
 
+
+        )
+        self.ui.load_pages.phone_qr.addWidget(self.qr_toggle)
 
 
         self.phone_sn = PyLineEdit(
             context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
-            bg_color=self.themes["app_color"]["bg_three"],
+            bg_color=self.themes["app_color"]["dark_one"],
 
         )
 
@@ -309,7 +318,7 @@ class SetupMainWindow:
         self.phone_price = PyLineEdit(
             context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
-            bg_color=self.themes["app_color"]["bg_three"],
+            bg_color=self.themes["app_color"]["dark_one"],
 
         )
 
@@ -318,7 +327,7 @@ class SetupMainWindow:
         self.phone_discount = PyLineEdit(
             context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
-            bg_color=self.themes["app_color"]["bg_three"],
+            bg_color=self.themes["app_color"]["dark_one"],
 
         )
 
@@ -328,7 +337,7 @@ class SetupMainWindow:
         self.phone_tax = PyLineEdit(
             context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
-            bg_color=self.themes["app_color"]["bg_three"],
+            bg_color=self.themes["app_color"]["dark_one"],
 
         )
 
@@ -336,12 +345,96 @@ class SetupMainWindow:
 
 
         # buttons section
-        self.add_to_cart = PyIconButton(
-          width = 400,
-            height = 40
+        self.add_to_cart_btn= PyPushButton(
+            text = "Add to Cart",
+            radius = 8,
+            color = self.themes["app_color"]["text_foreground"],
+            bg_color = self.themes["app_color"]["dark_one"],
+            bg_color_hover = self.themes["app_color"]["dark_three"],
+            bg_color_pressed = self.themes["app_color"]["dark_four"],
+        )
+        self.add_to_cart_btn.setMinimumHeight(30)
+        self.ui.load_pages.phone_add_to_cart_layout.addWidget(self.add_to_cart_btn)
+
+        self.remove_from_cart_btn = PyPushButton(
+            text="Remove from Cart",
+            radius=8,
+            color=self.themes["app_color"]["text_foreground"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color_hover=self.themes["app_color"]["dark_three"],
+            bg_color_pressed=self.themes["app_color"]["dark_four"],
         )
 
-        self.ui.load_pages.phone_addToCart_btn.addWidget(self.add_to_cart)
+        self.remove_from_cart_btn.setMinimumHeight(30)
+        self.ui.load_pages.remov_from_cart_layout.addWidget(self.remove_from_cart_btn)
+
+        self.phone_clear_cart_btn = PyPushButton(
+            text="Remove from Cart",
+            radius=8,
+            color=self.themes["app_color"]["text_foreground"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color_hover=self.themes["app_color"]["dark_three"],
+            bg_color_pressed=self.themes["app_color"]["dark_four"],
+        )
+        self.phone_clear_cart_btn.setMinimumHeight(30)
+        self.ui.load_pages.phone_clear_cart_layout.addWidget(self.phone_clear_cart_btn)
+
+        self.phone_buyme_btn = PyPushButton(
+            text="Buy / Save",
+            radius=8,
+            color=self.themes["app_color"]["text_foreground"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color_hover=self.themes["app_color"]["dark_three"],
+            bg_color_pressed=self.themes["app_color"]["dark_four"],
+        )
+        self.phone_buyme_btn.setMinimumHeight(30)
+        self.ui.load_pages.phone_buyme_layout.addWidget(self.phone_buyme_btn)
+
+        self.phone_clear_btn = PyPushButton(
+            text="Clear",
+            radius=8,
+            color=self.themes["app_color"]["text_foreground"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color_hover=self.themes["app_color"]["dark_three"],
+            bg_color_pressed=self.themes["app_color"]["dark_four"],
+        )
+        self.phone_clear_btn.setMinimumHeight(30)
+        self.ui.load_pages.phone_clear_layout.addWidget(self.phone_clear_btn)
+
+
+        self.phone_delete_btn = PyPushButton(
+            text="Delete",
+            radius=8,
+            color=self.themes["app_color"]["text_foreground"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color_hover=self.themes["app_color"]["dark_three"],
+            bg_color_pressed=self.themes["app_color"]["dark_four"],
+        )
+        self.phone_delete_btn.setMinimumHeight(30)
+        self.ui.load_pages.phone_delete_layout.addWidget(self.phone_delete_btn)
+
+        self.phone_all_in_one_btn = PyPushButton(
+            text="all-in_one",
+            radius=8,
+            color=self.themes["app_color"]["text_foreground"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color_hover=self.themes["app_color"]["dark_three"],
+            bg_color_pressed=self.themes["app_color"]["dark_four"],
+        )
+        self.phone_all_in_one_btn.setMinimumHeight(30)
+        self.ui.load_pages.phone_all_in_one_layout.addWidget(self.phone_all_in_one_btn)
+
+
+        self.phone_print_btn = PyPushButton(
+            text="Print",
+            radius=8,
+            color=self.themes["app_color"]["text_foreground"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color_hover=self.themes["app_color"]["dark_three"],
+            bg_color_pressed=self.themes["app_color"]["dark_four"],
+        )
+        self.phone_print_btn.setMinimumHeight(30)
+        self.ui.load_pages.phone_print_layout.addWidget(self.phone_print_btn)
 
 
 
@@ -349,7 +442,11 @@ class SetupMainWindow:
 
 
 
-        # ///////////////////////////////////////////////////////////////
+
+
+
+
+    # ///////////////////////////////////////////////////////////////
         # END - EXAMPLE CUSTOM WIDGETS
         # ///////////////////////////////////////////////////////////////
 
