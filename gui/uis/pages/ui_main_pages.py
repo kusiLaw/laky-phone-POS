@@ -139,7 +139,7 @@ class Ui_MainPages(object):
         self.formLayout = QFormLayout(self.customer_group)
         self.formLayout.setObjectName(u"formLayout")
         self.formLayout.setVerticalSpacing(12)
-        self.formLayout.setContentsMargins(15, 0, 20, 0)
+        self.formLayout.setContentsMargins(15, 5, 20, 5)
         self.label_3 = QLabel(self.customer_group)
         self.label_3.setObjectName(u"label_3")
 
@@ -174,19 +174,18 @@ class Ui_MainPages(object):
 
         self.formLayout.setWidget(2, QFormLayout.FieldRole, self.customer_contact)
 
-        self.label_4 = QLabel(self.customer_group)
-        self.label_4.setObjectName(u"label_4")
-
-        self.formLayout.setWidget(3, QFormLayout.LabelRole, self.label_4)
-
         self.frame_8 = QFrame(self.customer_group)
         self.frame_8.setObjectName(u"frame_8")
-        self.frame_8.setFrameShape(QFrame.StyledPanel)
+        self.frame_8.setEnabled(False)
+        self.frame_8.setMinimumSize(QSize(50, 50))
+        self.frame_8.setMaximumSize(QSize(16777215, 100))
+        self.frame_8.setStyleSheet(u"")
+        self.frame_8.setFrameShape(QFrame.NoFrame)
         self.frame_8.setFrameShadow(QFrame.Raised)
-
-        self.formLayout.setWidget(4, QFormLayout.LabelRole, self.frame_8)
-
-        self.cart_id = QFrame(self.customer_group)
+        self.gridLayout_4 = QGridLayout(self.frame_8)
+        self.gridLayout_4.setObjectName(u"gridLayout_4")
+        self.gridLayout_4.setContentsMargins(0, 0, 5, 0)
+        self.cart_id = QFrame(self.frame_8)
         self.cart_id.setObjectName(u"cart_id")
         self.cart_id.setStyleSheet(u"")
         self.cart_id.setFrameShape(QFrame.NoFrame)
@@ -196,7 +195,39 @@ class Ui_MainPages(object):
         self.cutomer_cart_id_edit.setObjectName(u"cutomer_cart_id_edit")
         self.cutomer_cart_id_edit.setContentsMargins(0, 0, 0, 0)
 
-        self.formLayout.setWidget(3, QFormLayout.FieldRole, self.cart_id)
+        self.gridLayout_4.addWidget(self.cart_id, 1, 1, 1, 1)
+
+        self.frame_14 = QFrame(self.frame_8)
+        self.frame_14.setObjectName(u"frame_14")
+        self.frame_14.setFrameShape(QFrame.NoFrame)
+        self.frame_14.setFrameShadow(QFrame.Raised)
+        self.phone_cart_total_edit = QVBoxLayout(self.frame_14)
+        self.phone_cart_total_edit.setSpacing(0)
+        self.phone_cart_total_edit.setObjectName(u"phone_cart_total_edit")
+        self.phone_cart_total_edit.setContentsMargins(0, 0, 0, 0)
+
+        self.gridLayout_4.addWidget(self.frame_14, 2, 1, 1, 1)
+
+        self.label_4 = QLabel(self.frame_8)
+        self.label_4.setObjectName(u"label_4")
+        self.label_4.setStyleSheet(u"")
+
+        self.gridLayout_4.addWidget(self.label_4, 1, 0, 1, 1)
+
+        self.label_25 = QLabel(self.frame_8)
+        self.label_25.setObjectName(u"label_25")
+
+        self.gridLayout_4.addWidget(self.label_25, 2, 0, 1, 1)
+
+        self.line = QFrame(self.frame_8)
+        self.line.setObjectName(u"line")
+        self.line.setFrameShape(QFrame.HLine)
+        self.line.setFrameShadow(QFrame.Sunken)
+
+        self.gridLayout_4.addWidget(self.line, 0, 0, 1, 2)
+
+
+        self.formLayout.setWidget(3, QFormLayout.SpanningRole, self.frame_8)
 
 
         self.verticalLayout_6.addWidget(self.customer_group)
@@ -222,42 +253,9 @@ class Ui_MainPages(object):
         self.gridLayout_2.setHorizontalSpacing(0)
         self.gridLayout_2.setVerticalSpacing(12)
         self.gridLayout_2.setContentsMargins(10, 5, 5, 10)
-        self.frame_10 = QFrame(self.phone_group)
-        self.frame_10.setObjectName(u"frame_10")
-        self.frame_10.setFrameShape(QFrame.StyledPanel)
-        self.frame_10.setFrameShadow(QFrame.Raised)
-        self.phone_sn_edit = QVBoxLayout(self.frame_10)
-        self.phone_sn_edit.setSpacing(0)
-        self.phone_sn_edit.setObjectName(u"phone_sn_edit")
-        self.phone_sn_edit.setContentsMargins(0, 0, 0, 0)
-
-        self.gridLayout_2.addWidget(self.frame_10, 5, 1, 1, 1)
-
-        self.label_18 = QLabel(self.phone_group)
-        self.label_18.setObjectName(u"label_18")
-
-        self.gridLayout_2.addWidget(self.label_18, 5, 2, 1, 1)
-
-        self.label_16 = QLabel(self.phone_group)
-        self.label_16.setObjectName(u"label_16")
-
-        self.gridLayout_2.addWidget(self.label_16, 3, 0, 1, 2)
-
-        self.label_17 = QLabel(self.phone_group)
-        self.label_17.setObjectName(u"label_17")
-        self.label_17.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout_2.addWidget(self.label_17, 3, 3, 1, 1)
-
-        self.frame_23 = QFrame(self.phone_group)
-        self.frame_23.setObjectName(u"frame_23")
-        self.frame_23.setFrameShape(QFrame.StyledPanel)
-        self.frame_23.setFrameShadow(QFrame.Raised)
-
-        self.gridLayout_2.addWidget(self.frame_23, 5, 3, 1, 1)
-
         self.frame_22 = QFrame(self.phone_group)
         self.frame_22.setObjectName(u"frame_22")
+        self.frame_22.setMinimumSize(QSize(100, 0))
         self.frame_22.setStyleSheet(u"")
         self.frame_22.setFrameShape(QFrame.NoFrame)
         self.frame_22.setFrameShadow(QFrame.Raised)
@@ -265,21 +263,8 @@ class Ui_MainPages(object):
         self.phone_type_edit.setSpacing(0)
         self.phone_type_edit.setObjectName(u"phone_type_edit")
         self.phone_type_edit.setContentsMargins(0, 0, 0, 0)
-        self.comboBox_2 = QComboBox(self.frame_22)
-        self.comboBox_2.addItem("")
-        self.comboBox_2.addItem("")
-        self.comboBox_2.setObjectName(u"comboBox_2")
-        self.comboBox_2.setMaximumSize(QSize(16777215, 16777215))
-
-        self.phone_type_edit.addWidget(self.comboBox_2)
-
 
         self.gridLayout_2.addWidget(self.frame_22, 0, 1, 1, 1)
-
-        self.label_8 = QLabel(self.phone_group)
-        self.label_8.setObjectName(u"label_8")
-
-        self.gridLayout_2.addWidget(self.label_8, 5, 0, 1, 1)
 
         self.label_7 = QLabel(self.phone_group)
         self.label_7.setObjectName(u"label_7")
@@ -300,17 +285,6 @@ class Ui_MainPages(object):
 
         self.gridLayout_2.addWidget(self.label_5, 0, 0, 1, 1)
 
-        self.frame_21 = QFrame(self.phone_group)
-        self.frame_21.setObjectName(u"frame_21")
-        self.frame_21.setFrameShape(QFrame.NoFrame)
-        self.frame_21.setFrameShadow(QFrame.Raised)
-        self.phone_qr = QVBoxLayout(self.frame_21)
-        self.phone_qr.setSpacing(0)
-        self.phone_qr.setObjectName(u"phone_qr")
-        self.phone_qr.setContentsMargins(0, 0, 0, 0)
-
-        self.gridLayout_2.addWidget(self.frame_21, 3, 2, 1, 1)
-
         self.frame_9 = QFrame(self.phone_group)
         self.frame_9.setObjectName(u"frame_9")
         self.frame_9.setFrameShape(QFrame.StyledPanel)
@@ -324,23 +298,74 @@ class Ui_MainPages(object):
 
         self.frame_24 = QFrame(self.phone_group)
         self.frame_24.setObjectName(u"frame_24")
+        self.frame_24.setMinimumSize(QSize(100, 0))
+        self.frame_24.setMaximumSize(QSize(16777215, 16777215))
         self.frame_24.setFrameShape(QFrame.NoFrame)
         self.frame_24.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_24 = QVBoxLayout(self.frame_24)
-        self.verticalLayout_24.setSpacing(0)
-        self.verticalLayout_24.setObjectName(u"verticalLayout_24")
-        self.verticalLayout_24.setContentsMargins(0, 0, 0, 0)
-        self.comboBox_3 = QComboBox(self.frame_24)
-        self.comboBox_3.addItem("")
-        self.comboBox_3.addItem("")
-        self.comboBox_3.addItem("")
-        self.comboBox_3.setObjectName(u"comboBox_3")
-        self.comboBox_3.setMinimumSize(QSize(125, 0))
-
-        self.verticalLayout_24.addWidget(self.comboBox_3)
-
+        self.phone_model_edit = QVBoxLayout(self.frame_24)
+        self.phone_model_edit.setSpacing(0)
+        self.phone_model_edit.setObjectName(u"phone_model_edit")
+        self.phone_model_edit.setContentsMargins(0, 0, 0, 0)
 
         self.gridLayout_2.addWidget(self.frame_24, 0, 3, 1, 1)
+
+        self.label_8 = QLabel(self.phone_group)
+        self.label_8.setObjectName(u"label_8")
+        self.label_8.setStyleSheet(u"")
+
+        self.gridLayout_2.addWidget(self.label_8, 3, 0, 1, 1)
+
+        self.frame_10 = QFrame(self.phone_group)
+        self.frame_10.setObjectName(u"frame_10")
+        self.frame_10.setStyleSheet(u"")
+        self.frame_10.setFrameShape(QFrame.StyledPanel)
+        self.frame_10.setFrameShadow(QFrame.Raised)
+        self.phone_sn_edit = QVBoxLayout(self.frame_10)
+        self.phone_sn_edit.setSpacing(0)
+        self.phone_sn_edit.setObjectName(u"phone_sn_edit")
+        self.phone_sn_edit.setContentsMargins(0, 0, 0, 0)
+
+        self.gridLayout_2.addWidget(self.frame_10, 3, 1, 1, 1)
+
+        self.label_18 = QLabel(self.phone_group)
+        self.label_18.setObjectName(u"label_18")
+
+        self.gridLayout_2.addWidget(self.label_18, 3, 2, 1, 1)
+
+        self.label_16 = QLabel(self.phone_group)
+        self.label_16.setObjectName(u"label_16")
+        self.label_16.setStyleSheet(u"")
+
+        self.gridLayout_2.addWidget(self.label_16, 5, 0, 1, 1)
+
+        self.frame_21 = QFrame(self.phone_group)
+        self.frame_21.setObjectName(u"frame_21")
+        self.frame_21.setStyleSheet(u"")
+        self.frame_21.setFrameShape(QFrame.NoFrame)
+        self.frame_21.setFrameShadow(QFrame.Raised)
+        self.phone_qr = QVBoxLayout(self.frame_21)
+        self.phone_qr.setSpacing(0)
+        self.phone_qr.setObjectName(u"phone_qr")
+        self.phone_qr.setContentsMargins(10, 0, 0, 0)
+
+        self.gridLayout_2.addWidget(self.frame_21, 5, 1, 1, 1)
+
+        self.frame_23 = QFrame(self.phone_group)
+        self.frame_23.setObjectName(u"frame_23")
+        self.frame_23.setFrameShape(QFrame.StyledPanel)
+        self.frame_23.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_13 = QVBoxLayout(self.frame_23)
+        self.verticalLayout_13.setObjectName(u"verticalLayout_13")
+        self.verticalLayout_13.setContentsMargins(0, 0, 0, 7)
+        self.label_17 = QLabel(self.frame_23)
+        self.label_17.setObjectName(u"label_17")
+        self.label_17.setStyleSheet(u"")
+        self.label_17.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+
+        self.verticalLayout_13.addWidget(self.label_17)
+
+
+        self.gridLayout_2.addWidget(self.frame_23, 5, 2, 1, 2)
 
 
         self.verticalLayout_7.addWidget(self.phone_group)
@@ -419,23 +444,16 @@ class Ui_MainPages(object):
 
         self.formLayout_3.setWidget(2, QFormLayout.FieldRole, self.frame_28)
 
-        self.frame_29 = QFrame(self.cost_group)
-        self.frame_29.setObjectName(u"frame_29")
-        self.frame_29.setStyleSheet(u"\\")
-        self.frame_29.setFrameShape(QFrame.StyledPanel)
-        self.frame_29.setFrameShadow(QFrame.Raised)
-        self.phone_payment_edit = QVBoxLayout(self.frame_29)
+        self.payment = QFrame(self.cost_group)
+        self.payment.setObjectName(u"payment")
+        self.payment.setStyleSheet(u"\\")
+        self.payment.setFrameShape(QFrame.NoFrame)
+        self.payment.setFrameShadow(QFrame.Raised)
+        self.phone_payment_edit = QVBoxLayout(self.payment)
         self.phone_payment_edit.setObjectName(u"phone_payment_edit")
         self.phone_payment_edit.setContentsMargins(0, 0, 0, 0)
-        self.comboBox = QComboBox(self.frame_29)
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.comboBox.setObjectName(u"comboBox")
 
-        self.phone_payment_edit.addWidget(self.comboBox)
-
-
-        self.formLayout_3.setWidget(3, QFormLayout.FieldRole, self.frame_29)
+        self.formLayout_3.setWidget(3, QFormLayout.FieldRole, self.payment)
 
 
         self.verticalLayout_8.addWidget(self.cost_group)
@@ -462,24 +480,10 @@ class Ui_MainPages(object):
         self.phone_cart_section.setStyleSheet(u"")
         self.phone_cart_section.setFrameShape(QFrame.NoFrame)
         self.phone_cart_section.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_15 = QVBoxLayout(self.phone_cart_section)
-        self.verticalLayout_15.setSpacing(0)
-        self.verticalLayout_15.setObjectName(u"verticalLayout_15")
-        self.verticalLayout_15.setContentsMargins(0, 0, 0, 0)
-        self.tableWidget_2 = QTableWidget(self.phone_cart_section)
-        if (self.tableWidget_2.columnCount() < 3):
-            self.tableWidget_2.setColumnCount(3)
-        __qtablewidgetitem = QTableWidgetItem()
-        self.tableWidget_2.setHorizontalHeaderItem(0, __qtablewidgetitem)
-        __qtablewidgetitem1 = QTableWidgetItem()
-        self.tableWidget_2.setHorizontalHeaderItem(1, __qtablewidgetitem1)
-        __qtablewidgetitem2 = QTableWidgetItem()
-        self.tableWidget_2.setHorizontalHeaderItem(2, __qtablewidgetitem2)
-        self.tableWidget_2.setObjectName(u"tableWidget_2")
-        self.tableWidget_2.horizontalHeader().setCascadingSectionResizes(True)
-
-        self.verticalLayout_15.addWidget(self.tableWidget_2)
-
+        self.phone_cart_layout = QVBoxLayout(self.phone_cart_section)
+        self.phone_cart_layout.setSpacing(0)
+        self.phone_cart_layout.setObjectName(u"phone_cart_layout")
+        self.phone_cart_layout.setContentsMargins(0, 0, 0, 0)
 
         self.horizontalLayout_2.addWidget(self.phone_cart_section)
 
@@ -626,13 +630,16 @@ class Ui_MainPages(object):
 
         self.formLayout_2.setWidget(0, QFormLayout.LabelRole, self.label_23)
 
-        self.comboBox_4 = QComboBox(self.frame_12)
-        self.comboBox_4.addItem("")
-        self.comboBox_4.addItem("")
-        self.comboBox_4.addItem("")
-        self.comboBox_4.setObjectName(u"comboBox_4")
+        self.frame_15 = QFrame(self.frame_12)
+        self.frame_15.setObjectName(u"frame_15")
+        self.frame_15.setFrameShape(QFrame.NoFrame)
+        self.frame_15.setFrameShadow(QFrame.Raised)
+        self.phone_search_key_edit = QVBoxLayout(self.frame_15)
+        self.phone_search_key_edit.setSpacing(0)
+        self.phone_search_key_edit.setObjectName(u"phone_search_key_edit")
+        self.phone_search_key_edit.setContentsMargins(-1, 0, 0, 0)
 
-        self.formLayout_2.setWidget(0, QFormLayout.FieldRole, self.comboBox_4)
+        self.formLayout_2.setWidget(0, QFormLayout.FieldRole, self.frame_15)
 
 
         self.gridLayout.addWidget(self.frame_12, 3, 0, 1, 1)
@@ -664,22 +671,9 @@ class Ui_MainPages(object):
         self.phone_table_section.setStyleSheet(u"")
         self.phone_table_section.setFrameShape(QFrame.NoFrame)
         self.phone_table_section.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout_3 = QHBoxLayout(self.phone_table_section)
-        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.horizontalLayout_3.setContentsMargins(0, -1, 0, 0)
-        self.tableWidget = QTableWidget(self.phone_table_section)
-        if (self.tableWidget.columnCount() < 3):
-            self.tableWidget.setColumnCount(3)
-        __qtablewidgetitem3 = QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(0, __qtablewidgetitem3)
-        __qtablewidgetitem4 = QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(1, __qtablewidgetitem4)
-        __qtablewidgetitem5 = QTableWidgetItem()
-        self.tableWidget.setHorizontalHeaderItem(2, __qtablewidgetitem5)
-        self.tableWidget.setObjectName(u"tableWidget")
-
-        self.horizontalLayout_3.addWidget(self.tableWidget)
-
+        self.phone_table = QHBoxLayout(self.phone_table_section)
+        self.phone_table.setObjectName(u"phone_table")
+        self.phone_table.setContentsMargins(0, -1, 0, 0)
 
         self.verticalLayout_5.addWidget(self.phone_table_section)
 
@@ -704,7 +698,7 @@ class Ui_MainPages(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.Contents = QWidget()
         self.Contents.setObjectName(u"Contents")
-        self.Contents.setGeometry(QRect(0, 0, 631, 606))
+        self.Contents.setGeometry(QRect(0, 0, 1055, 618))
         self.verticalLayout_2 = QVBoxLayout(self.Contents)
         self.verticalLayout_2.setSpacing(0)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
@@ -725,9 +719,7 @@ class Ui_MainPages(object):
         self.service_forms_section.setFrameShape(QFrame.NoFrame)
         self.service_forms_section.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_4 = QHBoxLayout(self.service_forms_section)
-        self.horizontalLayout_4.setSpacing(0)
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
-        self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
         self.service_customer_section = QFrame(self.service_forms_section)
         self.service_customer_section.setObjectName(u"service_customer_section")
         self.service_customer_section.setMaximumSize(QSize(280, 16777215))
@@ -776,6 +768,11 @@ class Ui_MainPages(object):
 
         self.formLayout_4.setWidget(2, QFormLayout.LabelRole, self.label_15)
 
+        self.label_30 = QLabel(self.service_customer_group)
+        self.label_30.setObjectName(u"label_30")
+
+        self.formLayout_4.setWidget(3, QFormLayout.LabelRole, self.label_30)
+
 
         self.verticalLayout_20.addWidget(self.service_customer_group)
 
@@ -786,7 +783,7 @@ class Ui_MainPages(object):
         self.service_phone_section.setObjectName(u"service_phone_section")
         self.service_phone_section.setMaximumSize(QSize(400, 16777215))
         self.service_phone_section.setStyleSheet(u"background :rgb(170, 170, 127)")
-        self.service_phone_section.setFrameShape(QFrame.StyledPanel)
+        self.service_phone_section.setFrameShape(QFrame.NoFrame)
         self.service_phone_section.setFrameShadow(QFrame.Raised)
         self.verticalLayout_22 = QVBoxLayout(self.service_phone_section)
         self.verticalLayout_22.setSpacing(0)
@@ -795,12 +792,9 @@ class Ui_MainPages(object):
         self.service_phon_group = QGroupBox(self.service_phone_section)
         self.service_phon_group.setObjectName(u"service_phon_group")
         self.gridLayout_3 = QGridLayout(self.service_phon_group)
+        self.gridLayout_3.setSpacing(0)
         self.gridLayout_3.setObjectName(u"gridLayout_3")
-        self.label_20 = QLabel(self.service_phon_group)
-        self.label_20.setObjectName(u"label_20")
-
-        self.gridLayout_3.addWidget(self.label_20, 1, 0, 1, 1)
-
+        self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
         self.label_19 = QLabel(self.service_phon_group)
         self.label_19.setObjectName(u"label_19")
 
@@ -809,26 +803,60 @@ class Ui_MainPages(object):
         self.label_22 = QLabel(self.service_phon_group)
         self.label_22.setObjectName(u"label_22")
 
-        self.gridLayout_3.addWidget(self.label_22, 0, 2, 1, 1)
+        self.gridLayout_3.addWidget(self.label_22, 0, 3, 1, 1)
+
+        self.label_20 = QLabel(self.service_phon_group)
+        self.label_20.setObjectName(u"label_20")
+
+        self.gridLayout_3.addWidget(self.label_20, 2, 0, 1, 1)
+
+        self.label_27 = QLabel(self.service_phon_group)
+        self.label_27.setObjectName(u"label_27")
+
+        self.gridLayout_3.addWidget(self.label_27, 1, 3, 1, 1)
+
+        self.label_26 = QLabel(self.service_phon_group)
+        self.label_26.setObjectName(u"label_26")
+
+        self.gridLayout_3.addWidget(self.label_26, 2, 3, 1, 1)
 
         self.label_21 = QLabel(self.service_phon_group)
         self.label_21.setObjectName(u"label_21")
 
-        self.gridLayout_3.addWidget(self.label_21, 2, 0, 1, 1)
+        self.gridLayout_3.addWidget(self.label_21, 1, 0, 1, 1)
 
         self.frame_25 = QFrame(self.service_phon_group)
         self.frame_25.setObjectName(u"frame_25")
         self.frame_25.setFrameShape(QFrame.StyledPanel)
         self.frame_25.setFrameShadow(QFrame.Raised)
 
-        self.gridLayout_3.addWidget(self.frame_25, 0, 1, 1, 1)
+        self.gridLayout_3.addWidget(self.frame_25, 0, 2, 1, 1)
 
         self.frame_30 = QFrame(self.service_phon_group)
         self.frame_30.setObjectName(u"frame_30")
         self.frame_30.setFrameShape(QFrame.StyledPanel)
         self.frame_30.setFrameShadow(QFrame.Raised)
 
-        self.gridLayout_3.addWidget(self.frame_30, 0, 3, 1, 1)
+        self.gridLayout_3.addWidget(self.frame_30, 0, 5, 1, 1)
+
+        self.label_28 = QLabel(self.service_phon_group)
+        self.label_28.setObjectName(u"label_28")
+
+        self.gridLayout_3.addWidget(self.label_28, 3, 0, 1, 1)
+
+        self.frame_17 = QFrame(self.service_phon_group)
+        self.frame_17.setObjectName(u"frame_17")
+        self.frame_17.setFrameShape(QFrame.StyledPanel)
+        self.frame_17.setFrameShadow(QFrame.Raised)
+
+        self.gridLayout_3.addWidget(self.frame_17, 0, 4, 1, 1)
+
+        self.frame_19 = QFrame(self.service_phon_group)
+        self.frame_19.setObjectName(u"frame_19")
+        self.frame_19.setFrameShape(QFrame.StyledPanel)
+        self.frame_19.setFrameShadow(QFrame.Raised)
+
+        self.gridLayout_3.addWidget(self.frame_19, 0, 1, 1, 1)
 
 
         self.verticalLayout_22.addWidget(self.service_phon_group)
@@ -853,23 +881,12 @@ class Ui_MainPages(object):
 
         self.horizontalLayout_4.addWidget(self.service_cost_section)
 
-        self.service_other_section = QFrame(self.service_forms_section)
-        self.service_other_section.setObjectName(u"service_other_section")
-        self.service_other_section.setMaximumSize(QSize(400, 16777215))
-        self.service_other_section.setStyleSheet(u"background :rgb(255, 56, 17)")
-        self.service_other_section.setFrameShape(QFrame.StyledPanel)
-        self.service_other_section.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_21 = QVBoxLayout(self.service_other_section)
-        self.verticalLayout_21.setSpacing(0)
-        self.verticalLayout_21.setObjectName(u"verticalLayout_21")
-        self.verticalLayout_21.setContentsMargins(0, 0, 0, 0)
-        self.service_other_group = QGroupBox(self.service_other_section)
-        self.service_other_group.setObjectName(u"service_other_group")
+        self.frame_16 = QFrame(self.service_forms_section)
+        self.frame_16.setObjectName(u"frame_16")
+        self.frame_16.setFrameShape(QFrame.StyledPanel)
+        self.frame_16.setFrameShadow(QFrame.Raised)
 
-        self.verticalLayout_21.addWidget(self.service_other_group)
-
-
-        self.horizontalLayout_4.addWidget(self.service_other_section)
+        self.horizontalLayout_4.addWidget(self.frame_16)
 
 
         self.verticalLayout_18.addWidget(self.service_forms_section)
@@ -933,19 +950,93 @@ class Ui_MainPages(object):
         self.pages.addWidget(self.service_page)
         self.stock = QWidget()
         self.stock.setObjectName(u"stock")
-        self.stock.setStyleSheet(u"QFrame {\n"
-"	font-size: 16pt; background-color:lightyellow;\n"
-"}")
+        self.stock.setStyleSheet(u"background-color:#2c313c;\n"
+"/**#2c313c;**/\n"
+"")
         self.page_3_layout = QVBoxLayout(self.stock)
+        self.page_3_layout.setSpacing(0)
         self.page_3_layout.setObjectName(u"page_3_layout")
-        self.empty_page_label = QLabel(self.stock)
-        self.empty_page_label.setObjectName(u"empty_page_label")
-        font = QFont()
-        font.setPointSize(16)
-        self.empty_page_label.setFont(font)
-        self.empty_page_label.setAlignment(Qt.AlignCenter)
+        self.page_3_layout.setContentsMargins(0, 0, 0, 0)
+        self.scrollArea_3 = QScrollArea(self.stock)
+        self.scrollArea_3.setObjectName(u"scrollArea_3")
+        self.scrollArea_3.setFrameShape(QFrame.NoFrame)
+        self.scrollArea_3.setWidgetResizable(True)
+        self.stockContents = QWidget()
+        self.stockContents.setObjectName(u"stockContents")
+        self.stockContents.setGeometry(QRect(0, 0, 1055, 618))
+        self.verticalLayout_9 = QVBoxLayout(self.stockContents)
+        self.verticalLayout_9.setSpacing(0)
+        self.verticalLayout_9.setObjectName(u"verticalLayout_9")
+        self.verticalLayout_9.setContentsMargins(0, 5, 0, 0)
+        self.inventories = QTabWidget(self.stockContents)
+        self.inventories.setObjectName(u"inventories")
+        self.inventories.setFocusPolicy(Qt.TabFocus)
+        self.inventories.setStyleSheet(u"QTabWidget::pane { /* The tab widget frame */\n"
+"    border-top: 1px solid #C2C7CB;\n"
+"	color: white\n"
+"}\n"
+"QTabWidget::tab-bar {\n"
+"    left: 5px; /* move to the right by 5px */\n"
+"}\n"
+"QTabBar::tab:selected, QTabBar::tab:hover {\n"
+"    background: #1b1e23;\n"
+"		font-size: 18px;\n"
+"	\n"
+"}\n"
+"\n"
+"")
+        self.inventories.setTabPosition(QTabWidget.North)
+        self.inventories.setTabShape(QTabWidget.Triangular)
+        self.inventories.setElideMode(Qt.ElideNone)
+        self.phone_inventory = QWidget()
+        self.phone_inventory.setObjectName(u"phone_inventory")
+        self.verticalLayout_11 = QVBoxLayout(self.phone_inventory)
+        self.verticalLayout_11.setSpacing(0)
+        self.verticalLayout_11.setObjectName(u"verticalLayout_11")
+        self.verticalLayout_11.setContentsMargins(0, 10, 0, 0)
+        self.phone_inventory_inner = QTabWidget(self.phone_inventory)
+        self.phone_inventory_inner.setObjectName(u"phone_inventory_inner")
+        self.phone_inventory_inner.setStyleSheet(u"")
+        self.phone_inventory_inner.setTabPosition(QTabWidget.North)
+        self.phone_inventory_inner.setTabShape(QTabWidget.Triangular)
+        self.detailed = QWidget()
+        self.detailed.setObjectName(u"detailed")
+        self.phone_inventory_inner.addTab(self.detailed, "")
+        self.simple = QWidget()
+        self.simple.setObjectName(u"simple")
+        self.simple.setFocusPolicy(Qt.StrongFocus)
+        self.phone_inventory_inner.addTab(self.simple, "")
 
-        self.page_3_layout.addWidget(self.empty_page_label)
+        self.verticalLayout_11.addWidget(self.phone_inventory_inner)
+
+        self.inventories.addTab(self.phone_inventory, "")
+        self.accessories_inventory = QWidget()
+        self.accessories_inventory.setObjectName(u"accessories_inventory")
+        self.accessories_inventory.setFocusPolicy(Qt.StrongFocus)
+        self.verticalLayout_12 = QVBoxLayout(self.accessories_inventory)
+        self.verticalLayout_12.setSpacing(0)
+        self.verticalLayout_12.setObjectName(u"verticalLayout_12")
+        self.verticalLayout_12.setContentsMargins(0, 10, 0, 0)
+        self.accessories_inventory_inner = QTabWidget(self.accessories_inventory)
+        self.accessories_inventory_inner.setObjectName(u"accessories_inventory_inner")
+        self.accessories_inventory_inner.setTabPosition(QTabWidget.North)
+        self.accessories_inventory_inner.setTabShape(QTabWidget.Triangular)
+        self.tab_5 = QWidget()
+        self.tab_5.setObjectName(u"tab_5")
+        self.accessories_inventory_inner.addTab(self.tab_5, "")
+        self.tab_6 = QWidget()
+        self.tab_6.setObjectName(u"tab_6")
+        self.accessories_inventory_inner.addTab(self.tab_6, "")
+
+        self.verticalLayout_12.addWidget(self.accessories_inventory_inner)
+
+        self.inventories.addTab(self.accessories_inventory, "")
+
+        self.verticalLayout_9.addWidget(self.inventories)
+
+        self.scrollArea_3.setWidget(self.stockContents)
+
+        self.page_3_layout.addWidget(self.scrollArea_3)
 
         self.pages.addWidget(self.stock)
 
@@ -955,6 +1046,9 @@ class Ui_MainPages(object):
         self.retranslateUi(MainPages)
 
         self.pages.setCurrentIndex(1)
+        self.inventories.setCurrentIndex(0)
+        self.phone_inventory_inner.setCurrentIndex(0)
+        self.accessories_inventory_inner.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(MainPages)
@@ -963,61 +1057,47 @@ class Ui_MainPages(object):
     def retranslateUi(self, MainPages):
         MainPages.setWindowTitle(QCoreApplication.translate("MainPages", u"Form", None))
         self.label.setText(QCoreApplication.translate("MainPages", u"HOME PAGE", None))
-        self.customer_group.setTitle(QCoreApplication.translate("MainPages", u"Customer", None))
+        self.customer_group.setTitle(QCoreApplication.translate("MainPages", u"Customer | Cart", None))
         self.label_3.setText(QCoreApplication.translate("MainPages", u"Name :", None))
         self.label_2.setText(QCoreApplication.translate("MainPages", u"Contact :", None))
         self.label_4.setText(QCoreApplication.translate("MainPages", u"Cart id", None))
+        self.label_25.setText(QCoreApplication.translate("MainPages", u"total Cart", None))
         self.phone_group.setTitle(QCoreApplication.translate("MainPages", u"Phone", None))
-        self.label_18.setText(QCoreApplication.translate("MainPages", u"Qty", None))
-        self.label_16.setText(QCoreApplication.translate("MainPages", u"Add imei ( Bar/QR code )", None))
-        self.label_17.setText(QCoreApplication.translate("MainPages", u"................", None))
-        self.comboBox_2.setItemText(0, QCoreApplication.translate("MainPages", u"item 1", None))
-        self.comboBox_2.setItemText(1, QCoreApplication.translate("MainPages", u"item 2", None))
-
-        self.label_8.setText(QCoreApplication.translate("MainPages", u"SN :", None))
-        self.label_7.setText(QCoreApplication.translate("MainPages", u"Imei :", None))
+        self.label_7.setText(QCoreApplication.translate("MainPages", u"Imei / meid :", None))
         self.label_6.setText(QCoreApplication.translate("MainPages", u"Model :", None))
-        self.label_5.setText(QCoreApplication.translate("MainPages", u"type :", None))
-        self.comboBox_3.setItemText(0, QCoreApplication.translate("MainPages", u"New Item 2", None))
-        self.comboBox_3.setItemText(1, QCoreApplication.translate("MainPages", u"New Item 1", None))
-        self.comboBox_3.setItemText(2, QCoreApplication.translate("MainPages", u"New Item 3", None))
-
+        self.label_5.setText(QCoreApplication.translate("MainPages", u"Type :", None))
+        self.label_8.setText(QCoreApplication.translate("MainPages", u"SN :", None))
+        self.label_18.setText(QCoreApplication.translate("MainPages", u"Qty", None))
+        self.label_16.setText(QCoreApplication.translate("MainPages", u"Read Bar/QR ", None))
+        self.label_17.setText(QCoreApplication.translate("MainPages", u".....................................", None))
         self.cost_group.setTitle(QCoreApplication.translate("MainPages", u"Cost", None))
         self.label_9.setText(QCoreApplication.translate("MainPages", u"Price :", None))
         self.label_10.setText(QCoreApplication.translate("MainPages", u"discount :", None))
         self.label_11.setText(QCoreApplication.translate("MainPages", u"tax :", None))
         self.label_12.setText(QCoreApplication.translate("MainPages", u"paymant :", None))
-        self.comboBox.setItemText(0, QCoreApplication.translate("MainPages", u"Cash", None))
-        self.comboBox.setItemText(1, QCoreApplication.translate("MainPages", u"mobile money", None))
-
-        ___qtablewidgetitem = self.tableWidget_2.horizontalHeaderItem(0)
-        ___qtablewidgetitem.setText(QCoreApplication.translate("MainPages", u"New Column", None));
-        ___qtablewidgetitem1 = self.tableWidget_2.horizontalHeaderItem(1)
-        ___qtablewidgetitem1.setText(QCoreApplication.translate("MainPages", u"id ", None));
-        ___qtablewidgetitem2 = self.tableWidget_2.horizontalHeaderItem(2)
-        ___qtablewidgetitem2.setText(QCoreApplication.translate("MainPages", u"imei", None));
         self.label_23.setText(QCoreApplication.translate("MainPages", u"Search :", None))
-        self.comboBox_4.setItemText(0, QCoreApplication.translate("MainPages", u"Bar / QR code", None))
-        self.comboBox_4.setItemText(1, QCoreApplication.translate("MainPages", u"Cart ID", None))
-        self.comboBox_4.setItemText(2, QCoreApplication.translate("MainPages", u" Imei QR", None))
-
-        ___qtablewidgetitem3 = self.tableWidget.horizontalHeaderItem(0)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("MainPages", u"New Column", None));
-        ___qtablewidgetitem4 = self.tableWidget.horizontalHeaderItem(1)
-        ___qtablewidgetitem4.setText(QCoreApplication.translate("MainPages", u"id", None));
-        ___qtablewidgetitem5 = self.tableWidget.horizontalHeaderItem(2)
-        ___qtablewidgetitem5.setText(QCoreApplication.translate("MainPages", u"dd", None));
         self.service_customer_group.setTitle(QCoreApplication.translate("MainPages", u"Customer", None))
         self.label_13.setText(QCoreApplication.translate("MainPages", u"Name : ", None))
         self.label_14.setText(QCoreApplication.translate("MainPages", u"contact :", None))
-        self.label_15.setText(QCoreApplication.translate("MainPages", u"TextLabel", None))
+        self.label_15.setText(QCoreApplication.translate("MainPages", u"Email", None))
+        self.label_30.setText(QCoreApplication.translate("MainPages", u"Next of kin", None))
         self.service_phon_group.setTitle(QCoreApplication.translate("MainPages", u"GroupBox", None))
-        self.label_20.setText(QCoreApplication.translate("MainPages", u"TextLabel", None))
-        self.label_19.setText(QCoreApplication.translate("MainPages", u"TextLabel", None))
-        self.label_22.setText(QCoreApplication.translate("MainPages", u"TextLabel", None))
-        self.label_21.setText(QCoreApplication.translate("MainPages", u"TextLabel", None))
+        self.label_19.setText(QCoreApplication.translate("MainPages", u"Type:", None))
+        self.label_22.setText(QCoreApplication.translate("MainPages", u"Model:", None))
+        self.label_20.setText(QCoreApplication.translate("MainPages", u"imei/meid", None))
+        self.label_27.setText(QCoreApplication.translate("MainPages", u"repairer", None))
+        self.label_26.setText(QCoreApplication.translate("MainPages", u"SN", None))
+        self.label_21.setText(QCoreApplication.translate("MainPages", u"Fault ", None))
+        self.label_28.setText(QCoreApplication.translate("MainPages", u"state", None))
         self.service_cost_group.setTitle(QCoreApplication.translate("MainPages", u"GroupBox", None))
-        self.service_other_group.setTitle(QCoreApplication.translate("MainPages", u"GroupBox", None))
-        self.empty_page_label.setText(QCoreApplication.translate("MainPages", u"Empty Page", None))
+        self.phone_inventory_inner.setTabText(self.phone_inventory_inner.indexOf(self.detailed), QCoreApplication.translate("MainPages", u"Detailed ", None))
+        self.phone_inventory_inner.setTabText(self.phone_inventory_inner.indexOf(self.simple), QCoreApplication.translate("MainPages", u"Simple", None))
+        self.inventories.setTabText(self.inventories.indexOf(self.phone_inventory), QCoreApplication.translate("MainPages", u"PHONE", None))
+#if QT_CONFIG(tooltip)
+        self.inventories.setTabToolTip(self.inventories.indexOf(self.phone_inventory), QCoreApplication.translate("MainPages", u"tho sodn dikd", None))
+#endif // QT_CONFIG(tooltip)
+        self.accessories_inventory_inner.setTabText(self.accessories_inventory_inner.indexOf(self.tab_5), QCoreApplication.translate("MainPages", u"Detailed", None))
+        self.accessories_inventory_inner.setTabText(self.accessories_inventory_inner.indexOf(self.tab_6), QCoreApplication.translate("MainPages", u"Simple", None))
+        self.inventories.setTabText(self.inventories.indexOf(self.accessories_inventory), QCoreApplication.translate("MainPages", u"Accesssories", None))
     # retranslateUi
 

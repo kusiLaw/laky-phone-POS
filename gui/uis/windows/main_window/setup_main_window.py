@@ -93,7 +93,14 @@ class SetupMainWindow:
             "show_top" : True,
             "is_active" : False
         },
-
+        {
+            "btn_icon": "repairs.svg",
+            "btn_id": "stock_btn",
+            "btn_text": "Inventory",
+            "btn_tooltip": "Inventory",
+            "show_top": True,
+            "is_active": False
+        },
 
         {
             "btn_icon": "icon_file.svg",
@@ -249,6 +256,7 @@ class SetupMainWindow:
         # ADD CUSTOM WIDGET TO MAIN PAGE
         # ///////////////////////////////////////////////////////////////
         # custom py_line_edit
+
         self.customerName = PyLineEdit(
 
             context_color = self.themes["app_color"]["context_color"],
@@ -274,22 +282,75 @@ class SetupMainWindow:
         self.curt_id = PyLineEdit(
             context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
-            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color=self.themes["app_color"]["bg_three"],
 
         )
 
         self.ui.load_pages.cutomer_cart_id_edit.addWidget(self.curt_id)
 
         # phone section
+        self.phone_type = PyComBox(
 
-        self.phone_imei = PyLineEdit(
-            context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
             bg_color=self.themes["app_color"]["dark_one"],
+            radius=8,
+            bg_color_hover=self.themes["app_color"]["context_color"],
+            items=['item 1', 'item 2', 'item 2']
+
+        )
+
+        self.ui.load_pages.phone_type_edit.addWidget(self.phone_type)
+
+        self.phone_model = PyComBox(
+
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            radius=8,
+            bg_color_hover=self.themes["app_color"]["context_color"],
+            items=['item 1', 'item 2', 'item 2']
+
+        )
+
+        self.ui.load_pages.phone_model_edit.addWidget(self.phone_model)
+
+
+        self.phone_imei = PyComBox(
+
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            radius = 8,
+            bg_color_hover = self.themes["app_color"]["context_color"],
+            items = ['item 1', 'item 2', 'item 2']
 
         )
 
         self.ui.load_pages.phone_imei_edit.addWidget(self.phone_imei)
+
+        self.phone_payment = PyComBox(
+
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            radius = 8,
+            bg_color_hover = self.themes["app_color"]["context_color"],
+            items = ['Cash', 'Paypal', 'mtn momo'],
+            editable = False
+        )
+
+        self.ui.load_pages.phone_payment_edit.addWidget(self.phone_payment)
+
+
+        self.phone_search_key = PyComBox(
+
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            radius=8,
+            bg_color_hover=self.themes["app_color"]["context_color"],
+            items=['Cash', 'Paypal', 'mtn momo'],
+            editable=False
+        )
+
+        self.ui.load_pages.phone_search_key_edit.addWidget(self.phone_search_key)
+
 
         self.qr_toggle = PyToggle(
             width=70,
@@ -346,100 +407,115 @@ class SetupMainWindow:
 
         # buttons section
 
-        self.add_to_cart_btn= PyPushButton(
+        self.add_to_cart_btn= PyPushButton2(
             text = "Add to Cart",
             radius = 8,
             color = self.themes["app_color"]["text_foreground"],
             bg_color = self.themes["app_color"]["dark_one"],
             bg_color_hover = self.themes["app_color"]["dark_three"],
             bg_color_pressed = self.themes["app_color"]["dark_four"],
+            hover_border_color = self.themes["app_color"]["context_color"]
         )
         self.add_to_cart_btn.setMinimumHeight(30)
+
         self.ui.load_pages.phone_add_to_cart_layout.addWidget(self.add_to_cart_btn)
 
-        self.remove_from_cart_btn = PyPushButton(
+        self.remove_from_cart_btn = PyPushButton2(
             text="Remove from Cart",
             radius=8,
             color=self.themes["app_color"]["text_foreground"],
             bg_color=self.themes["app_color"]["dark_one"],
             bg_color_hover=self.themes["app_color"]["dark_three"],
             bg_color_pressed=self.themes["app_color"]["dark_four"],
+            hover_border_color=self.themes["app_color"]["context_color"]
+
         )
 
         self.remove_from_cart_btn.setMinimumHeight(30)
         self.ui.load_pages.remov_from_cart_layout.addWidget(self.remove_from_cart_btn)
 
-        self.phone_clear_cart_btn = PyPushButton(
-            text="Remove from Cart",
+        self.phone_clear_cart_btn = PyPushButton2(
+            text="Clear Cart",
             radius=8,
             color=self.themes["app_color"]["text_foreground"],
             bg_color=self.themes["app_color"]["dark_one"],
             bg_color_hover=self.themes["app_color"]["dark_three"],
             bg_color_pressed=self.themes["app_color"]["dark_four"],
+            hover_border_color=self.themes["app_color"]["context_color"]
+
         )
         self.phone_clear_cart_btn.setMinimumHeight(30)
         self.ui.load_pages.phone_clear_cart_layout.addWidget(self.phone_clear_cart_btn)
 
-        self.phone_buyme_btn = PyPushButton(
+        self.phone_buyme_btn = PyPushButton2(
             text="Buy / Save",
             radius=8,
             color=self.themes["app_color"]["text_foreground"],
             bg_color=self.themes["app_color"]["dark_one"],
             bg_color_hover=self.themes["app_color"]["dark_three"],
             bg_color_pressed=self.themes["app_color"]["dark_four"],
+            hover_border_color=self.themes["app_color"]["green"],
+            show_boader_color = True
         )
         self.phone_buyme_btn.setMinimumHeight(30)
         self.ui.load_pages.phone_buyme_layout.addWidget(self.phone_buyme_btn)
 
-        self.phone_clear_btn = PyPushButton(
+        self.phone_clear_btn = PyPushButton2(
             text="Clear",
             radius=8,
             color=self.themes["app_color"]["text_foreground"],
             bg_color=self.themes["app_color"]["dark_one"],
             bg_color_hover=self.themes["app_color"]["dark_three"],
             bg_color_pressed=self.themes["app_color"]["dark_four"],
+            hover_border_color=self.themes["app_color"]["red"]
         )
         self.phone_clear_btn.setMinimumHeight(30)
         self.ui.load_pages.phone_clear_layout.addWidget(self.phone_clear_btn)
 
 
-        self.phone_delete_btn = PyPushButton(
+        self.phone_delete_btn = PyPushButton2(
             text="Delete",
             radius=8,
             color=self.themes["app_color"]["text_foreground"],
             bg_color=self.themes["app_color"]["dark_one"],
             bg_color_hover=self.themes["app_color"]["dark_three"],
             bg_color_pressed=self.themes["app_color"]["dark_four"],
+            hover_border_color=self.themes["app_color"]["red"]
+
         )
         self.phone_delete_btn.setMinimumHeight(30)
         self.ui.load_pages.phone_delete_layout.addWidget(self.phone_delete_btn)
 
-        self.phone_all_in_one_btn = PyPushButton(
+        self.phone_all_in_one_btn = PyPushButton2(
             text="all-in_one",
             radius=8,
             color=self.themes["app_color"]["text_foreground"],
             bg_color=self.themes["app_color"]["dark_one"],
             bg_color_hover=self.themes["app_color"]["dark_three"],
             bg_color_pressed=self.themes["app_color"]["dark_four"],
+            hover_border_color=self.themes["app_color"]["context_color"]
+
         )
         self.phone_all_in_one_btn.setMinimumHeight(30)
         self.ui.load_pages.phone_all_in_one_layout.addWidget(self.phone_all_in_one_btn)
 
 
-        self.phone_print_btn = PyPushButton(
+        self.phone_print_btn = PyPushButton2(
             text="Print",
             radius=8,
             color=self.themes["app_color"]["text_foreground"],
             bg_color=self.themes["app_color"]["dark_one"],
             bg_color_hover=self.themes["app_color"]["dark_three"],
             bg_color_pressed=self.themes["app_color"]["dark_four"],
+            hover_border_color=self.themes["app_color"]["context_color"]
+
         )
         self.phone_print_btn.setMinimumHeight(30)
         self.ui.load_pages.phone_print_layout.addWidget(self.phone_print_btn)
 
         # Search
         self.phone_search_edit = PyLineEdit(
-         
+
             context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
             bg_color=self.themes["app_color"]["dark_three"]
@@ -450,7 +526,109 @@ class SetupMainWindow:
 
 
 
+        # Phone table section
 
+     # TABLE WIDGETS
+        self.table_widget = PyTableWidget(
+            radius = 8,
+            color = self.themes["app_color"]["text_foreground"],
+            selection_color = self.themes["app_color"]["context_color"],
+            bg_color = self.themes["app_color"]["bg_two"],
+            header_horizontal_color = self.themes["app_color"]["bg_one"],
+            header_vertical_color = self.themes["app_color"]["bg_three"],
+            bottom_line_color = self.themes["app_color"]["bg_three"],
+            grid_line_color = self.themes["app_color"]["bg_one"],
+            scroll_bar_bg_color = self.themes["app_color"]["bg_one"],
+            scroll_bar_btn_color = self.themes["app_color"]["dark_four"],
+            context_color = self.themes["app_color"]["context_color"]
+        )
+        self.table_widget.setColumnCount(3)
+        self.table_widget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.table_widget.setSelectionMode(QAbstractItemView.ExtendedSelection)
+        self.table_widget.setSelectionBehavior(QAbstractItemView.SelectRows)
+
+        # Columns / Header
+        self.column_1 = QTableWidgetItem()
+        self.column_1.setTextAlignment(Qt.AlignCenter)
+        self.column_1.setText("NAME")
+
+        self.column_2 = QTableWidgetItem()
+        self.column_2.setTextAlignment(Qt.AlignCenter)
+        self.column_2.setText("NICK")
+
+        self.column_3 = QTableWidgetItem()
+        self.column_3.setTextAlignment(Qt.AlignCenter)
+        self.column_3.setText("PASS")
+
+        # Set column
+        self.table_widget.setHorizontalHeaderItem(0, self.column_1)
+        self.table_widget.setHorizontalHeaderItem(1, self.column_2)
+        self.table_widget.setHorizontalHeaderItem(2, self.column_3)
+
+        for x in range(20):
+            row_number = self.table_widget.rowCount()
+            self.table_widget.insertRow(row_number) # Insert row
+            self.table_widget.setItem(row_number, 0, QTableWidgetItem(str("Lawrence"))) # Add name
+            self.table_widget.setItem(row_number, 1, QTableWidgetItem(str("vfx_on_fire_" + str(x)))) # Add nick
+            self.pass_text = QTableWidgetItem()
+            self.pass_text.setTextAlignment(Qt.AlignCenter)
+            self.pass_text.setText("12345" + str(x))
+            self.table_widget.setItem(row_number, 2, self.pass_text) # Add pass
+            self.table_widget.setRowHeight(row_number, 22)
+
+        self.ui.load_pages.phone_table.addWidget(self.table_widget)
+
+
+
+
+        self.phone_cart = PyTableWidget(
+            radius = 8,
+            color = self.themes["app_color"]["text_foreground"],
+            selection_color = self.themes["app_color"]["context_color"],
+            bg_color = self.themes["app_color"]["bg_two"],
+            header_horizontal_color = self.themes["app_color"]["bg_one"],
+            header_vertical_color = self.themes["app_color"]["bg_three"],
+            bottom_line_color = self.themes["app_color"]["bg_three"],
+            grid_line_color = self.themes["app_color"]["bg_one"],
+            scroll_bar_bg_color = self.themes["app_color"]["bg_one"],
+            scroll_bar_btn_color = self.themes["app_color"]["dark_four"],
+            context_color = self.themes["app_color"]["context_color"]
+        )
+        self.phone_cart.setColumnCount(3)
+        self.phone_cart.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.phone_cart.setSelectionMode(QAbstractItemView.ExtendedSelection)
+        self.phone_cart.setSelectionBehavior(QAbstractItemView.SelectRows)
+
+        # Columns / Header
+        self.cart_column_1 = QTableWidgetItem()
+        self.cart_column_1.setTextAlignment(Qt.AlignCenter)
+        self.cart_column_1.setText("NAME")
+
+        self.cart_column_2 = QTableWidgetItem()
+        self.cart_column_2.setTextAlignment(Qt.AlignCenter)
+        self.cart_column_2.setText("NICK")
+
+        self.cart_column_3 = QTableWidgetItem()
+        self.cart_column_3.setTextAlignment(Qt.AlignCenter)
+        self.cart_column_3.setText("PASS")
+
+        # Set column
+        self.phone_cart.setHorizontalHeaderItem(0, self.cart_column_1)
+        self.phone_cart.setHorizontalHeaderItem(1, self.cart_column_2)
+        self.phone_cart.setHorizontalHeaderItem(2, self.cart_column_3)
+
+        for x in range(10):
+            cart_row_number = self.phone_cart.rowCount()
+            self.phone_cart.insertRow(cart_row_number) # Insert row
+            self.phone_cart.setItem(cart_row_number, 0, QTableWidgetItem(str("Lawrence"))) # Add name
+            self.phone_cart.setItem(cart_row_number, 1, QTableWidgetItem(str("vfx_on_fire_" + str(x)))) # Add nick
+            self.cart_pass_text = QTableWidgetItem()
+            self.cart_pass_text.setTextAlignment(Qt.AlignCenter)
+            self.cart_pass_text.setText("12345" + str(x))
+            self.phone_cart.setItem(cart_row_number, 2, self.cart_pass_text) # Add pass
+            self.phone_cart.setRowHeight(cart_row_number, 22)
+
+        self.ui.load_pages.phone_cart_layout.addWidget(self.phone_cart)
 
 
 

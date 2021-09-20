@@ -95,11 +95,22 @@ class MainWindow(QMainWindow):
             # Load page
             MainFunctions.set_page(self, self.ui.load_pages.phone_page)
 
+        # service page
         if btn.objectName() == "service_btn":
             self.ui.left_menu.select_only_one(btn.objectName())
 
             # Load page
             MainFunctions.set_page(self, self.ui.load_pages.service_page)
+
+        # inventory page
+        if btn.objectName() == "stock_btn":
+            self.ui.left_menu.select_only_one(btn.objectName())
+
+            # Load page
+            MainFunctions.set_page(self, self.ui.load_pages.stock)
+
+
+
 
         # open menu 2 of left colomn stackwiew
 
