@@ -17,7 +17,7 @@ class Ui_MainPages(object):
     def setupUi(self, MainPages):
         if not MainPages.objectName():
             MainPages.setObjectName(u"MainPages")
-        MainPages.resize(1060, 623)
+        MainPages.resize(1078, 725)
         self.main_pages_layout = QVBoxLayout(MainPages)
         self.main_pages_layout.setSpacing(0)
         self.main_pages_layout.setObjectName(u"main_pages_layout")
@@ -92,7 +92,7 @@ class Ui_MainPages(object):
         self.scrollArea.setWidgetResizable(True)
         self.contents = QWidget()
         self.contents.setObjectName(u"contents")
-        self.contents.setGeometry(QRect(0, 0, 1055, 618))
+        self.contents.setGeometry(QRect(0, 0, 1073, 720))
         self.verticalLayout_4 = QVBoxLayout(self.contents)
         self.verticalLayout_4.setSpacing(0)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
@@ -698,7 +698,7 @@ class Ui_MainPages(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.Contents = QWidget()
         self.Contents.setObjectName(u"Contents")
-        self.Contents.setGeometry(QRect(0, 0, 1055, 618))
+        self.Contents.setGeometry(QRect(0, 0, 1073, 720))
         self.verticalLayout_2 = QVBoxLayout(self.Contents)
         self.verticalLayout_2.setSpacing(0)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
@@ -950,8 +950,10 @@ class Ui_MainPages(object):
         self.pages.addWidget(self.service_page)
         self.stock = QWidget()
         self.stock.setObjectName(u"stock")
-        self.stock.setStyleSheet(u"background-color:#2c313c;\n"
-"/**#2c313c;**/\n"
+        font = QFont()
+        font.setPointSize(14)
+        self.stock.setFont(font)
+        self.stock.setStyleSheet(u"font-size: 14pt; background : #2c313c; \n"
 "")
         self.page_3_layout = QVBoxLayout(self.stock)
         self.page_3_layout.setSpacing(0)
@@ -963,17 +965,57 @@ class Ui_MainPages(object):
         self.scrollArea_3.setWidgetResizable(True)
         self.stockContents = QWidget()
         self.stockContents.setObjectName(u"stockContents")
-        self.stockContents.setGeometry(QRect(0, 0, 1055, 618))
+        self.stockContents.setGeometry(QRect(0, 0, 1073, 720))
+        self.stockContents.setFont(font)
+        self.stockContents.setStyleSheet(u"")
         self.verticalLayout_9 = QVBoxLayout(self.stockContents)
-        self.verticalLayout_9.setSpacing(0)
+        self.verticalLayout_9.setSpacing(7)
         self.verticalLayout_9.setObjectName(u"verticalLayout_9")
-        self.verticalLayout_9.setContentsMargins(0, 5, 0, 0)
-        self.inventories = QTabWidget(self.stockContents)
-        self.inventories.setObjectName(u"inventories")
-        self.inventories.setFocusPolicy(Qt.TabFocus)
-        self.inventories.setStyleSheet(u"QTabWidget::pane { /* The tab widget frame */\n"
+        self.verticalLayout_9.setContentsMargins(0, 5, 0, 5)
+        self.label_24 = QLabel(self.stockContents)
+        self.label_24.setObjectName(u"label_24")
+        self.label_24.setMaximumSize(QSize(16777215, 232))
+        self.label_24.setAlignment(Qt.AlignHCenter|Qt.AlignTop)
+
+        self.verticalLayout_9.addWidget(self.label_24)
+
+        self.frame_29 = QFrame(self.stockContents)
+        self.frame_29.setObjectName(u"frame_29")
+        self.frame_29.setMinimumSize(QSize(0, 50))
+        self.frame_29.setMaximumSize(QSize(16777215, 84))
+        self.frame_29.setFont(font)
+        self.frame_29.setFrameShape(QFrame.NoFrame)
+        self.frame_29.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_12 = QVBoxLayout(self.frame_29)
+        self.verticalLayout_12.setObjectName(u"verticalLayout_12")
+        self.label_29 = QLabel(self.frame_29)
+        self.label_29.setObjectName(u"label_29")
+        self.label_29.setMaximumSize(QSize(16777215, 232))
+        self.label_29.setFont(font)
+        self.label_29.setAlignment(Qt.AlignHCenter|Qt.AlignTop)
+        self.label_29.setWordWrap(True)
+
+        self.verticalLayout_12.addWidget(self.label_29)
+
+
+        self.verticalLayout_9.addWidget(self.frame_29)
+
+        self.stock_tab_frame = QFrame(self.stockContents)
+        self.stock_tab_frame.setObjectName(u"stock_tab_frame")
+        self.stock_tab_frame.setFrameShape(QFrame.StyledPanel)
+        self.stock_tab_frame.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_3 = QHBoxLayout(self.stock_tab_frame)
+        self.horizontalLayout_3.setSpacing(0)
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.stock_parent_tab = QTabWidget(self.stock_tab_frame)
+        self.stock_parent_tab.setObjectName(u"stock_parent_tab")
+        self.stock_parent_tab.setStyleSheet(u"QTabWidget::pane { /* The tab widget frame */\n"
 "    border-top: 1px solid #C2C7CB;\n"
-"	color: white\n"
+"	color: white;\n"
+"	\n"
+"	\n"
+"	font: 12pt \"Segoe UI\";\n"
 "}\n"
 "QTabWidget::tab-bar {\n"
 "    left: 5px; /* move to the right by 5px */\n"
@@ -985,54 +1027,464 @@ class Ui_MainPages(object):
 "}\n"
 "\n"
 "")
-        self.inventories.setTabPosition(QTabWidget.North)
-        self.inventories.setTabShape(QTabWidget.Triangular)
-        self.inventories.setElideMode(Qt.ElideNone)
-        self.phone_inventory = QWidget()
-        self.phone_inventory.setObjectName(u"phone_inventory")
-        self.verticalLayout_11 = QVBoxLayout(self.phone_inventory)
+        self.stock_parent_tab.setTabShape(QTabWidget.Triangular)
+        self.tab_1 = QWidget()
+        self.tab_1.setObjectName(u"tab_1")
+        self.verticalLayout_11 = QVBoxLayout(self.tab_1)
         self.verticalLayout_11.setSpacing(0)
         self.verticalLayout_11.setObjectName(u"verticalLayout_11")
-        self.verticalLayout_11.setContentsMargins(0, 10, 0, 0)
-        self.phone_inventory_inner = QTabWidget(self.phone_inventory)
-        self.phone_inventory_inner.setObjectName(u"phone_inventory_inner")
-        self.phone_inventory_inner.setStyleSheet(u"")
-        self.phone_inventory_inner.setTabPosition(QTabWidget.North)
-        self.phone_inventory_inner.setTabShape(QTabWidget.Triangular)
-        self.detailed = QWidget()
-        self.detailed.setObjectName(u"detailed")
-        self.phone_inventory_inner.addTab(self.detailed, "")
-        self.simple = QWidget()
-        self.simple.setObjectName(u"simple")
-        self.simple.setFocusPolicy(Qt.StrongFocus)
-        self.phone_inventory_inner.addTab(self.simple, "")
+        self.verticalLayout_11.setContentsMargins(0, 0, 0, 0)
+        self.frame_20 = QFrame(self.tab_1)
+        self.frame_20.setObjectName(u"frame_20")
+        self.frame_20.setFrameShape(QFrame.NoFrame)
+        self.frame_20.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_6 = QHBoxLayout(self.frame_20)
+        self.horizontalLayout_6.setSpacing(0)
+        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
+        self.horizontalLayout_6.setContentsMargins(0, 7, 0, 0)
+        self.tabWidget = QTabWidget(self.frame_20)
+        self.tabWidget.setObjectName(u"tabWidget")
+        self.tabWidget.setTabShape(QTabWidget.Triangular)
+        self.tab_3 = QWidget()
+        self.tab_3.setObjectName(u"tab_3")
+        self.verticalLayout_14 = QVBoxLayout(self.tab_3)
+        self.verticalLayout_14.setObjectName(u"verticalLayout_14")
+        self.frame_31 = QFrame(self.tab_3)
+        self.frame_31.setObjectName(u"frame_31")
+        self.frame_31.setMinimumSize(QSize(0, 156))
+        self.frame_31.setStyleSheet(u"")
+        self.frame_31.setFrameShape(QFrame.StyledPanel)
+        self.frame_31.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_7 = QHBoxLayout(self.frame_31)
+        self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
+        self.sdp_form_layout = QFrame(self.frame_31)
+        self.sdp_form_layout.setObjectName(u"sdp_form_layout")
+        self.sdp_form_layout.setFrameShape(QFrame.StyledPanel)
+        self.sdp_form_layout.setFrameShadow(QFrame.Raised)
+        self.formLayout_5 = QFormLayout(self.sdp_form_layout)
+        self.formLayout_5.setObjectName(u"formLayout_5")
+        self.label_31 = QLabel(self.sdp_form_layout)
+        self.label_31.setObjectName(u"label_31")
 
-        self.verticalLayout_11.addWidget(self.phone_inventory_inner)
+        self.formLayout_5.setWidget(0, QFormLayout.LabelRole, self.label_31)
 
-        self.inventories.addTab(self.phone_inventory, "")
-        self.accessories_inventory = QWidget()
-        self.accessories_inventory.setObjectName(u"accessories_inventory")
-        self.accessories_inventory.setFocusPolicy(Qt.StrongFocus)
-        self.verticalLayout_12 = QVBoxLayout(self.accessories_inventory)
-        self.verticalLayout_12.setSpacing(0)
-        self.verticalLayout_12.setObjectName(u"verticalLayout_12")
-        self.verticalLayout_12.setContentsMargins(0, 10, 0, 0)
-        self.accessories_inventory_inner = QTabWidget(self.accessories_inventory)
-        self.accessories_inventory_inner.setObjectName(u"accessories_inventory_inner")
-        self.accessories_inventory_inner.setTabPosition(QTabWidget.North)
-        self.accessories_inventory_inner.setTabShape(QTabWidget.Triangular)
-        self.tab_5 = QWidget()
-        self.tab_5.setObjectName(u"tab_5")
-        self.accessories_inventory_inner.addTab(self.tab_5, "")
-        self.tab_6 = QWidget()
-        self.tab_6.setObjectName(u"tab_6")
-        self.accessories_inventory_inner.addTab(self.tab_6, "")
+        self.frame_34 = QFrame(self.sdp_form_layout)
+        self.frame_34.setObjectName(u"frame_34")
+        self.frame_34.setStyleSheet(u"background: rgb(255, 255, 255)")
+        self.frame_34.setFrameShape(QFrame.StyledPanel)
+        self.frame_34.setFrameShadow(QFrame.Raised)
 
-        self.verticalLayout_12.addWidget(self.accessories_inventory_inner)
+        self.formLayout_5.setWidget(0, QFormLayout.FieldRole, self.frame_34)
 
-        self.inventories.addTab(self.accessories_inventory, "")
+        self.label_32 = QLabel(self.sdp_form_layout)
+        self.label_32.setObjectName(u"label_32")
 
-        self.verticalLayout_9.addWidget(self.inventories)
+        self.formLayout_5.setWidget(1, QFormLayout.LabelRole, self.label_32)
+
+        self.frame_35 = QFrame(self.sdp_form_layout)
+        self.frame_35.setObjectName(u"frame_35")
+        self.frame_35.setStyleSheet(u"background: rgb(255, 255, 255)")
+        self.frame_35.setFrameShape(QFrame.StyledPanel)
+        self.frame_35.setFrameShadow(QFrame.Raised)
+
+        self.formLayout_5.setWidget(1, QFormLayout.FieldRole, self.frame_35)
+
+        self.label_33 = QLabel(self.sdp_form_layout)
+        self.label_33.setObjectName(u"label_33")
+
+        self.formLayout_5.setWidget(2, QFormLayout.LabelRole, self.label_33)
+
+        self.frame_36 = QFrame(self.sdp_form_layout)
+        self.frame_36.setObjectName(u"frame_36")
+        self.frame_36.setStyleSheet(u"background: rgb(255, 255, 255)")
+        self.frame_36.setFrameShape(QFrame.StyledPanel)
+        self.frame_36.setFrameShadow(QFrame.Raised)
+
+        self.formLayout_5.setWidget(2, QFormLayout.FieldRole, self.frame_36)
+
+
+        self.horizontalLayout_7.addWidget(self.sdp_form_layout)
+
+        self.sdp_sn_layout = QFrame(self.frame_31)
+        self.sdp_sn_layout.setObjectName(u"sdp_sn_layout")
+        self.sdp_sn_layout.setMinimumSize(QSize(333, 0))
+        self.sdp_sn_layout.setFrameShape(QFrame.StyledPanel)
+        self.sdp_sn_layout.setFrameShadow(QFrame.Raised)
+        self.gridLayout_5 = QGridLayout(self.sdp_sn_layout)
+        self.gridLayout_5.setObjectName(u"gridLayout_5")
+        self.label_34 = QLabel(self.sdp_sn_layout)
+        self.label_34.setObjectName(u"label_34")
+
+        self.gridLayout_5.addWidget(self.label_34, 1, 0, 1, 1)
+
+        self.frame_39 = QFrame(self.sdp_sn_layout)
+        self.frame_39.setObjectName(u"frame_39")
+        self.frame_39.setFrameShape(QFrame.StyledPanel)
+        self.frame_39.setFrameShadow(QFrame.Raised)
+
+        self.gridLayout_5.addWidget(self.frame_39, 3, 1, 1, 1)
+
+        self.frame_38 = QFrame(self.sdp_sn_layout)
+        self.frame_38.setObjectName(u"frame_38")
+        self.frame_38.setFrameShape(QFrame.StyledPanel)
+        self.frame_38.setFrameShadow(QFrame.Raised)
+
+        self.gridLayout_5.addWidget(self.frame_38, 0, 1, 1, 1)
+
+        self.label_37 = QLabel(self.sdp_sn_layout)
+        self.label_37.setObjectName(u"label_37")
+
+        self.gridLayout_5.addWidget(self.label_37, 0, 0, 1, 1)
+
+        self.label_36 = QLabel(self.sdp_sn_layout)
+        self.label_36.setObjectName(u"label_36")
+
+        self.gridLayout_5.addWidget(self.label_36, 2, 0, 1, 1)
+
+        self.frame_37 = QFrame(self.sdp_sn_layout)
+        self.frame_37.setObjectName(u"frame_37")
+        self.frame_37.setStyleSheet(u"background: rgb(255, 255, 255)")
+        self.frame_37.setFrameShape(QFrame.StyledPanel)
+        self.frame_37.setFrameShadow(QFrame.Raised)
+
+        self.gridLayout_5.addWidget(self.frame_37, 1, 1, 1, 1)
+
+        self.frame_42 = QFrame(self.sdp_sn_layout)
+        self.frame_42.setObjectName(u"frame_42")
+        self.frame_42.setStyleSheet(u"background: rgb(255, 255, 255)")
+        self.frame_42.setFrameShape(QFrame.StyledPanel)
+        self.frame_42.setFrameShadow(QFrame.Raised)
+
+        self.gridLayout_5.addWidget(self.frame_42, 2, 1, 1, 1)
+
+
+        self.horizontalLayout_7.addWidget(self.sdp_sn_layout)
+
+        self.frame_40 = QFrame(self.frame_31)
+        self.frame_40.setObjectName(u"frame_40")
+        self.frame_40.setFrameShape(QFrame.StyledPanel)
+        self.frame_40.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_15 = QVBoxLayout(self.frame_40)
+        self.verticalLayout_15.setObjectName(u"verticalLayout_15")
+        self.label_40 = QLabel(self.frame_40)
+        self.label_40.setObjectName(u"label_40")
+        self.label_40.setMinimumSize(QSize(0, 20))
+        self.label_40.setMaximumSize(QSize(16777215, 20))
+
+        self.verticalLayout_15.addWidget(self.label_40)
+
+        self.frame_41 = QFrame(self.frame_40)
+        self.frame_41.setObjectName(u"frame_41")
+        self.frame_41.setStyleSheet(u"background: rgb(255, 255, 255)")
+        self.frame_41.setFrameShape(QFrame.StyledPanel)
+        self.frame_41.setFrameShadow(QFrame.Raised)
+
+        self.verticalLayout_15.addWidget(self.frame_41)
+
+
+        self.horizontalLayout_7.addWidget(self.frame_40)
+
+        self.sdp_cost_layout = QFrame(self.frame_31)
+        self.sdp_cost_layout.setObjectName(u"sdp_cost_layout")
+        self.sdp_cost_layout.setMinimumSize(QSize(300, 0))
+        self.sdp_cost_layout.setFrameShape(QFrame.StyledPanel)
+        self.sdp_cost_layout.setFrameShadow(QFrame.Raised)
+        self.gridLayout_6 = QGridLayout(self.sdp_cost_layout)
+        self.gridLayout_6.setObjectName(u"gridLayout_6")
+        self.label_35 = QLabel(self.sdp_cost_layout)
+        self.label_35.setObjectName(u"label_35")
+
+        self.gridLayout_6.addWidget(self.label_35, 0, 0, 1, 1)
+
+        self.label_38 = QLabel(self.sdp_cost_layout)
+        self.label_38.setObjectName(u"label_38")
+
+        self.gridLayout_6.addWidget(self.label_38, 1, 0, 1, 1)
+
+        self.label_39 = QLabel(self.sdp_cost_layout)
+        self.label_39.setObjectName(u"label_39")
+
+        self.gridLayout_6.addWidget(self.label_39, 2, 0, 1, 1)
+
+        self.frame_43 = QFrame(self.sdp_cost_layout)
+        self.frame_43.setObjectName(u"frame_43")
+        self.frame_43.setStyleSheet(u"background: rgb(255, 255, 255)")
+        self.frame_43.setFrameShape(QFrame.StyledPanel)
+        self.frame_43.setFrameShadow(QFrame.Raised)
+
+        self.gridLayout_6.addWidget(self.frame_43, 0, 1, 1, 1)
+
+        self.frame_44 = QFrame(self.sdp_cost_layout)
+        self.frame_44.setObjectName(u"frame_44")
+        self.frame_44.setStyleSheet(u"background: rgb(255, 255, 255)")
+        self.frame_44.setFrameShape(QFrame.StyledPanel)
+        self.frame_44.setFrameShadow(QFrame.Raised)
+
+        self.gridLayout_6.addWidget(self.frame_44, 1, 1, 1, 1)
+
+        self.frame_45 = QFrame(self.sdp_cost_layout)
+        self.frame_45.setObjectName(u"frame_45")
+        self.frame_45.setStyleSheet(u"background: rgb(255, 255, 255)")
+        self.frame_45.setFrameShape(QFrame.StyledPanel)
+        self.frame_45.setFrameShadow(QFrame.Raised)
+
+        self.gridLayout_6.addWidget(self.frame_45, 2, 1, 1, 1)
+
+
+        self.horizontalLayout_7.addWidget(self.sdp_cost_layout)
+
+
+        self.verticalLayout_14.addWidget(self.frame_31)
+
+        self.frame_32 = QFrame(self.tab_3)
+        self.frame_32.setObjectName(u"frame_32")
+        self.frame_32.setMinimumSize(QSize(0, 80))
+        self.frame_32.setStyleSheet(u"background:rgb(64, 255, 84)")
+        self.frame_32.setFrameShape(QFrame.StyledPanel)
+        self.frame_32.setFrameShadow(QFrame.Raised)
+
+        self.verticalLayout_14.addWidget(self.frame_32)
+
+        self.frame_33 = QFrame(self.tab_3)
+        self.frame_33.setObjectName(u"frame_33")
+        self.frame_33.setMinimumSize(QSize(0, 157))
+        self.frame_33.setStyleSheet(u"background:rgb(0, 26, 0)")
+        self.frame_33.setFrameShape(QFrame.StyledPanel)
+        self.frame_33.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_9 = QHBoxLayout(self.frame_33)
+        self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
+        self.tableView = QTableView(self.frame_33)
+        self.tableView.setObjectName(u"tableView")
+
+        self.horizontalLayout_9.addWidget(self.tableView)
+
+
+        self.verticalLayout_14.addWidget(self.frame_33)
+
+        self.tabWidget.addTab(self.tab_3, "")
+        self.tab_4 = QWidget()
+        self.tab_4.setObjectName(u"tab_4")
+        self.verticalLayout_16 = QVBoxLayout(self.tab_4)
+        self.verticalLayout_16.setObjectName(u"verticalLayout_16")
+        self.frame_48 = QFrame(self.tab_4)
+        self.frame_48.setObjectName(u"frame_48")
+        self.frame_48.setFrameShape(QFrame.StyledPanel)
+        self.frame_48.setFrameShadow(QFrame.Raised)
+        self.frame_50 = QFrame(self.frame_48)
+        self.frame_50.setObjectName(u"frame_50")
+        self.frame_50.setGeometry(QRect(0, 0, 1049, 163))
+        self.frame_50.setMinimumSize(QSize(0, 156))
+        self.frame_50.setStyleSheet(u"")
+        self.frame_50.setFrameShape(QFrame.StyledPanel)
+        self.frame_50.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_10 = QHBoxLayout(self.frame_50)
+        self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
+        self.sdp_form_layout_2 = QFrame(self.frame_50)
+        self.sdp_form_layout_2.setObjectName(u"sdp_form_layout_2")
+        self.sdp_form_layout_2.setFrameShape(QFrame.StyledPanel)
+        self.sdp_form_layout_2.setFrameShadow(QFrame.Raised)
+        self.formLayout_6 = QFormLayout(self.sdp_form_layout_2)
+        self.formLayout_6.setObjectName(u"formLayout_6")
+        self.label_41 = QLabel(self.sdp_form_layout_2)
+        self.label_41.setObjectName(u"label_41")
+
+        self.formLayout_6.setWidget(0, QFormLayout.LabelRole, self.label_41)
+
+        self.frame_51 = QFrame(self.sdp_form_layout_2)
+        self.frame_51.setObjectName(u"frame_51")
+        self.frame_51.setStyleSheet(u"background: rgb(255, 255, 255)")
+        self.frame_51.setFrameShape(QFrame.StyledPanel)
+        self.frame_51.setFrameShadow(QFrame.Raised)
+
+        self.formLayout_6.setWidget(0, QFormLayout.FieldRole, self.frame_51)
+
+        self.label_42 = QLabel(self.sdp_form_layout_2)
+        self.label_42.setObjectName(u"label_42")
+
+        self.formLayout_6.setWidget(1, QFormLayout.LabelRole, self.label_42)
+
+        self.frame_52 = QFrame(self.sdp_form_layout_2)
+        self.frame_52.setObjectName(u"frame_52")
+        self.frame_52.setStyleSheet(u"background: rgb(255, 255, 255)")
+        self.frame_52.setFrameShape(QFrame.StyledPanel)
+        self.frame_52.setFrameShadow(QFrame.Raised)
+
+        self.formLayout_6.setWidget(1, QFormLayout.FieldRole, self.frame_52)
+
+        self.label_43 = QLabel(self.sdp_form_layout_2)
+        self.label_43.setObjectName(u"label_43")
+
+        self.formLayout_6.setWidget(2, QFormLayout.LabelRole, self.label_43)
+
+        self.frame_53 = QFrame(self.sdp_form_layout_2)
+        self.frame_53.setObjectName(u"frame_53")
+        self.frame_53.setStyleSheet(u"background: rgb(255, 255, 255)")
+        self.frame_53.setFrameShape(QFrame.StyledPanel)
+        self.frame_53.setFrameShadow(QFrame.Raised)
+
+        self.formLayout_6.setWidget(2, QFormLayout.FieldRole, self.frame_53)
+
+
+        self.horizontalLayout_10.addWidget(self.sdp_form_layout_2)
+
+        self.sdp_sn_layout_2 = QFrame(self.frame_50)
+        self.sdp_sn_layout_2.setObjectName(u"sdp_sn_layout_2")
+        self.sdp_sn_layout_2.setMinimumSize(QSize(333, 0))
+        self.sdp_sn_layout_2.setFrameShape(QFrame.StyledPanel)
+        self.sdp_sn_layout_2.setFrameShadow(QFrame.Raised)
+        self.gridLayout_7 = QGridLayout(self.sdp_sn_layout_2)
+        self.gridLayout_7.setObjectName(u"gridLayout_7")
+        self.label_44 = QLabel(self.sdp_sn_layout_2)
+        self.label_44.setObjectName(u"label_44")
+
+        self.gridLayout_7.addWidget(self.label_44, 1, 0, 1, 1)
+
+        self.frame_54 = QFrame(self.sdp_sn_layout_2)
+        self.frame_54.setObjectName(u"frame_54")
+        self.frame_54.setFrameShape(QFrame.StyledPanel)
+        self.frame_54.setFrameShadow(QFrame.Raised)
+
+        self.gridLayout_7.addWidget(self.frame_54, 3, 1, 1, 1)
+
+        self.frame_55 = QFrame(self.sdp_sn_layout_2)
+        self.frame_55.setObjectName(u"frame_55")
+        self.frame_55.setFrameShape(QFrame.StyledPanel)
+        self.frame_55.setFrameShadow(QFrame.Raised)
+
+        self.gridLayout_7.addWidget(self.frame_55, 0, 1, 1, 1)
+
+        self.label_45 = QLabel(self.sdp_sn_layout_2)
+        self.label_45.setObjectName(u"label_45")
+
+        self.gridLayout_7.addWidget(self.label_45, 0, 0, 1, 1)
+
+        self.label_46 = QLabel(self.sdp_sn_layout_2)
+        self.label_46.setObjectName(u"label_46")
+
+        self.gridLayout_7.addWidget(self.label_46, 2, 0, 1, 1)
+
+        self.frame_56 = QFrame(self.sdp_sn_layout_2)
+        self.frame_56.setObjectName(u"frame_56")
+        self.frame_56.setStyleSheet(u"background: rgb(255, 255, 255)")
+        self.frame_56.setFrameShape(QFrame.StyledPanel)
+        self.frame_56.setFrameShadow(QFrame.Raised)
+
+        self.gridLayout_7.addWidget(self.frame_56, 1, 1, 1, 1)
+
+        self.frame_57 = QFrame(self.sdp_sn_layout_2)
+        self.frame_57.setObjectName(u"frame_57")
+        self.frame_57.setStyleSheet(u"background: rgb(255, 255, 255)")
+        self.frame_57.setFrameShape(QFrame.StyledPanel)
+        self.frame_57.setFrameShadow(QFrame.Raised)
+
+        self.gridLayout_7.addWidget(self.frame_57, 2, 1, 1, 1)
+
+
+        self.horizontalLayout_10.addWidget(self.sdp_sn_layout_2)
+
+        self.sdp_cost_layout_2 = QFrame(self.frame_50)
+        self.sdp_cost_layout_2.setObjectName(u"sdp_cost_layout_2")
+        self.sdp_cost_layout_2.setMinimumSize(QSize(300, 0))
+        self.sdp_cost_layout_2.setFrameShape(QFrame.StyledPanel)
+        self.sdp_cost_layout_2.setFrameShadow(QFrame.Raised)
+        self.gridLayout_8 = QGridLayout(self.sdp_cost_layout_2)
+        self.gridLayout_8.setObjectName(u"gridLayout_8")
+        self.label_48 = QLabel(self.sdp_cost_layout_2)
+        self.label_48.setObjectName(u"label_48")
+
+        self.gridLayout_8.addWidget(self.label_48, 0, 0, 1, 1)
+
+        self.label_49 = QLabel(self.sdp_cost_layout_2)
+        self.label_49.setObjectName(u"label_49")
+
+        self.gridLayout_8.addWidget(self.label_49, 1, 0, 1, 1)
+
+        self.label_50 = QLabel(self.sdp_cost_layout_2)
+        self.label_50.setObjectName(u"label_50")
+
+        self.gridLayout_8.addWidget(self.label_50, 2, 0, 1, 1)
+
+        self.frame_60 = QFrame(self.sdp_cost_layout_2)
+        self.frame_60.setObjectName(u"frame_60")
+        self.frame_60.setStyleSheet(u"background: rgb(255, 255, 255)")
+        self.frame_60.setFrameShape(QFrame.StyledPanel)
+        self.frame_60.setFrameShadow(QFrame.Raised)
+
+        self.gridLayout_8.addWidget(self.frame_60, 0, 1, 1, 1)
+
+        self.frame_61 = QFrame(self.sdp_cost_layout_2)
+        self.frame_61.setObjectName(u"frame_61")
+        self.frame_61.setStyleSheet(u"background: rgb(255, 255, 255)")
+        self.frame_61.setFrameShape(QFrame.StyledPanel)
+        self.frame_61.setFrameShadow(QFrame.Raised)
+
+        self.gridLayout_8.addWidget(self.frame_61, 1, 1, 1, 1)
+
+        self.frame_62 = QFrame(self.sdp_cost_layout_2)
+        self.frame_62.setObjectName(u"frame_62")
+        self.frame_62.setStyleSheet(u"background: rgb(255, 255, 255)")
+        self.frame_62.setFrameShape(QFrame.StyledPanel)
+        self.frame_62.setFrameShadow(QFrame.Raised)
+
+        self.gridLayout_8.addWidget(self.frame_62, 2, 1, 1, 1)
+
+
+        self.horizontalLayout_10.addWidget(self.sdp_cost_layout_2)
+
+
+        self.verticalLayout_16.addWidget(self.frame_48)
+
+        self.frame_47 = QFrame(self.tab_4)
+        self.frame_47.setObjectName(u"frame_47")
+        self.frame_47.setFrameShape(QFrame.StyledPanel)
+        self.frame_47.setFrameShadow(QFrame.Raised)
+
+        self.verticalLayout_16.addWidget(self.frame_47)
+
+        self.frame_46 = QFrame(self.tab_4)
+        self.frame_46.setObjectName(u"frame_46")
+        self.frame_46.setFrameShape(QFrame.StyledPanel)
+        self.frame_46.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_8 = QHBoxLayout(self.frame_46)
+        self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
+        self.frame_49 = QFrame(self.frame_46)
+        self.frame_49.setObjectName(u"frame_49")
+        self.frame_49.setFrameShape(QFrame.StyledPanel)
+        self.frame_49.setFrameShadow(QFrame.Raised)
+        self.tableView_2 = QTableView(self.frame_49)
+        self.tableView_2.setObjectName(u"tableView_2")
+        self.tableView_2.setGeometry(QRect(200, 10, 256, 192))
+
+        self.horizontalLayout_8.addWidget(self.frame_49)
+
+
+        self.verticalLayout_16.addWidget(self.frame_46)
+
+        self.tabWidget.addTab(self.tab_4, "")
+
+        self.horizontalLayout_6.addWidget(self.tabWidget)
+
+
+        self.verticalLayout_11.addWidget(self.frame_20)
+
+        self.stock_parent_tab.addTab(self.tab_1, "")
+        self.tab_2 = QWidget()
+        self.tab_2.setObjectName(u"tab_2")
+        self.horizontalLayout_11 = QHBoxLayout(self.tab_2)
+        self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
+        self.label_47 = QLabel(self.tab_2)
+        self.label_47.setObjectName(u"label_47")
+        self.label_47.setAlignment(Qt.AlignCenter)
+        self.label_47.setWordWrap(True)
+
+        self.horizontalLayout_11.addWidget(self.label_47)
+
+        self.stock_parent_tab.addTab(self.tab_2, "")
+
+        self.horizontalLayout_3.addWidget(self.stock_parent_tab)
+
+
+        self.verticalLayout_9.addWidget(self.stock_tab_frame)
 
         self.scrollArea_3.setWidget(self.stockContents)
 
@@ -1045,10 +1497,9 @@ class Ui_MainPages(object):
 
         self.retranslateUi(MainPages)
 
-        self.pages.setCurrentIndex(1)
-        self.inventories.setCurrentIndex(0)
-        self.phone_inventory_inner.setCurrentIndex(0)
-        self.accessories_inventory_inner.setCurrentIndex(1)
+        self.pages.setCurrentIndex(3)
+        self.stock_parent_tab.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(MainPages)
@@ -1090,14 +1541,31 @@ class Ui_MainPages(object):
         self.label_21.setText(QCoreApplication.translate("MainPages", u"Fault ", None))
         self.label_28.setText(QCoreApplication.translate("MainPages", u"state", None))
         self.service_cost_group.setTitle(QCoreApplication.translate("MainPages", u"GroupBox", None))
-        self.phone_inventory_inner.setTabText(self.phone_inventory_inner.indexOf(self.detailed), QCoreApplication.translate("MainPages", u"Detailed ", None))
-        self.phone_inventory_inner.setTabText(self.phone_inventory_inner.indexOf(self.simple), QCoreApplication.translate("MainPages", u"Simple", None))
-        self.inventories.setTabText(self.inventories.indexOf(self.phone_inventory), QCoreApplication.translate("MainPages", u"PHONE", None))
-#if QT_CONFIG(tooltip)
-        self.inventories.setTabToolTip(self.inventories.indexOf(self.phone_inventory), QCoreApplication.translate("MainPages", u"tho sodn dikd", None))
-#endif // QT_CONFIG(tooltip)
-        self.accessories_inventory_inner.setTabText(self.accessories_inventory_inner.indexOf(self.tab_5), QCoreApplication.translate("MainPages", u"Detailed", None))
-        self.accessories_inventory_inner.setTabText(self.accessories_inventory_inner.indexOf(self.tab_6), QCoreApplication.translate("MainPages", u"Simple", None))
-        self.inventories.setTabText(self.inventories.indexOf(self.accessories_inventory), QCoreApplication.translate("MainPages", u"Accesssories", None))
+        self.label_24.setText(QCoreApplication.translate("MainPages", u"IMPORTANT NOTICES", None))
+        self.label_29.setText(QCoreApplication.translate("MainPages", u"Laky Phone P.O.S provides two different ways of taking stock (Detailed and Simple). The \"Detailed\" allows client to track individual item while the Simple track items as a whole. You are therefore reaquire use one that fit most in your senario. For more details please to the documentation ", None))
+        self.label_31.setText(QCoreApplication.translate("MainPages", u"Type :", None))
+        self.label_32.setText(QCoreApplication.translate("MainPages", u"Model :", None))
+        self.label_33.setText(QCoreApplication.translate("MainPages", u"Suplier :", None))
+        self.label_34.setText(QCoreApplication.translate("MainPages", u"QR/ Bar Code :", None))
+        self.label_37.setText(QCoreApplication.translate("MainPages", u"Select type :", None))
+        self.label_36.setText(QCoreApplication.translate("MainPages", u"Quantity", None))
+        self.label_40.setText(QCoreApplication.translate("MainPages", u"Imei/SN/Meid list", None))
+        self.label_35.setText(QCoreApplication.translate("MainPages", u"Cost Price", None))
+        self.label_38.setText(QCoreApplication.translate("MainPages", u"Selling Price", None))
+        self.label_39.setText(QCoreApplication.translate("MainPages", u"TextLabel", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), QCoreApplication.translate("MainPages", u"Detailed", None))
+        self.label_41.setText(QCoreApplication.translate("MainPages", u"Type :", None))
+        self.label_42.setText(QCoreApplication.translate("MainPages", u"Model :", None))
+        self.label_43.setText(QCoreApplication.translate("MainPages", u"Suplier :", None))
+        self.label_44.setText(QCoreApplication.translate("MainPages", u"QR/ Bar Code :", None))
+        self.label_45.setText(QCoreApplication.translate("MainPages", u"Select type :", None))
+        self.label_46.setText(QCoreApplication.translate("MainPages", u"Quantity", None))
+        self.label_48.setText(QCoreApplication.translate("MainPages", u"Cost Price", None))
+        self.label_49.setText(QCoreApplication.translate("MainPages", u"Selling Price", None))
+        self.label_50.setText(QCoreApplication.translate("MainPages", u"TextLabel", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), QCoreApplication.translate("MainPages", u"Simple", None))
+        self.stock_parent_tab.setTabText(self.stock_parent_tab.indexOf(self.tab_1), QCoreApplication.translate("MainPages", u"Phone", None))
+        self.label_47.setText(QCoreApplication.translate("MainPages", u"Please check on next update", None))
+        self.stock_parent_tab.setTabText(self.stock_parent_tab.indexOf(self.tab_2), QCoreApplication.translate("MainPages", u"Accessories", None))
     # retranslateUi
 

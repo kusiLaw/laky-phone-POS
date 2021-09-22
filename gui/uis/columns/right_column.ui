@@ -10,6 +10,12 @@
     <height>600</height>
    </rect>
   </property>
+  <property name="maximumSize">
+   <size>
+    <width>269</width>
+    <height>16777215</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
@@ -32,7 +38,7 @@
    <item>
     <widget class="QStackedWidget" name="menus">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="menu_1">
       <layout class="QVBoxLayout" name="verticalLayout">

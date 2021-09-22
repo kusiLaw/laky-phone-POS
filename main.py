@@ -116,10 +116,11 @@ class MainWindow(QMainWindow):
 
         # get top settings
         top_btn_settings = MainFunctions.get_title_bar_btn(self, "btn_top_settings")
-
+        top_btn_user = MainFunctions.get_title_bar_btn(self, "btn_user")
         if btn.objectName() == "report_btn" or btn.objectName() == "btn_close_left_column":
             # disable to btn active
             top_btn_settings.set_active(False)
+            top_btn_user.set_active(False)
 
             # check if left column is visible
             if not MainFunctions.left_column_is_visible(self):
@@ -150,6 +151,7 @@ class MainWindow(QMainWindow):
         if btn.objectName() == "btn_info" or btn.objectName() == "btn_close_left_column":
             # disable to btn active
             top_btn_settings.set_active(False)
+            top_btn_user.set_active(False)
 
             # check if left column is visible
             if not MainFunctions.left_column_is_visible(self):
@@ -181,26 +183,56 @@ class MainWindow(QMainWindow):
         
         # SETTINGS TITLE BAR
         if btn.objectName() == "btn_top_settings":
-            # Toogle Active
+            # check if left column is visible
             if not MainFunctions.right_column_is_visible(self):
                 btn.set_active(True)
-
+                top_btn_user.set_active(False)
                 # Show / Hide
                 MainFunctions.toggle_right_column(self)
+               #  MainFunctions.set_right_column_menu(self, menu=self.ui.right_column.menus)
+
             else:
                 btn.set_active(False)
 
                 # Show / Hide
                 MainFunctions.toggle_right_column(self)
+                # MainFunctions.set_right_column_menu(self, menu=self.ui.right_column.menus)
 
-            # Get Left Menu settings
-            top_settings = MainFunctions.get_left_menu_btn(self, "btn_settings")
-            top_settings.set_active_tab(False)
+            # # Get Left Menu settings
+            # top_settings = MainFunctions.get_left_menu_btn(self, "btn_user")
+            # top_settings.set_active_tab(False)
 
-            # Get Left Menu info
-            top_info = MainFunctions.get_left_menu_btn(self, "btn_menu_2")
-            top_info.set_active_tab(False)
+            # # Get Left Menu info
+            # top_info = MainFunctions.get_left_menu_btn(self, "btn_info")
+            # top_info.set_active_tab(False)
 
+        if btn.objectName() == "btn_user":
+            # Toogle Active
+            if not MainFunctions.right_column_is_visible(self):
+                btn.set_active(True)
+                top_btn_settings.set_active(False)
+
+                # Show / Hide
+                MainFunctions.toggle_right_column(self)
+                print(self.ui.right_column.menus.menu_1)
+                # MainFunctions.set_right_column_menu(self, menu=self.ui.right_column.menus.menu_1)
+
+
+            else:
+                btn.set_active(False)
+
+                # Show / Hide
+                MainFunctions.toggle_right_column(self)
+                # MainFunctions.set_right_column_menu(self, menu=self.ui.right_column.menus)
+
+
+            # # Get Left Menu settings
+            # top_settings = MainFunctions.get_left_menu_btn(self, "btn_top_settings")
+            # top_settings.set_active_tab(False)
+
+            # # Get Left Menu info
+            # top_info = MainFunctions.get_left_menu_btn(self, "btn_info")
+            # top_info.set_active_tab(False)
 
             # DEBUG
         print(f"Button {btn.objectName()}, clicked!")
@@ -308,4 +340,4 @@ if __name__ == "__main__":
     window = SplashScreen()
     # EXEC APP
     # ///////////////////////////////////////////////////////////////
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
