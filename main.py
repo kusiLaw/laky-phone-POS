@@ -189,14 +189,15 @@ class MainWindow(QMainWindow):
                 top_btn_user.set_active(False)
                 # Show / Hide
                 MainFunctions.toggle_right_column(self)
-               #  MainFunctions.set_right_column_menu(self, menu=self.ui.right_column.menus)
+                MainFunctions.set_right_column_menu(self, menu=self.ui.right_column.setting_page)
 
             else:
-                btn.set_active(False)
+                btn.set_active(True)
+                top_btn_user.set_active(False)
 
                 # Show / Hide
-                MainFunctions.toggle_right_column(self)
-                # MainFunctions.set_right_column_menu(self, menu=self.ui.right_column.menus)
+                #MainFunctions.toggle_right_column(self)
+                MainFunctions.set_right_column_menu(self, menu=self.ui.right_column.setting_page)
 
             # # Get Left Menu settings
             # top_settings = MainFunctions.get_left_menu_btn(self, "btn_user")
@@ -214,16 +215,17 @@ class MainWindow(QMainWindow):
 
                 # Show / Hide
                 MainFunctions.toggle_right_column(self)
-                print(self.ui.right_column.menus.menu_1)
-                # MainFunctions.set_right_column_menu(self, menu=self.ui.right_column.menus.menu_1)
+
+                MainFunctions.set_right_column_menu(self, menu=self.ui.right_column.profile_page)
 
 
             else:
-                btn.set_active(False)
+                btn.set_active(True)
+                top_btn_settings.set_active(False)
 
                 # Show / Hide
-                MainFunctions.toggle_right_column(self)
-                # MainFunctions.set_right_column_menu(self, menu=self.ui.right_column.menus)
+                # MainFunctions.toggle_right_column(self)
+                MainFunctions.set_right_column_menu(self, menu=self.ui.right_column.profile_page)
 
 
             # # Get Left Menu settings

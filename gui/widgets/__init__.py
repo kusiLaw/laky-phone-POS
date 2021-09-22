@@ -75,3 +75,6 @@ from .py_push_button2 import PyPushButton2
 
 #PY COMBO
 from .py_combobox import PyComBox
+
+# PyPicture
+from .py_pic import PyPicture

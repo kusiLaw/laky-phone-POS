@@ -215,7 +215,7 @@ class SetupMainWindow:
             title = "Settings Left Column",
             icon_path = Functions.set_svg_icon("icon_settings.svg")
         )
-        MainFunctions.set_right_column_menu(self, self.ui.right_column.menu_1)
+        MainFunctions.set_right_column_menu(self, self.ui.right_column.setting_page)
 
         # ///////////////////////////////////////////////////////////////
         # EXAMPLE CUSTOM WIDGETS
@@ -252,6 +252,11 @@ class SetupMainWindow:
         # ///////////////////////////////////////////////////////////////
         # custom py_line_edit
 
+        # Right Column
+        self.pro_pic = PyPicture()
+        self.ui.right_column.pro_pic_frame.addWidget(self.pro_pic)
+
+        # Main Page
         self.customerName = PyLineEdit(
 
             context_color = self.themes["app_color"]["context_color"],
