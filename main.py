@@ -1,18 +1,3 @@
-# ///////////////////////////////////////////////////////////////
-#
-# BY: WANDERSON M.PIMENTA
-# PROJECT MADE WITH: Qt Designer and PySide6
-# V: 1.0.0
-#
-# This project can be used freely for all uses, as long as they maintain the
-# respective credits only in the Python scripts, any information in the visual
-# interface (GUI) can be modified without any implication.
-#
-# There are limitations on Qt licenses if you want to use your products
-# commercially, I recommend reading them on the official website:
-# https://doc.qt.io/qtforpython/licenses.html
-#
-# ///////////////////////////////////////////////////////////////
 
 # IMPORT PACKAGES AND MODULES
 # ///////////////////////////////////////////////////////////////
@@ -180,24 +165,37 @@ class MainWindow(QMainWindow):
 
         # TITLE BAR MENU
         # ///////////////////////////////////////////////////////////////
-        
+        # self.right_column_has_open = False
+
+
         # SETTINGS TITLE BAR
         if btn.objectName() == "btn_top_settings":
             # check if left column is visible
             if not MainFunctions.right_column_is_visible(self):
+                # first toggle will  open, default is close when app start
+                # make it active and deactivate other
+
                 btn.set_active(True)
                 top_btn_user.set_active(False)
+
                 # Show / Hide
                 MainFunctions.toggle_right_column(self)
+                # self.right_column_has_open = True
+
                 MainFunctions.set_right_column_menu(self, menu=self.ui.right_column.setting_page)
 
             else:
-                btn.set_active(True)
+                # now right-column  open
+                # this indicate button is pressed the second time
+                # toggle again will close it, so deselect all
+                btn.set_active(False)
                 top_btn_user.set_active(False)
 
                 # Show / Hide
-                #MainFunctions.toggle_right_column(self)
+                MainFunctions.toggle_right_column(self)
+                # self.right_column_has_open = False
                 MainFunctions.set_right_column_menu(self, menu=self.ui.right_column.setting_page)
+
 
             # # Get Left Menu settings
             # top_settings = MainFunctions.get_left_menu_btn(self, "btn_user")
@@ -210,6 +208,9 @@ class MainWindow(QMainWindow):
         if btn.objectName() == "btn_user":
             # Toogle Active
             if not MainFunctions.right_column_is_visible(self):
+                # first toggle will  open, default is close when app start
+                # make it active and deactivate other
+
                 btn.set_active(True)
                 top_btn_settings.set_active(False)
 
@@ -217,14 +218,20 @@ class MainWindow(QMainWindow):
                 MainFunctions.toggle_right_column(self)
 
                 MainFunctions.set_right_column_menu(self, menu=self.ui.right_column.profile_page)
+                # self.right_column_has_open = True
 
 
             else:
-                btn.set_active(True)
+                # now right-column  open
+                # this indicate button is pressed the second time
+                # toggle again will close it, so deselect all
+
+                btn.set_active(False)
                 top_btn_settings.set_active(False)
 
+
                 # Show / Hide
-                # MainFunctions.toggle_right_column(self)
+                MainFunctions.toggle_right_column(self)
                 MainFunctions.set_right_column_menu(self, menu=self.ui.right_column.profile_page)
 
 
