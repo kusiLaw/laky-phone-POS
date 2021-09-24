@@ -252,11 +252,11 @@ class SetupMainWindow:
         # ///////////////////////////////////////////////////////////////
         # custom py_line_edit
 
-        # Right Column
+        # RIGHT COLUMN SECTION
         self.pro_pic = PyPicture()
         self.ui.right_column.pro_pic_frame.addWidget(self.pro_pic)
 
-        # Main Page
+        # MAIN PAGE SECTION
         self.customerName = PyLineEdit(
 
             context_color = self.themes["app_color"]["context_color"],
@@ -529,6 +529,7 @@ class SetupMainWindow:
         # Phone table section
 
      # TABLE WIDGETS
+
         self.table_widget = PyTableWidget(
             radius = 8,
             color = self.themes["app_color"]["text_foreground"],
@@ -631,8 +632,195 @@ class SetupMainWindow:
         self.ui.load_pages.phone_cart_layout.addWidget(self.phone_cart)
 
 
+        # STOCK SECTION
+
+        self.stock_type = PyComBox(
+
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            radius=0,
+            bg_color_hover=self.themes["app_color"]["context_color"],
+            items=[],
+            editable=True
+        )
+
+        self.ui.load_pages.stock_ph_type_layout.addWidget(self.stock_type)
 
 
+        self.stock_model = PyComBox(
+
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            radius=0,
+            bg_color_hover=self.themes["app_color"]["context_color"],
+            items=[],
+            editable=True
+        )
+
+        self.ui.load_pages.stock_ph_model_layout.addWidget(self.stock_model)
+
+
+        self.stock_prod_code = PyComBox(
+
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            radius=8,
+            bg_color_hover=self.themes["app_color"]["context_color"],
+            items=[],
+            editable=True
+        )
+
+        self.ui.load_pages.stock_ph_pdt_layout.addWidget(self.stock_prod_code)
+
+
+        self.stock_suplier = PyComBox(
+
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            radius=0,
+            bg_color_hover=self.themes["app_color"]["context_color"],
+            items=[],
+            editable=True
+        )
+
+        self.ui.load_pages.stock_suplier_layout.addWidget(self.stock_suplier)
+
+        self.stock_unique_code = PyComBox(
+
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            radius=0,
+            bg_color_hover=self.themes["app_color"]["context_color"],
+            items=['SN Number only', 'Imei Number only', 'Meid Number only'],
+            editable=False
+        )
+
+        self.ui.load_pages.stock_unique_code_layout.addWidget(self.stock_unique_code)
+
+        self.stock_cp = PyLineEdit(
+
+            context_color=self.themes["app_color"]["context_color"],
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["dark_one"]
+
+        )
+
+        self.ui.load_pages.stock_cp_layout.addWidget(self.stock_cp)
+
+
+        self.stock_qantity = PyLineEdit(
+
+            context_color=self.themes["app_color"]["context_color"],
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["dark_one"]
+
+        )
+
+        self.ui.load_pages.stock_qantity_layout.addWidget(self.stock_qantity)
+
+        self.stock_sp = PyLineEdit(
+
+            context_color=self.themes["app_color"]["context_color"],
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["dark_one"]
+
+        )
+
+        self.ui.load_pages.stock_sp_layout.addWidget(self.stock_sp)
+
+        self.stock_tax = PyLineEdit(
+
+            context_color=self.themes["app_color"]["context_color"],
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["dark_one"]
+
+        )
+
+        self.ui.load_pages.stock_tax_layout.addWidget(self.stock_tax)
+
+        self.stock_qr = PyToggle(
+            width=70,
+            active_color=self.themes["app_color"]["context_color"],
+            circle_color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["dark_one"]
+
+        )
+
+        self.ui.load_pages.stock_qr_layout.addWidget(self.stock_qr)
+
+        self.stock_save = PyPushButton2(
+            text="Save",
+            radius=8,
+            color=self.themes["app_color"]["text_foreground"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color_hover=self.themes["app_color"]["dark_three"],
+            bg_color_pressed=self.themes["app_color"]["dark_four"],
+            hover_border_color=self.themes["app_color"]["green"]
+
+        )
+        # self.phone_delete_btn.setMinimumHeight(30)
+        self.ui.load_pages.stock_save_layout.addWidget(self.stock_save)
+
+        self.stock_update = PyPushButton2(
+            text="Update",
+            radius=8,
+            color=self.themes["app_color"]["text_foreground"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color_hover=self.themes["app_color"]["dark_three"],
+            bg_color_pressed=self.themes["app_color"]["dark_four"],
+            hover_border_color=self.themes["app_color"]["context_color"]
+
+        )
+        # self.phone_delete_btn.setMinimumHeight(30)
+        self.ui.load_pages.stock_update_layout.addWidget(self.stock_update)
+
+        self.stock_delete = PyPushButton2(
+            text="Delete",
+            radius=8,
+            color=self.themes["app_color"]["text_foreground"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color_hover=self.themes["app_color"]["dark_three"],
+            bg_color_pressed=self.themes["app_color"]["dark_four"],
+            hover_border_color=self.themes["app_color"]["red"]
+
+        )
+        # self.phone_delete_btn.setMinimumHeight(30)
+        self.ui.load_pages.stock_delete_layout.addWidget(self.stock_delete)
+
+        self.stock_clear = PyPushButton2(
+            text="Clear",
+            radius=8,
+            color=self.themes["app_color"]["text_foreground"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color_hover=self.themes["app_color"]["dark_three"],
+            bg_color_pressed=self.themes["app_color"]["dark_four"],
+            hover_border_color=self.themes["app_color"]["context_color"]
+
+        )
+        # self.phone_delete_btn.setMinimumHeight(30)
+        self.ui.load_pages.stock_clear_layout.addWidget(self.stock_clear)
+
+        self.stock_search_key = PyComBox(
+
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            radius=0,
+            bg_color_hover=self.themes["app_color"]["context_color"],
+            items=['SN Number only', 'Imei Number only', 'Meid Number only'],
+            editable=True
+        )
+
+        self.ui.load_pages.stock_search_key_layout.addWidget(self.stock_search_key)
+
+        self.stock_search = PyLineEdit(
+
+            context_color=self.themes["app_color"]["context_color"],
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["dark_one"]
+
+        )
+
+        self.ui.load_pages.stock_search_layout.addWidget(self.stock_search)
 
     # ///////////////////////////////////////////////////////////////
         # END - EXAMPLE CUSTOM WIDGETS
