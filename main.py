@@ -268,6 +268,11 @@ class MainWindow(QMainWindow):
         # SET DRAG POS WINDOW
         self.dragPos = event.globalPos()
 
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_Escape:
+            self.close()
+
+
 
 class SplashScreen(QMainWindow):
     # Load theme
@@ -334,6 +339,11 @@ class SplashScreen(QMainWindow):
             self.main = MainWindow()
             self.main.show()
             self.close()
+
+    # def keyPressEvent(self, event):
+    #     if event.key() == Qt.Key_Escape:
+    #         QMessageBox.information(None, "Received Key Release EVent", "You Pressed ewewewewewe  ewewewewewewe  we wwew wewe we w: "+ event.text())
+    #         self.close()
 
 
 

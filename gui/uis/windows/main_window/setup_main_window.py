@@ -256,6 +256,81 @@ class SetupMainWindow:
         self.pro_pic = PyPicture()
         self.ui.right_column.pro_pic_frame.addWidget(self.pro_pic)
 
+        self.sign_out = PyPushButton2(
+            text="sign out",
+            radius=8,
+            color=self.themes["app_color"]["text_foreground"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color_hover=self.themes["app_color"]["dark_three"],
+            bg_color_pressed=self.themes["app_color"]["dark_four"],
+            hover_border_color=self.themes["app_color"]["red"],
+            show_boader_color = True
+        )
+        self.sign_out.setMinimumHeight(30)
+
+        self.ui.right_column.sing_out_frame.addWidget(self.sign_out)
+
+        self.add_user = PyPushButton2(
+            text="Add User",
+            radius=8,
+            color=self.themes["app_color"]["text_foreground"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color_hover=self.themes["app_color"]["dark_three"],
+            bg_color_pressed=self.themes["app_color"]["dark_four"],
+            hover_border_color=self.themes["app_color"]["context_color"]
+        )
+        self.add_user.setMinimumHeight(30)
+
+        self.ui.right_column.add_user_frame.addWidget(self.add_user)
+
+        self.reset_pass = PyPushButton2(
+            text="Reset Password",
+            radius=8,
+            color=self.themes["app_color"]["text_foreground"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color_hover=self.themes["app_color"]["dark_three"],
+            bg_color_pressed=self.themes["app_color"]["dark_four"],
+            hover_border_color=self.themes["app_color"]["context_color"]
+        )
+        self.reset_pass.setMinimumHeight(30)
+
+        self.ui.right_column.reset_password_frame.addWidget(self.reset_pass)
+
+
+
+        self.current_pass = PyLineEdit(
+
+            context_color=self.themes["app_color"]["context_color"],
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["dark_one"],
+
+        )
+
+        self.ui.right_column.current_password_frame.addWidget(self.current_pass)
+
+        self.new_pass = PyLineEdit(
+
+            context_color=self.themes["app_color"]["context_color"],
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["dark_one"],
+
+        )
+
+        self.ui.right_column.new_password_frame.addWidget(self.new_pass)
+
+        self.comfirm_pass = PyLineEdit(
+
+            context_color=self.themes["app_color"]["context_color"],
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["dark_one"],
+
+        )
+
+        self.ui.right_column.confirm_password_frame.addWidget(self.comfirm_pass)
+
+
+
+
         # MAIN PAGE SECTION
         self.customerName = PyLineEdit(
 
@@ -264,6 +339,7 @@ class SetupMainWindow:
             bg_color = self.themes["app_color"]["dark_one"],
 
             )
+
         # add to phone
         self.customerName.height = 40
         self.ui.load_pages.customer_name_edit.addWidget(self.customerName)
@@ -455,7 +531,7 @@ class SetupMainWindow:
             bg_color_hover=self.themes["app_color"]["dark_three"],
             bg_color_pressed=self.themes["app_color"]["dark_four"],
             hover_border_color=self.themes["app_color"]["green"],
-            show_boader_color = True
+            show_boader_color = False
         )
         self.phone_buyme_btn.setMinimumHeight(30)
         self.ui.load_pages.phone_buyme_layout.addWidget(self.phone_buyme_btn)
@@ -512,6 +588,14 @@ class SetupMainWindow:
         )
         self.phone_print_btn.setMinimumHeight(30)
         self.ui.load_pages.phone_print_layout.addWidget(self.phone_print_btn)
+
+        def printInput():
+            QMessageBox.information(None, "Received Key Release EVent", f"You Pres: " )
+            print(self.phone_price.text())
+
+        self.phone_print_btn.clicked.connect(printInput)
+
+
 
         # Search
         self.phone_search_edit = PyLineEdit(
@@ -826,6 +910,7 @@ class SetupMainWindow:
         # END - EXAMPLE CUSTOM WIDGETS
         # ///////////////////////////////////////////////////////////////
 
+
     # RESIZE GRIPS AND CHANGE POSITION
     # Resize or change position when window is resized
     # ///////////////////////////////////////////////////////////////
@@ -838,3 +923,5 @@ class SetupMainWindow:
             self.top_right_grip.setGeometry(self.width() - 20, 5, 15, 15)
             self.bottom_left_grip.setGeometry(5, self.height() - 20, 15, 15)
             self.bottom_right_grip.setGeometry(self.width() - 20, self.height() - 20, 15, 15)
+
+

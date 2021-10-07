@@ -60,6 +60,8 @@ class PyLineEdit(QLineEdit):
         if place_holder_text:
             self.setPlaceholderText(place_holder_text)
 
+        # self.setMaximum(5)
+
         # SET STYLESHEET
         self.set_stylesheet(
             radius,
