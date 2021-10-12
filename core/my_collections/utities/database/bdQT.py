@@ -3,25 +3,43 @@ import json
 import mysql.connector
 
 
+# class db_meta(type):
+#     def __new__(cls, name,base, class_dict, sql_engine= "QSQLITE"):
+#         obj = super().__new__(cls, name,base,class_dict)
+#
+#         obj.bd = QSqlDatabase.addDatabase(sql_engine)
+#
+#         return obj
+
+class My_BaseDB:
+    db = QSqlDatabase.addDatabase("QSQLITE")
+
+
 
 class My_db:
     # __slots__ = "_db"
 
     # TODO: read default from  json file to populate the class parameter
-    db = QSqlDatabase.addDatabase("QSQLITE")
+    # db = QSqlDatabase.addDatabase("QSQLITE")
+
 
     def __init__(self, database_engin = "QSQLITE"):
-        # self.initial_args = dict(My_db.deserialize())  # dict obj
-        try:
-            # we must read json file each instanciated since we want most current agrs
-            self.initial_args = dict(My_db.deserialize())  # dict obj
-            print("everything cool, file exit and is valid, done reading")
-        except FileNotFoundError :
-            # file not in folder
-            # Todo: I will generator object that send and recieve obj
-            print("file not found please activate")
-        except json.JSONDecodeError:
-            print("File exist but not valid")
+        # overwrite this class "Qsql" object is mysql is used
+
+        if  database_engin == "QMYSQL":
+            self.class_initilzer(database_engin)
+
+        # try:
+        #     # we must read json file each instanciated since we want most current agrs
+        #     self.initial_args = dict(My_db.deserialize())  # dict obj
+        #     print("everything cool, file exit and is valid, done reading")
+        # except FileNotFoundError :
+        #     # file not in folder
+        #     # Todo: I will generator object that send and recieve obj
+        #     print("file not found please activate")
+        # except json.JSONDecodeError:
+        #     print("File exist but not valid")
+
         # except:
         #     print("didnt find it try defaul")
         #     try:
@@ -29,6 +47,10 @@ class My_db:
         #         self.initial_args = self.restore_default()
         #     except:
         #         print("Error initilising object")
+
+    @classmethod
+    def class_initilzer(cls, engine):
+        cls.db = QSqlDatabase.addDatabase(engine)
 
 
     def connect(self):
@@ -39,7 +61,7 @@ class My_db:
         self.db.setPassword(self.initial_args['password'])
         return self.db.open()
 
-    def save_changes(self, host,dbname,user,password, database_engin):
+    def save_changes(self, host,dbname,user,password, database_engin ="Sqlite"):
         para = {
             "db_type" : database_engin,
             "hostname": host,
@@ -57,10 +79,15 @@ class My_db:
 
     def restore_default(self):
         self.initial_args ={
-            "hostname": "localhost",
-            "user": "root",
-            "dbname": "myQtdb",
-            "password": "Laky@689393"
+            "sqlLite": {
+                "dbname": "myQtdb",
+            },
+            "local": {
+                "hostname": "localhost",
+                "user": "root",
+                "dbname": "myQtdb",
+                "password": "Laky@689393"
+            }
         }
 
         self.serialize(self.initial_args)
