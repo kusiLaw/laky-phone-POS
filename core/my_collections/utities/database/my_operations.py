@@ -1,10 +1,9 @@
 from .my_db import My_db
 
-# class Operations(My_db):
-#     def __init__(self, ph_type, ph_model,ime, sn, price,
-#                  cust_name = "unknown", cust_num = "unknown",
-#                  payment = "Cash", tax = 0 , discount = 0):
-#         pass
-#
-#     def createTable(self):
-#         pass
+
+class Operations(My_db):
+    def handle(self, fun):
+        try:
+            fun()
+        except:
+            pass

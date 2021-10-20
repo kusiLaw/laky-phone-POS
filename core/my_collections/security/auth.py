@@ -2,9 +2,11 @@ import bcrypt
 
 
 class Encryption:
+    @classmethod
     def passcrypt(self,password):
         return bcrypt.hashpw(password, bcrypt.gensalt())
 
+    @classmethod
     def passcheck(self, password, hashes):
         return bcrypt.checkpw(password, hashes)
 

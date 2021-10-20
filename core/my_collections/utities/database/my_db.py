@@ -7,6 +7,7 @@ import sqlite3
 
 sys.path.append("..")
 # from  import Custom_json
+print("catching")
 from json_util import custom_deserializer, custom_serializer
 
 
@@ -74,22 +75,21 @@ class My_db(metaclass=DB_Meta):
 
                     )
                     a = self.con.cursor()
-                    a.execute(self.create_tables(), multi=True)
-                    print(a)
-                    a.close()
+                    for result in a.execute(self.create_tables(), multi=True):
+                        print("Number of rows affected by statement '{}': {}".format(
+                            result.statement, result.rowcount))
+
+                        # if result.with_rows:
+                    # a.executemany(self.create_tables())
+                    # print(a)
+                    # a.close()
             except:
                 print("error occured")
+            return self.con
 
-            return self.con.cursor()
 
-            # self.db = QSqlDatabase.addDatabase(str(self.initial_args["Default"]))
-            # self.db.setHostName(self.initial_args["QMYSQL"]["hostname"])
-            # self.db.setDatabaseName()
-            # self.db.setUserName(self.initial_args["QMYSQL"]['user'])
             # # TODO: password should be well handled
-            # self.db.setPassword(self.initial_args["QMYSQL"]['password'])
-            # print("mysql sucess")
-            # return self.db.open()
+
         else:
             raise NotImplemented("Database specified currently not supported")
 
@@ -136,28 +136,194 @@ class My_db(metaclass=DB_Meta):
 
     def create_tables(self):
         exec_str = """
-            CREATE SCHEMA IF NOT EXISTS `lakydb` DEFAULT CHARACTER SET utf8 ;
-                USE `lakydb` ;
-            CREATE TABLE IF NOT EXISTS `lakydb`.`Users` (
-              `idUsers` INT NOT NULL AUTO_INCREMENT,
-              `User_Name` VARCHAR(25) NOT NULL,
-              `User_Password` VARCHAR(15) NOT NULL,
-              `User_Email` VARCHAR(45) NULL,
-              PRIMARY KEY (`idUsers`),
-              UNIQUE INDEX `idUsers_UNIQUE` (`idUsers` ASC) VISIBLE,
-              UNIQUE INDEX `User_Name_UNIQUE` (`User_Name` ASC) VISIBLE)
-            
-            CREATE TABLE IF NOT EXISTS `lakydb`.`Customer` (
-              `customer_contact` INT NOT NULL,
-              `customer_name` VARCHAR(25) NULL DEFAULT '\"Customer\"',
-              `users_idUsers` INT NOT NULL,
-              PRIMARY KEY (`customer_contact`),
-              INDEX `fk_Customer_Users_idx` (`users_idUsers` ASC) VISIBLE,
-              CONSTRAINT `fk_Customer_Users`
-                FOREIGN KEY (`users_idUsers`)
-                REFERENCES `lakydb`.`Users` (`idUsers`)
-                ON DELETE NO ACTION
-                ON UPDATE NO ACTION)
+   CREATE SCHEMA IF NOT EXISTS `lakydb` DEFAULT CHARACTER SET utf8 ;
+USE `lakydb` ;
+
+CREATE TABLE IF NOT EXISTS `lakydb`.`Users` (
+  `idUsers` INT NOT NULL AUTO_INCREMENT,
+  `User_Name` VARCHAR(25) NOT NULL,
+  `User_Password` BINARY(20) NOT NULL,
+  `User_Email` VARCHAR(45) NULL,
+  PRIMARY KEY (`idUsers`),
+  UNIQUE INDEX `idUsers_UNIQUE` (`idUsers` ASC) VISIBLE,
+  UNIQUE INDEX `User_Name_UNIQUE` (`User_Name` ASC) VISIBLE)
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `lakydb`.`Customer` (
+  `customer_contact` INT NOT NULL,
+  `customer_name` VARCHAR(25) NULL DEFAULT '\"Customer\"',
+  `users_idUsers` INT NOT NULL,
+  PRIMARY KEY (`customer_contact`),
+  INDEX `fk_Customer_Users_idx` (`users_idUsers` ASC) VISIBLE,
+  CONSTRAINT `fk_Customer_Users`
+    FOREIGN KEY (`users_idUsers`)
+    REFERENCES `lakydb`.`Users` (`idUsers`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `lakydb`.`Service_Phone` (
+  `Phone_ID` INT NOT NULL AUTO_INCREMENT,
+  `Phone_Type` VARCHAR(45) NOT NULL,
+  `Phone_Model` VARCHAR(45) NOT NULL,
+  `Phone_Fault` VARCHAR(45) NOT NULL,
+  `Phone_Imei` INT NULL,
+  `Comments` VARCHAR(45) NULL,
+  `Phone_Status` VARCHAR(45) NULL DEFAULT 'Faulty',
+  `Receive Status` VARCHAR(45) NULL DEFAULT 'No',
+  `Customer_Customer_Contact` INT NOT NULL,
+  PRIMARY KEY (`Phone_ID`),
+  INDEX `fk_Service_Phone_Customer1_idx` (`Customer_Customer_Contact` ASC) VISIBLE,
+  CONSTRAINT `fk_Service_Phone_Customer1`
+    FOREIGN KEY (`Customer_Customer_Contact`)
+    REFERENCES `lakydb`.`Customer` (`customer_contact`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `lakydb`.`Price` (
+  `Amount` DOUBLE NOT NULL,
+  `Deposite` DOUBLE NULL,
+  `Balance` DOUBLE NULL,
+  `Pricecol1` DOUBLE NULL,
+  `Service_Phone_Phone_ID` INT NOT NULL,
+  INDEX `fk_Price_Service_Phone1_idx` (`Service_Phone_Phone_ID` ASC) VISIBLE,
+  CONSTRAINT `fk_Price_Service_Phone1`
+    FOREIGN KEY (`Service_Phone_Phone_ID`)
+    REFERENCES `lakydb`.`Service_Phone` (`Phone_ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `lakydb`.`Stock` (
+  `stockId` INT NOT NULL,
+  `phone_name` VARCHAR(20) NOT NULL,
+  `Phonr_type` VARCHAR(20) NOT NULL,
+  `phone_imei` INT NULL,
+  `Users_idUsers` INT NOT NULL,
+  PRIMARY KEY (`stockId`),
+  UNIQUE INDEX `phone_imei_UNIQUE` (`phone_imei` ASC) VISIBLE,
+  INDEX `fk_Stock_Users1_idx` (`Users_idUsers` ASC) VISIBLE,
+  CONSTRAINT `fk_Stock_Users1`
+    FOREIGN KEY (`Users_idUsers`)
+    REFERENCES `lakydb`.`Users` (`idUsers`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `lakydb`.`Suplier` (
+  `idsuplier` INT NOT NULL AUTO_INCREMENT,
+  `supliername` VARCHAR(20) NOT NULL,
+  `number` VARCHAR(45) NULL,
+  PRIMARY KEY (`idsuplier`))
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `lakydb`.`Suply` (
+  `idsuplies` INT NOT NULL,
+  `suply_code` VARCHAR(45) NOT NULL,
+  `quantity` VARCHAR(45) NULL,
+  `date` VARCHAR(45) NULL,
+  `Suplier_idsuplier` INT NOT NULL,
+  PRIMARY KEY (`idsuplies`),
+  INDEX `fk_Suply_Suplier1_idx` (`Suplier_idsuplier` ASC) VISIBLE,
+  CONSTRAINT `fk_Suply_Suplier1`
+    FOREIGN KEY (`Suplier_idsuplier`)
+    REFERENCES `lakydb`.`Suplier` (`idsuplier`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `lakydb`.`Stock_phone_info` (
+  `info_id` INT NOT NULL AUTO_INCREMENT,
+  `phone_sn` VARCHAR(45) NULL,
+  `phone_imei` INT NULL,
+  `phone_meid` VARCHAR(45) NULL,
+  `Stock_stockId` INT NOT NULL,
+  `suplier_idsuplier` INT NOT NULL,
+  `Suply_idsuplies` INT NOT NULL,
+  INDEX `fk_phone_info_Stock1_idx` (`Stock_stockId` ASC) VISIBLE,
+  PRIMARY KEY (`info_id`),
+  INDEX `fk_phone_info_suplier1_idx` (`suplier_idsuplier` ASC) VISIBLE,
+  INDEX `fk_Phone_info_Suply1_idx` (`Suply_idsuplies` ASC) VISIBLE,
+  CONSTRAINT `fk_phone_info_Stock1`
+    FOREIGN KEY (`Stock_stockId`)
+    REFERENCES `lakydb`.`Stock` (`stockId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_phone_info_suplier1`
+    FOREIGN KEY (`suplier_idsuplier`)
+    REFERENCES `lakydb`.`Suplier` (`idsuplier`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Phone_info_Suply1`
+    FOREIGN KEY (`Suply_idsuplies`)
+    REFERENCES `lakydb`.`Suply` (`idsuplies`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `lakydb`.`Stock_prices` (
+  `Stock_stockId` INT NOT NULL,
+  `quantity` INT NOT NULL,
+  `cost_pricel` DECIMAL(12) NOT NULL,
+  `sale_price` DECIMAL(12) NOT NULL,
+  `tax` INT NULL DEFAULT 0,
+  `created_date` DATETIME NULL,
+  `last_update` DATETIME NULL,
+  PRIMARY KEY (`Stock_stockId`),
+  INDEX `fk_Stock_prices_Stock1_idx` (`Stock_stockId` ASC) VISIBLE,
+  CONSTRAINT `fk_Stock_prices_Stock1`
+    FOREIGN KEY (`Stock_stockId`)
+    REFERENCES `lakydb`.`Stock` (`stockId`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `lakydb`.`Sale_phone` (
+  `Sale_phone_id` INT NOT NULL,
+  `type` VARCHAR(45) NULL,
+  `model` VARCHAR(45) NULL,
+  `phone_code` VARCHAR(45) NULL,
+  `Customer_customer_contact` INT NOT NULL,
+  PRIMARY KEY (`Sale_phone_id`),
+  INDEX `fk_Sale_phone_Customer1_idx` (`Customer_customer_contact` ASC) VISIBLE,
+  CONSTRAINT `fk_Sale_phone_Customer1`
+    FOREIGN KEY (`Customer_customer_contact`)
+    REFERENCES `lakydb`.`Customer` (`customer_contact`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `lakydb`.`phone_transaction` (
+  `phone_transaction_id` INT NOT NULL,
+  `trans_code` VARCHAR(45) NOT NULL,
+  `discount` INT NULL,
+  PRIMARY KEY (`phone_transaction_id`),
+  UNIQUE INDEX `trans_code_UNIQUE` (`trans_code` ASC) VISIBLE)
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `lakydb`.`Phone_prices` (
+  `phone_price_id` INT NOT NULL,
+  `sp` VARCHAR(45) NULL,
+  `Phone_pricescol` VARCHAR(45) NULL,
+  `tax` VARCHAR(45) NULL,
+  `date` VARCHAR(45) NULL,
+  `phone_transaction_phone_transaction_id` INT NOT NULL,
+  `Sale_phone_Sale_phone_id` INT NOT NULL,
+  PRIMARY KEY (`phone_price_id`, `Sale_phone_Sale_phone_id`),
+  INDEX `fk_Phone_prices_phone_transaction1_idx` (`phone_transaction_phone_transaction_id` ASC) VISIBLE,
+  INDEX `fk_Phone_prices_Sale_phone1_idx` (`Sale_phone_Sale_phone_id` ASC) VISIBLE,
+  CONSTRAINT `fk_Phone_prices_phone_transaction1`
+    FOREIGN KEY (`phone_transaction_phone_transaction_id`)
+    REFERENCES `lakydb`.`phone_transaction` (`phone_transaction_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Phone_prices_Sale_phone1`
+    FOREIGN KEY (`Sale_phone_Sale_phone_id`)
+    REFERENCES `lakydb`.`Sale_phone` (`Sale_phone_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
         """
         return exec_str
 
@@ -165,6 +331,13 @@ class My_db(metaclass=DB_Meta):
 if __name__ == "__main__":
     dic = My_db()
     a =dic.connect()
+    b = a.cursor()
+    b.execute("INSERT INTO `lakydb`.`users` ( `User_Name`,`User_Password`, `User_Email`)"
+                     " VALUES ( 'law2','law2' ,'law@me') on duplicate key  update ('User_name = lawe')")
+    a.commit()
+    a.close()
+    # for x in data:
+    #     print(x)
     print(a)
 
 
