@@ -44,7 +44,7 @@ class CharField(BaseValidator):
 
     def validate(self, value):
         if not isinstance(value, str):
-            raise ValueError(f'{self.name} must be integer value')
+            raise ValueError(f'{self.name} must be string')
         if len(value) < self.low_bound:
             raise ValueError(f'{self.name} must not be less than {self.low_bound}')
         if len(value) > self.upper_bound:

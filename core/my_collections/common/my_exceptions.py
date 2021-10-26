@@ -1,4 +1,4 @@
-from my_enum import Laky_Enum
+from .my_enum import Laky_Enum
 import json
 import datetime
 

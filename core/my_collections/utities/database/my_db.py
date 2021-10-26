@@ -5,11 +5,11 @@ import  mysql.connector
 from mysql.connector import errorcode
 import sqlite3
 
-sys.path.append("..")
+# sys.path.append("..")
 # from  import Custom_json
 print("catching")
-from json_util import custom_deserializer, custom_serializer
-
+# from json_util import custom_deserializer, custom_serializer
+from json_base import custom_deserializer, custom_serializer
 
 class DB_Meta(type):
     def __new__(cls, name,base, class_dict):
@@ -327,6 +327,7 @@ ENGINE = InnoDB;
         """
         return exec_str
 
+__all__ = ["My_db"]
 
 if __name__ == "__main__":
     dic = My_db()
