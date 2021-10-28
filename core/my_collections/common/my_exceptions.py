@@ -110,6 +110,11 @@ class InvalidDiscount(SalesException):
     """
     pass
 
+
+class Invalid_Item_Purchase(SalesException):
+    pass
+
+
 if __name__ == "__main__":
     # print(help(LakyException))
     raise InvalidSalesPrice("",_message=Laky_Enum.Failed)
