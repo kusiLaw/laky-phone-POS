@@ -419,26 +419,124 @@ class Phone:
         finally:
             con.close()
 
-    def undo_buy(self,  default = "trans_code"):
+
+    def undo_buy(self, key):
         # get all items in the transaction, if length is one then delete  by trans_code
-        expect= {"trans_code" :"trans_code", "by_id":"by_id" }
-        a = expect.get(default)
-        print(a)
 
-        statement ="SELECT  Sale_phone_id, quantity  FROM lakydb.sale_phone inner join  lakydb.phone_transaction  on " \
-                   "phone_transaction.phone_transaction_id = sale_phone.phone_transaction_phone_transaction_id " \
-                   "inner join lakydb.phone_prices on sale_phone.Sale_phone_id = phone_prices.Sale_phone_Sale_phone_id " \
-                   " where phone_transaction.trans_code = %s"
+        con = self.con.connect()
+        cur = con.cursor()
+        cur2 = con.cursor()
 
-        if default == "trans_code":
+        statement_code = "SELECT  Sale_phone_id, quantity, model  FROM lakydb.sale_phone inner join  lakydb.phone_transaction  on " \
+                         "phone_transaction.phone_transaction_id = sale_phone.phone_transaction_phone_transaction_id " \
+                         "inner join lakydb.phone_prices on sale_phone.Sale_phone_id = phone_prices.Sale_phone_Sale_phone_id " \
+                         " where phone_transaction.trans_code = %s"
 
-            # for each item update quantity in stock raise erorr if not in stock or deleletd
-            pass
+        stock_update = "UPDATE lakydb.stock_prices SET quantity = quantity + %s where Stock_stockId = %s"
 
-        if default =='by_id':
-            pass
+        get_stock_id = "SELECT stockId FROM lakydb.stock WHERE phone_model = %s"
+
+        try:
+
+            # deletion by trans_code,
+            if isinstance(key, str) and '-' in key:  # every trans_code has '-'
+                # Todo: i must use 're' to for more sufficiency
+                self.inner_code_delete(key, cur, cur2,statement_code,stock_update,get_stock_id, _conn=con)
+                # con.commit()
+                # con.close()
+
+            else:
+                # deletion by id
+                try:
+                    int(key)
+                except ValueError:
+                    print('key error')
+                    return
+                statement_id = "SELECT  quantity, trans_code, model  FROM lakydb.sale_phone inner join  lakydb.phone_transaction  on " \
+                               " phone_transaction.phone_transaction_id = sale_phone.phone_transaction_phone_transaction_id " \
+                               "inner join lakydb.phone_prices on sale_phone.Sale_phone_id = phone_prices.Sale_phone_Sale_phone_id " \
+                               "where sale_phone.Sale_phone_id =%s"
+                cur.execute(statement_id, (key,))
+                result = cur.fetchone()  # only one data, it quantity and trans_code
+
+                if result: # has item?, or if found
+                    get_code_by_id = dict(zip(cur.column_names, result))
+                    print('code', get_code_by_id)
+
+                    # check if this data is the only item left in the trans_code tree,
+                    # we first got hold the "code" and "quantity" and we use the code to check if is the only child left
+                    cur.execute(statement_code, (get_code_by_id['trans_code'],))
+                    get_qty_by_code = cur.fetchall() # may return more than one records
+                    print('id',get_qty_by_code)
+
+                    if get_qty_by_code and len(get_qty_by_code) < 2:
+                        # delete by trans_code, has just tested to be the only child
+                        print("am the only child letf am calling my parent to delete me")
+
+                        self.inner_code_delete(get_code_by_id['trans_code'], cur, cur2, statement_code, stock_update, get_stock_id, _conn=con)
+                        # con.commit()
+                        # con.close()
+                    else:
+                       print(f"am delete my self mum has many {len(result)} children ")
+                        # has more than one node, delete only this record
+                       cur2.execute(get_stock_id,(get_code_by_id['model'],))
+                       stock_id = cur2.fetchone()
+                       # print(stock_id)
+
+                       if stock_id:  # found
+                           # upadte stock and delete record
+                           cur2.execute(stock_update, (get_code_by_id['quantity'],stock_id[0]))
+
+                           delete_phone = "DELETE FROM lakydb.sale_phone WHERE Sale_phone_id = %s"
+                           cur2.execute(delete_phone, (key,))
+
+                           con.commit()
+                      
+                       else:
+                           print("Record not found in stock")
+
+                else:
+                    print('Record not found')
+
+        except  errors.Error as err:
+            if err.errno == errorcode.ER_DUP_ENTRY:
+                print("record already exist")
+            else:
+                print(err.msg)
+        finally:
+            con.close()
+
+    def inner_code_delete(self,key, cur, cur2 = None, statement_code = None, stock_update = None, get_stock_id =None, _conn =None ):
+
+        cur.execute(statement_code, (key,))
+        result_code = cur.fetchall()
+
+        if result_code:
+            # get_stock_id  = "SELECT stockId FROM lakydb.stock WHERE phone_model = %s"
+            delete_code = "DELETE FROM lakydb.phone_transaction WHERE trans_code = %s"
+
+            print("result_code is", result_code)
+
+            for data in result_code: # one transaction may link different records
+                data2=dict(zip(cur.column_names, data))
+
+                # go to stock and check if record is there
+                cur2.execute(get_stock_id, (data2.get("model",0), ) )
+                stock_id = cur.fetchone()
+                # print("data fetched is", stock_id, ' model is', data2.get("model",0) )
+
+                if stock_id: # found (in tuple)
+                    # update the stock table
+                    cur2.execute(stock_update, (data2.get("quantity",0), stock_id[0]) )
+
+                    # delete the record
+                    cur2.execute(delete_code, (key,))
+                    _conn.commit()
+                    _conn.close()
+                else:
+                    print("recode not found")
         else:
-            raise NotImplemented
+            print("Record not found")
 
 
     def remove_from_cache(self, sn):
@@ -757,14 +855,15 @@ if __name__ == "__main__":
     u = Active_User("laky1", "laky689393")
     u.login()
     # # # #USER TEST BUY PHONE
-    # u.add_to_cart('samsung', 'G770', '123564789','',210.05)
-    # u.add_to_cart( 'samsung', 'T770', '123564759', 'sn-321', 210.568)
-    # u.add_to_cart( 'samsung', 'F770', '123564719', 'sn-213', 210.50)
-    # # # # print(u.caches_whole)
+    u.add_to_cart('samsung', 'G770', '123564789','',210.05)
+    u.add_to_cart( 'samsung', 'T770', '123564759', 'sn-333', 210.568)
+    u.add_to_cart( 'samsung', 'F770', '123564719', 'sn-234', 210.50)
+    #     # # # # print(u.caches_whole)
     # # # # print(u.caches_retail)
     # u.buyphone( customer_number='0246689724')
 
-    u.undo_buy(default='gfyf')
+    u.undo_buy('31') #\
+
 
 
     # u.remove_from_cache('sn')
