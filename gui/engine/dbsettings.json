@@ -1,0 +1,12 @@
+{
+  "Default": "mysql",
+  "sqlite": {
+    "dbname": "lakydb"
+  },
+  "mysql": {
+    "hostname": "localhost",
+    "user": "root",
+    "dbname": "lakydb",
+    "password": "Laky@689393"
+  }
+}

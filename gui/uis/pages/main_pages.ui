@@ -173,8 +173,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1164</width>
-            <height>765</height>
+            <width>934</width>
+            <height>608</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -1695,8 +1695,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1164</width>
-            <height>765</height>
+            <width>530</width>
+            <height>606</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -3423,15 +3423,27 @@ QTabBar::tab:selected, QTabBar::tab:hover {
                         <string notr="true">background:rgb(0, 26, 0)</string>
                        </property>
                        <property name="frameShape">
-                        <enum>QFrame::StyledPanel</enum>
+                        <enum>QFrame::NoFrame</enum>
                        </property>
                        <property name="frameShadow">
                         <enum>QFrame::Raised</enum>
                        </property>
-                       <layout class="QHBoxLayout" name="horizontalLayout_15">
-                        <item>
-                         <widget class="QTableView" name="tableView_4"/>
-                        </item>
+                       <layout class="QHBoxLayout" name="stock_table_frame">
+                        <property name="spacing">
+                         <number>0</number>
+                        </property>
+                        <property name="leftMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="topMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="rightMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="bottomMargin">
+                         <number>0</number>
+                        </property>
                        </layout>
                       </widget>
                      </item>

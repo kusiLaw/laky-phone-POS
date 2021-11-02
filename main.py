@@ -5,7 +5,7 @@ from gui.uis.windows.main_window.functions_main_window import *
 from gui.uis.splashscreen.splash_screen import *
 import sys
 import os
-
+from decimal import Decimal
 # IMPORT QT CORE
 # ///////////////////////////////////////////////////////////////
 from qt_core import *
@@ -22,6 +22,7 @@ from gui.uis.windows.main_window import *
 # IMPORT PY ONE DARK WIDGETS
 # ///////////////////////////////////////////////////////////////
 from gui.widgets import *
+from gui.engine.phones_operations import Active_User
 
 # ADJUST QT FONT DPI FOR HIGHT SCALE AN 4K MONITOR
 # ///////////////////////////////////////////////////////////////
@@ -30,7 +31,8 @@ os.environ["QT_FONT_DPI"] = "96"
 
 # set splashscreen Counter
 counter = 0
-
+user = Active_User()
+user.login("laky1", "laky689393")
 
 # MAIN WINDOW
 # ///////////////////////////////////////////////////////////////
@@ -54,9 +56,106 @@ class MainWindow(QMainWindow):
         self.hide_grips = True # Show/Hide resize grips
         SetupMainWindow.setup_gui(self)
 
+        self.add_to_cart_btn.clicked.connect(lambda: self.dispatch(self.add_to_cart_btn))
+        self.remove_from_cart_btn.clicked.connect(lambda: self.dispatch(self.remove_from_cart_btn))
+        self.phone_clear_cart_btn.clicked.connect(lambda: self.dispatch(self.phone_clear_cart_btn))
+        self.phone_buyme_btn.clicked.connect(lambda : self.dispatch(self.phone_buyme_btn))
+        self.phone_print_btn.clicked.connect(lambda: self.dispatch(self.phone_print_btn))
+
+        # stock btn signals
+        # stock_table.clicked.connect(lambda: self.dispatch(self.stock_table))
+
+
+
+        self.load_sale_tables()
+        self.load_stock_tables()
+
         # SHOW MAIN WINDOW
         # ///////////////////////////////////////////////////////////////
         self.show()
+
+    def dispatch(self, obj):
+
+        if obj.text() == "Print":
+            print("print was pressed")
+
+        elif obj.text()  == "Buy / Save":
+            print('save was pressde')
+
+        elif obj.text() == "Clear Cart":
+            user.caches_retail = {}
+            self.load_phone_cart()
+
+        elif obj.text() == "Remove from Cart":
+            print('save was pressde')
+        elif obj.text() == "Add to Cart":
+            user.add_to_cart(ph_type= str(self.phone_type.currentText()),ph_model= str(self.phone_model.currentText()),
+                             sn = str(self.phone_sn.text()),ime= str(self.phone_imei.currentText()),price=Decimal(self.phone_price.text()))
+            # print(user.caches_retail)
+            self.load_phone_cart()
+
+
+    def load_phone_cart(self):
+        while (self.phone_cart.rowCount() > 0):
+                self.phone_cart.removeRow(0)
+
+        for _, val in  user.caches_retail.items():
+            cart_row_number = self.phone_cart.rowCount()
+            self.phone_cart.insertRow(cart_row_number) # Insert row
+            self.phone_cart.setItem(cart_row_number, 0, QTableWidgetItem(str(val["ph_type"]))) # Add name
+            self.phone_cart.setItem(cart_row_number, 1, QTableWidgetItem(str(val["ph_model"]))) # Add nick
+            self.phone_cart.setItem(cart_row_number, 2, QTableWidgetItem(str(val["sn"]))) # Add pass
+            self.phone_cart.setItem(cart_row_number, 3, QTableWidgetItem(str(val["ime"]))) # Add pass
+            self.phone_cart.setItem(cart_row_number, 4, QTableWidgetItem(str(val["price"]))) # Add pass
+
+            self.phone_cart.setRowHeight(cart_row_number, 20)
+
+
+    def load_sale_tables(self):
+        result = user.load_sale_phone_table()
+        while (self.table_widget.rowCount() > 0):
+            self.table_widget.removeRow(0)
+
+        for tup in result:
+            cart_row_number = self.table_widget.rowCount()
+            self.table_widget.insertRow(cart_row_number)  # Insert row
+            self.table_widget.setItem(cart_row_number, 0, QTableWidgetItem(str(tup[0])))  # Add name
+            self.table_widget.setItem(cart_row_number, 1, QTableWidgetItem(str(tup[1])))  # Add nick
+            self.table_widget.setItem(cart_row_number, 2, QTableWidgetItem(str(tup[2])))  # Add pass
+            self.table_widget.setItem(cart_row_number, 3, QTableWidgetItem(str(tup[3])))  # Add pass
+            self.table_widget.setItem(cart_row_number, 4, QTableWidgetItem(str(tup[4])))  # Add pass
+            self.table_widget.setItem(cart_row_number, 5, QTableWidgetItem(str(tup[5])))  # Add pass
+            self.table_widget.setItem(cart_row_number, 6, QTableWidgetItem(str(tup[6])))  # Add pass
+            self.table_widget.setItem(cart_row_number, 7, QTableWidgetItem(str(tup[7])))  # Add pass
+            self.table_widget.setItem(cart_row_number, 8, QTableWidgetItem(str(tup[8])))  # Add pass
+            self.table_widget.setItem(cart_row_number, 9, QTableWidgetItem(str(tup[9])))  # Add pass
+            self.table_widget.setItem(cart_row_number, 10, QTableWidgetItem(str(tup[10])))  # Add pass
+
+
+            self.table_widget.setRowHeight(cart_row_number, 20)
+
+    def load_stock_tables(self):
+        result = user.load_stock()
+        while (self.stock_table.rowCount() > 0):
+            self.stock_table.removeRow(0)
+        print(result)
+
+        for tup in result:
+            cart_row_number = self.stock_table.rowCount()
+            self.stock_table.insertRow(cart_row_number)  # Insert row
+            self.stock_table.setItem(cart_row_number, 0, QTableWidgetItem(str(tup[0])))  # Add name
+            self.stock_table.setItem(cart_row_number, 1, QTableWidgetItem(str(tup[1])))  # Add nick
+            self.stock_table.setItem(cart_row_number, 2, QTableWidgetItem(str(tup[2])))  # Add pass
+            self.stock_table.setItem(cart_row_number, 3, QTableWidgetItem(str(tup[3])))  # Add pass
+            self.stock_table.setItem(cart_row_number, 4, QTableWidgetItem(str(tup[4])))  # Add pass
+            self.stock_table.setItem(cart_row_number, 5, QTableWidgetItem(str(tup[5])))  # Add pass
+            self.stock_table.setItem(cart_row_number, 6, QTableWidgetItem(str(tup[6])))  # Add pass
+            self.stock_table.setItem(cart_row_number, 7, QTableWidgetItem(str(tup[7])))  # Add pass
+            self.stock_table.setItem(cart_row_number, 8, QTableWidgetItem(str(tup[8])))  # Add pass
+            self.stock_table.setItem(cart_row_number, 9, QTableWidgetItem(str(tup[9])))  # Add pass
+
+
+            self.stock_table.setRowHeight(cart_row_number, 20)
 
     # LEFT MENU BTN IS CLICKED
     # Run function when btn is clicked
@@ -65,6 +164,10 @@ class MainWindow(QMainWindow):
     def btn_clicked(self):
         # GET BT CLICKED
         btn = SetupMainWindow.setup_btns(self)
+
+        # if btn.objectName == "phone_buyme_btn":
+        #     print('buybought')
+        # print(btn.objectName)
 
         # Open Page 1
         if btn.objectName() == "home_btn":
@@ -245,6 +348,9 @@ class MainWindow(QMainWindow):
 
             # DEBUG
         print(f"Button {btn.objectName()}, clicked!")
+
+
+
 
     # LEFT MENU BTN IS RELEASED
     # Run function when btn is released

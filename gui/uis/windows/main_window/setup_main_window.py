@@ -37,6 +37,11 @@ from gui.core.json_themes import Themes
 # ///////////////////////////////////////////////////////////////
 from gui.widgets import *
 
+
+# from core import Active_User
+# from gui.engine.phones_operations import Active_User
+
+
 # LOAD UI MAIN
 # ///////////////////////////////////////////////////////////////
 from . ui_main import *
@@ -151,6 +156,9 @@ class SetupMainWindow:
             return self.ui.left_menu.sender()
         elif self.ui.left_column.sender() != None:
             return self.ui.left_column.sender()
+
+        # elif self.ui.load_pages.sender() != None:
+        #     return self.ui.load_pages.sender()
 
     # SETUP MAIN WINDOW WITH CUSTOM PARAMETERS
     # ///////////////////////////////////////////////////////////////
@@ -295,8 +303,8 @@ class SetupMainWindow:
         self.reset_pass.setMinimumHeight(30)
 
         self.ui.right_column.reset_password_frame.addWidget(self.reset_pass)
-
-
+        # p = Active_User("Laky3" "laky689393")
+        # self.reset_pass.clicked.connect(p.login())
 
         self.current_pass = PyLineEdit(
 
@@ -322,21 +330,22 @@ class SetupMainWindow:
 
             context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
-            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color=self.themes["app_color"]["bg_three"],
 
         )
 
         self.ui.right_column.confirm_password_frame.addWidget(self.comfirm_pass)
 
 
-
-
+#///////////////////////////////////////////////////////////////////////////////////////////////////
         # MAIN PAGE SECTION
+#///////////////////////////////////////////////////////////////////////////////////////////////////
+
         self.customerName = PyLineEdit(
 
             context_color = self.themes["app_color"]["context_color"],
             color = self.themes["app_color"]["text_active"],
-            bg_color = self.themes["app_color"]["dark_one"],
+            bg_color = self.themes["app_color"]["bg_three"],
 
             )
 
@@ -349,7 +358,7 @@ class SetupMainWindow:
 
             context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
-            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color=self.themes["app_color"]["bg_three"],
 
         )
 
@@ -443,7 +452,7 @@ class SetupMainWindow:
         self.phone_sn = PyLineEdit(
             context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
-            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color=self.themes["app_color"]["bg_three"],
 
         )
 
@@ -455,7 +464,7 @@ class SetupMainWindow:
         self.phone_price = PyLineEdit(
             context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
-            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color=self.themes["app_color"]["bg_three"],
 
         )
 
@@ -464,7 +473,7 @@ class SetupMainWindow:
         self.phone_discount = PyLineEdit(
             context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
-            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color=self.themes["app_color"]["bg_three"],
 
         )
 
@@ -474,7 +483,7 @@ class SetupMainWindow:
         self.phone_tax = PyLineEdit(
             context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
-            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color=self.themes["app_color"]["bg_three"],
 
         )
 
@@ -493,8 +502,12 @@ class SetupMainWindow:
             hover_border_color = self.themes["app_color"]["context_color"]
         )
         self.add_to_cart_btn.setMinimumHeight(30)
-
         self.ui.load_pages.phone_add_to_cart_layout.addWidget(self.add_to_cart_btn)
+
+        # self.add_to_cart_btn.clicked.connect(printInput)
+
+
+
 
         self.remove_from_cart_btn = PyPushButton2(
             text="Remove from Cart",
@@ -510,6 +523,7 @@ class SetupMainWindow:
         self.remove_from_cart_btn.setMinimumHeight(30)
         self.ui.load_pages.remov_from_cart_layout.addWidget(self.remove_from_cart_btn)
 
+
         self.phone_clear_cart_btn = PyPushButton2(
             text="Clear Cart",
             radius=8,
@@ -523,6 +537,7 @@ class SetupMainWindow:
         self.phone_clear_cart_btn.setMinimumHeight(30)
         self.ui.load_pages.phone_clear_cart_layout.addWidget(self.phone_clear_cart_btn)
 
+
         self.phone_buyme_btn = PyPushButton2(
             text="Buy / Save",
             radius=8,
@@ -535,6 +550,7 @@ class SetupMainWindow:
         )
         self.phone_buyme_btn.setMinimumHeight(30)
         self.ui.load_pages.phone_buyme_layout.addWidget(self.phone_buyme_btn)
+
 
         self.phone_clear_btn = PyPushButton2(
             text="Clear",
@@ -589,13 +605,12 @@ class SetupMainWindow:
         self.phone_print_btn.setMinimumHeight(30)
         self.ui.load_pages.phone_print_layout.addWidget(self.phone_print_btn)
 
-        def printInput():
+        def printInput(message = None):
             QMessageBox.information(None, "Received Key Release EVent", f"You Pres: " )
             print(self.phone_price.text())
 
-        self.phone_print_btn.clicked.connect(printInput)
-
-
+        self.phone_print_btn.clicked.connect(lambda messasage: printInput(messasage))
+        # self.phone_print_btn.clicked.connect(printInput(message='hjkhjghjgh'))
 
         # Search
         self.phone_search_edit = PyLineEdit(
@@ -627,7 +642,7 @@ class SetupMainWindow:
             scroll_bar_btn_color = self.themes["app_color"]["dark_four"],
             context_color = self.themes["app_color"]["context_color"]
         )
-        self.table_widget.setColumnCount(3)
+        self.table_widget.setColumnCount(11)
         self.table_widget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.table_widget.setSelectionMode(QAbstractItemView.ExtendedSelection)
         self.table_widget.setSelectionBehavior(QAbstractItemView.SelectRows)
@@ -635,31 +650,62 @@ class SetupMainWindow:
         # Columns / Header
         self.column_1 = QTableWidgetItem()
         self.column_1.setTextAlignment(Qt.AlignCenter)
-        self.column_1.setText("NAME")
+        self.column_1.setText("Customer")
 
         self.column_2 = QTableWidgetItem()
         self.column_2.setTextAlignment(Qt.AlignCenter)
-        self.column_2.setText("NICK")
+        self.column_2.setText("Customer Contact")
 
         self.column_3 = QTableWidgetItem()
         self.column_3.setTextAlignment(Qt.AlignCenter)
-        self.column_3.setText("PASS")
+        self.column_3.setText("Phone Type")
+
+        self.column_4 = QTableWidgetItem()
+        self.column_4.setTextAlignment(Qt.AlignCenter)
+        self.column_4.setText("Phone Model")
+
+        self.column_5 = QTableWidgetItem()
+        self.column_5.setTextAlignment(Qt.AlignCenter)
+        self.column_5.setText("Serial Number")
+
+        self.column_6 = QTableWidgetItem()
+        self.column_6.setTextAlignment(Qt.AlignCenter)
+        self.column_6.setText("Price")
+
+        self.column_7 = QTableWidgetItem()
+        self.column_7.setTextAlignment(Qt.AlignCenter)
+        self.column_7.setText("Tax")
+
+        self.column_8 = QTableWidgetItem()
+        self.column_8.setTextAlignment(Qt.AlignCenter)
+        self.column_8.setText("Transaction Code")
+
+        self.column_9 = QTableWidgetItem()
+        self.column_9.setTextAlignment(Qt.AlignCenter)
+        self.column_9.setText("Discount")
+
+        self.column_10 = QTableWidgetItem()
+        self.column_10.setTextAlignment(Qt.AlignCenter)
+        self.column_10.setText("Date")
+
+        self.column_11 = QTableWidgetItem()
+        self.column_11.setTextAlignment(Qt.AlignCenter)
+        self.column_11.setText("User")
+
+
 
         # Set column
         self.table_widget.setHorizontalHeaderItem(0, self.column_1)
         self.table_widget.setHorizontalHeaderItem(1, self.column_2)
         self.table_widget.setHorizontalHeaderItem(2, self.column_3)
-
-        for x in range(20):
-            row_number = self.table_widget.rowCount()
-            self.table_widget.insertRow(row_number) # Insert row
-            self.table_widget.setItem(row_number, 0, QTableWidgetItem(str("Lawrence"))) # Add name
-            self.table_widget.setItem(row_number, 1, QTableWidgetItem(str("vfx_on_fire_" + str(x)))) # Add nick
-            self.pass_text = QTableWidgetItem()
-            self.pass_text.setTextAlignment(Qt.AlignCenter)
-            self.pass_text.setText("12345" + str(x))
-            self.table_widget.setItem(row_number, 2, self.pass_text) # Add pass
-            self.table_widget.setRowHeight(row_number, 22)
+        self.table_widget.setHorizontalHeaderItem(3, self.column_4)
+        self.table_widget.setHorizontalHeaderItem(4, self.column_5)
+        self.table_widget.setHorizontalHeaderItem(5, self.column_6)
+        self.table_widget.setHorizontalHeaderItem(6, self.column_7)
+        self.table_widget.setHorizontalHeaderItem(7, self.column_8)
+        self.table_widget.setHorizontalHeaderItem(8, self.column_9)
+        self.table_widget.setHorizontalHeaderItem(9, self.column_10)
+        self.table_widget.setHorizontalHeaderItem(10, self.column_11)
 
         self.ui.load_pages.phone_table.addWidget(self.table_widget)
 
@@ -679,7 +725,7 @@ class SetupMainWindow:
             scroll_bar_btn_color = self.themes["app_color"]["dark_four"],
             context_color = self.themes["app_color"]["context_color"]
         )
-        self.phone_cart.setColumnCount(3)
+        self.phone_cart.setColumnCount(5)
         self.phone_cart.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.phone_cart.setSelectionMode(QAbstractItemView.ExtendedSelection)
         self.phone_cart.setSelectionBehavior(QAbstractItemView.SelectRows)
@@ -687,36 +733,37 @@ class SetupMainWindow:
         # Columns / Header
         self.cart_column_1 = QTableWidgetItem()
         self.cart_column_1.setTextAlignment(Qt.AlignCenter)
-        self.cart_column_1.setText("NAME")
+        self.cart_column_1.setText("Type")
 
         self.cart_column_2 = QTableWidgetItem()
         self.cart_column_2.setTextAlignment(Qt.AlignCenter)
-        self.cart_column_2.setText("NICK")
+        self.cart_column_2.setText("Model")
 
         self.cart_column_3 = QTableWidgetItem()
         self.cart_column_3.setTextAlignment(Qt.AlignCenter)
-        self.cart_column_3.setText("PASS")
+        self.cart_column_3.setText("S/N")
+
+        self.cart_column_4 = QTableWidgetItem()
+        self.cart_column_4.setTextAlignment(Qt.AlignCenter)
+        self.cart_column_4.setText("Imei")
+
+        self.cart_column_5 = QTableWidgetItem()
+        self.cart_column_5.setTextAlignment(Qt.AlignCenter)
+        self.cart_column_5.setText("Price")
 
         # Set column
         self.phone_cart.setHorizontalHeaderItem(0, self.cart_column_1)
         self.phone_cart.setHorizontalHeaderItem(1, self.cart_column_2)
         self.phone_cart.setHorizontalHeaderItem(2, self.cart_column_3)
-
-        for x in range(10):
-            cart_row_number = self.phone_cart.rowCount()
-            self.phone_cart.insertRow(cart_row_number) # Insert row
-            self.phone_cart.setItem(cart_row_number, 0, QTableWidgetItem(str("Lawrence"))) # Add name
-            self.phone_cart.setItem(cart_row_number, 1, QTableWidgetItem(str("vfx_on_fire_" + str(x)))) # Add nick
-            self.cart_pass_text = QTableWidgetItem()
-            self.cart_pass_text.setTextAlignment(Qt.AlignCenter)
-            self.cart_pass_text.setText("12345" + str(x))
-            self.phone_cart.setItem(cart_row_number, 2, self.cart_pass_text) # Add pass
-            self.phone_cart.setRowHeight(cart_row_number, 22)
+        self.phone_cart.setHorizontalHeaderItem(3, self.cart_column_4)
+        self.phone_cart.setHorizontalHeaderItem(4, self.cart_column_5)
 
         self.ui.load_pages.phone_cart_layout.addWidget(self.phone_cart)
 
 
+# ///////////////////////////////////////////////////////////////////////////////////////////////////
         # STOCK SECTION
+# ///////////////////////////////////////////////////////////////////////////////////////////////////
 
         self.stock_type = PyComBox(
 
@@ -775,7 +822,7 @@ class SetupMainWindow:
             bg_color=self.themes["app_color"]["dark_one"],
             radius=0,
             bg_color_hover=self.themes["app_color"]["context_color"],
-            items=['SN Number only', 'Imei Number only', 'Meid Number only'],
+            items=['SN Number only'],
             editable=False
         )
 
@@ -872,7 +919,7 @@ class SetupMainWindow:
         self.ui.load_pages.stock_delete_layout.addWidget(self.stock_delete)
 
         self.stock_clear = PyPushButton2(
-            text="Clear",
+             text="Clear",
             radius=8,
             color=self.themes["app_color"]["text_foreground"],
             bg_color=self.themes["app_color"]["dark_one"],
@@ -905,6 +952,79 @@ class SetupMainWindow:
         )
 
         self.ui.load_pages.stock_search_layout.addWidget(self.stock_search)
+
+        self.stock_table = PyTableWidget(
+            radius=8,
+            color=self.themes["app_color"]["text_foreground"],
+            selection_color=self.themes["app_color"]["context_color"],
+            bg_color=self.themes["app_color"]["bg_two"],
+            header_horizontal_color=self.themes["app_color"]["bg_one"],
+            header_vertical_color=self.themes["app_color"]["bg_three"],
+            bottom_line_color=self.themes["app_color"]["bg_three"],
+            grid_line_color=self.themes["app_color"]["bg_one"],
+            scroll_bar_bg_color=self.themes["app_color"]["bg_one"],
+            scroll_bar_btn_color=self.themes["app_color"]["dark_four"],
+            context_color=self.themes["app_color"]["context_color"]
+        )
+        self.stock_table.setColumnCount(10)
+        self.stock_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.stock_table.setSelectionMode(QAbstractItemView.ExtendedSelection)
+        self.stock_table.setSelectionBehavior(QAbstractItemView.SelectRows)
+
+        # Columns / Header
+        self.cart_column_1 = QTableWidgetItem()
+        self.cart_column_1.setTextAlignment(Qt.AlignCenter)
+        self.cart_column_1.setText("ID")
+
+        self.cart_column_2 = QTableWidgetItem()
+        self.cart_column_2.setTextAlignment(Qt.AlignCenter)
+        self.cart_column_2.setText("Type")
+
+        self.cart_column_3 = QTableWidgetItem()
+        self.cart_column_3.setTextAlignment(Qt.AlignCenter)
+        self.cart_column_3.setText("Model")
+
+        self.cart_column_4 = QTableWidgetItem()
+        self.cart_column_4.setTextAlignment(Qt.AlignCenter)
+        self.cart_column_4.setText("Quantity")
+
+        self.cart_column_5 = QTableWidgetItem()
+        self.cart_column_5.setTextAlignment(Qt.AlignCenter)
+        self.cart_column_5.setText("Cost Price")
+
+        self.cart_column_6 = QTableWidgetItem()
+        self.cart_column_6.setTextAlignment(Qt.AlignCenter)
+        self.cart_column_6.setText("Salling Price")
+
+        self.cart_column_7 = QTableWidgetItem()
+        self.cart_column_7.setTextAlignment(Qt.AlignCenter)
+        self.cart_column_7.setText("tax %")
+
+        self.cart_column_8 = QTableWidgetItem()
+        self.cart_column_8.setTextAlignment(Qt.AlignCenter)
+        self.cart_column_8.setText("Created Date")
+
+        self.cart_column_9 = QTableWidgetItem()
+        self.cart_column_9.setTextAlignment(Qt.AlignCenter)
+        self.cart_column_9.setText("Last Upadte")
+
+        self.cart_column_10 = QTableWidgetItem()
+        self.cart_column_10.setTextAlignment(Qt.AlignCenter)
+        self.cart_column_10.setText("User")
+
+        # Set column
+        self.stock_table.setHorizontalHeaderItem(0, self.cart_column_1)
+        self.stock_table.setHorizontalHeaderItem(1, self.cart_column_2)
+        self.stock_table.setHorizontalHeaderItem(2, self.cart_column_3)
+        self.stock_table.setHorizontalHeaderItem(3, self.cart_column_4)
+        self.stock_table.setHorizontalHeaderItem(4, self.cart_column_5)
+        self.stock_table.setHorizontalHeaderItem(5, self.cart_column_6)
+        self.stock_table.setHorizontalHeaderItem(6, self.cart_column_7)
+        self.stock_table.setHorizontalHeaderItem(7, self.cart_column_8)
+        self.stock_table.setHorizontalHeaderItem(8, self.cart_column_9)
+        self.stock_table.setHorizontalHeaderItem(8, self.cart_column_10)
+
+        self.ui.load_pages.stock_table_frame.addWidget(self.stock_table)
 
     # ///////////////////////////////////////////////////////////////
         # END - EXAMPLE CUSTOM WIDGETS

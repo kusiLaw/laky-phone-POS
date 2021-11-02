@@ -92,7 +92,7 @@ class Ui_MainPages(object):
         self.scrollArea.setWidgetResizable(True)
         self.contents = QWidget()
         self.contents.setObjectName(u"contents")
-        self.contents.setGeometry(QRect(0, 0, 1164, 765))
+        self.contents.setGeometry(QRect(0, 0, 934, 608))
         self.verticalLayout_4 = QVBoxLayout(self.contents)
         self.verticalLayout_4.setSpacing(0)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
@@ -698,7 +698,7 @@ class Ui_MainPages(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.Contents = QWidget()
         self.Contents.setObjectName(u"Contents")
-        self.Contents.setGeometry(QRect(0, 0, 1164, 765))
+        self.Contents.setGeometry(QRect(0, 0, 530, 606))
         self.verticalLayout_2 = QVBoxLayout(self.Contents)
         self.verticalLayout_2.setSpacing(0)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
@@ -1474,15 +1474,12 @@ class Ui_MainPages(object):
         self.stock_table.setObjectName(u"stock_table")
         self.stock_table.setMinimumSize(QSize(0, 157))
         self.stock_table.setStyleSheet(u"background:rgb(0, 26, 0)")
-        self.stock_table.setFrameShape(QFrame.StyledPanel)
+        self.stock_table.setFrameShape(QFrame.NoFrame)
         self.stock_table.setFrameShadow(QFrame.Raised)
-        self.horizontalLayout_15 = QHBoxLayout(self.stock_table)
-        self.horizontalLayout_15.setObjectName(u"horizontalLayout_15")
-        self.tableView_4 = QTableView(self.stock_table)
-        self.tableView_4.setObjectName(u"tableView_4")
-
-        self.horizontalLayout_15.addWidget(self.tableView_4)
-
+        self.stock_table_frame = QHBoxLayout(self.stock_table)
+        self.stock_table_frame.setSpacing(0)
+        self.stock_table_frame.setObjectName(u"stock_table_frame")
+        self.stock_table_frame.setContentsMargins(0, 0, 0, 0)
 
         self.verticalLayout_11.addWidget(self.stock_table)
 
