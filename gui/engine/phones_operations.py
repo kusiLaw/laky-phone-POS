@@ -215,6 +215,62 @@ class PhoneStock:
     def delete_all(self):
         pass
 
+    def feed_type(self):
+        con = self.con.connect()
+        cur = con.cursor()
+        statement = "SELECT distinct  phone_name FROM lakydb.stock;"
+        try:
+            cur.execute(statement,tuple())
+            result = cur.fetchall()
+            result = [val[0] for val in result]
+        except  errors.Error as err:
+            return []
+        else:
+            return result
+        finally:
+            con.close()
+
+    def feed_model(self, key):
+        statement = 'SELECT phone_model FROM lakydb.stock where phone_name = %s'
+        con = self.con.connect()
+        cur = con.cursor()
+
+        try:
+            cur.execute(statement, (key, ))
+            result = cur.fetchall()
+            result = [val[0] for val in result]
+        except  errors.Error as err:
+            return []
+        else:
+            return result
+        finally:
+            con.close()
+
+    def model_feed_rest(self, key):
+        statement ="SELECT stock_prices.quantity as qty, stock_prices.cost_price as cp, stock_prices.sale_price as sp ," \
+        " stock_prices.tax as tax, stock_prices.last_update FROM lakydb.stock  inner join " \
+        " lakydb.stock_prices on  stock.stockId = stock_prices.Stock_stockId where stock.phone_model = %s;"
+
+        con = self.con.connect()
+        cur = con.cursor()
+
+        try:
+            cur.execute(statement, (key, ))
+            result = cur.fetchone()
+            if result:
+                result = dict(zip(cur.column_names, result))
+            #     print(result)
+            # print(result, 'ygghghg')
+        except  errors.Error as err:
+            return {}
+        except :
+            return {}
+        else:
+            return result
+
+        finally:
+            con.close()
+
 
 class Phone:
     caches_whole = {}
@@ -858,11 +914,7 @@ class Active_User(PhoneStock, Phone):
     #PhoneDb Operation
     def savestock(self, user_id, name, model, cp, sp, qty, date,tax=0, suplier = "n/a", suplier_number='n/a',
                   prod_code='n/a', code_list='n/a'):
-        # (self, user_id, name, model, cp, sp, qty, dat, suplier=None, prod_code=None,
-        # tax=0, prefer_code="sn", code_list=None, suplier_number = None):
-        # (user_id=u.id, name="samsung", model="T300", cp=100, sp=200, qty=20,
-        # date='2020-12-12', prod_code='1235468', tax= 0,
-        # code_list=['sn/1234', 'sn/1235', 'sn/1236', 'sn/1237', 'sn/1238'], suplier_number='0243689564')
+
         if not self.has_login:
             print("Not authorised, please login first")
             return

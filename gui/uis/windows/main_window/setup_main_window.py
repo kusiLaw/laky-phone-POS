@@ -81,23 +81,7 @@ class SetupMainWindow:
             "is_active": False
         },
 
-        {
-            "btn_icon": "Accessories2.svg",
-            "btn_id": "accessories_btn",
-            "btn_text": "Phone Accessories",
-            "btn_tooltip": "Phone Accessories",
-            "show_top": True,
-            "is_active": False
-        },
 
-        {
-            "btn_icon" : "repairs.svg",
-            "btn_id" : "service_btn",
-            "btn_text" : "Phone Repairs",
-            "btn_tooltip" : "Phone Repairs",
-            "show_top" : True,
-            "is_active" : False
-        },
         {
             "btn_icon": "repairs.svg",
             "btn_id": "stock_btn",
@@ -127,6 +111,24 @@ class SetupMainWindow:
 
 
     ]
+
+    # {
+    #     "btn_icon": "Accessories2.svg",
+    #     "btn_id": "accessories_btn",
+    #     "btn_text": "Phone Accessories",
+    #     "btn_tooltip": "Phone Accessories",
+    #     "show_top": True,
+    #     "is_active": False
+    # },
+    #
+    # {
+    #     "btn_icon": "repairs.svg",
+    #     "btn_id": "service_btn",
+    #     "btn_text": "Phone Repairs",
+    #     "btn_tooltip": "Phone Repairs",
+    #     "show_top": True,
+    #     "is_active": False
+    # },
 
      # ADD TITLE BAR MENUS
     # ///////////////////////////////////////////////////////////////
@@ -341,12 +343,56 @@ class SetupMainWindow:
         # MAIN PAGE SECTION
 #///////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+        self.user_name = PyLineEdit(
+
+            context_color=self.themes["app_color"]["context_color"],
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["bg_three"],
+            maxlen=22,
+            # validator=QIntValidator()
+        )
+        # self.user_name.height = 40
+        self.user_name.setMinimumHeight(40)
+        self.ui.load_pages.login_username_frame.addWidget(self.user_name)
+
+
+        self.user_passsword = PyLineEdit(
+
+            context_color=self.themes["app_color"]["context_color"],
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["bg_three"],
+            maxlen=22,
+            # validator=QIntValidator()
+        )
+        # self.user_passsword.height = 40
+        self.user_passsword.setMinimumHeight(40)
+        self.ui.load_pages.login_password_frame.addWidget(self.user_passsword)
+
+        self.login_btn = PyPushButton2(
+            text="Login",
+            radius=8,
+            color=self.themes["app_color"]["text_foreground"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color_hover=self.themes["app_color"]["dark_three"],
+            bg_color_pressed=self.themes["app_color"]["dark_four"],
+            hover_border_color=self.themes["app_color"]["context_color"]
+
+        )
+        self.login_btn.setMinimumHeight(40)
+        self.ui.load_pages.login_button_fame.addWidget(self.login_btn)
+
+
+
+        # ///////////////////////
+
         self.customerName = PyLineEdit(
 
             context_color = self.themes["app_color"]["context_color"],
             color = self.themes["app_color"]["text_active"],
             bg_color = self.themes["app_color"]["bg_three"],
-
+            maxlen=22,
+            # validator=QIntValidator()
             )
 
         # add to phone
@@ -359,7 +405,8 @@ class SetupMainWindow:
             context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
             bg_color=self.themes["app_color"]["bg_three"],
-
+            maxlen=15,
+            validator=QIntValidator()
         )
 
         self.ui.load_pages.customer_contact_edit.addWidget(self.contactName)
@@ -380,7 +427,8 @@ class SetupMainWindow:
             bg_color=self.themes["app_color"]["dark_one"],
             radius=8,
             bg_color_hover=self.themes["app_color"]["context_color"],
-            items=['item 1', 'item 2', 'item 2']
+            items=['item 1', 'item 2', 'item 2'],
+            editable = False
 
         )
 
@@ -392,7 +440,8 @@ class SetupMainWindow:
             bg_color=self.themes["app_color"]["dark_one"],
             radius=8,
             bg_color_hover=self.themes["app_color"]["context_color"],
-            items=['item 1', 'item 2', 'item 2']
+            items=['item 1', 'item 2', 'item 2'],
+            editable=False
 
         )
 
@@ -465,7 +514,8 @@ class SetupMainWindow:
             context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
             bg_color=self.themes["app_color"]["bg_three"],
-
+            maxlen=12,
+            validator=QDoubleValidator(0.99,99.99,2)
         )
 
         self.ui.load_pages.phone_price_edit.addWidget(self.phone_price)
@@ -474,7 +524,8 @@ class SetupMainWindow:
             context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
             bg_color=self.themes["app_color"]["bg_three"],
-
+            maxlen = 2,
+            validator = QIntValidator()
         )
 
         self.ui.load_pages.phone_discount_edit.addWidget(self.phone_discount)
@@ -484,7 +535,8 @@ class SetupMainWindow:
             context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
             bg_color=self.themes["app_color"]["bg_three"],
-
+            maxlen= 8,
+            read_only  = True
         )
 
         self.ui.load_pages.phone_tax_edit.addWidget(self.phone_tax)
@@ -644,8 +696,12 @@ class SetupMainWindow:
         )
         self.table_widget.setColumnCount(11)
         self.table_widget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+
+
         self.table_widget.setSelectionMode(QAbstractItemView.ExtendedSelection)
         self.table_widget.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.table_widget.setEditTriggers(QAbstractItemView.NoEditTriggers)
+
 
         # Columns / Header
         self.column_1 = QTableWidgetItem()
@@ -729,6 +785,8 @@ class SetupMainWindow:
         self.phone_cart.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.phone_cart.setSelectionMode(QAbstractItemView.ExtendedSelection)
         self.phone_cart.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.phone_cart.setEditTriggers(QAbstractItemView.NoEditTriggers)
+
 
         # Columns / Header
         self.cart_column_1 = QTableWidgetItem()
@@ -832,8 +890,9 @@ class SetupMainWindow:
 
             context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
-            bg_color=self.themes["app_color"]["dark_one"]
-
+            bg_color=self.themes["app_color"]["dark_one"],
+            maxlen = 12,
+            validator = QDoubleValidator(0.99, 99.99, 2)
         )
 
         self.ui.load_pages.stock_cp_layout.addWidget(self.stock_cp)
@@ -868,6 +927,20 @@ class SetupMainWindow:
         )
 
         self.ui.load_pages.stock_tax_layout.addWidget(self.stock_tax)
+
+
+        self.stock_suplier_contact = PyLineEdit(
+
+            context_color=self.themes["app_color"]["context_color"],
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["dark_one"]
+
+        )
+
+        self.ui.load_pages.suplier_contact_layout.addWidget(self.stock_suplier_contact)
+
+
+
 
         self.stock_qr = PyToggle(
             width=70,
@@ -970,6 +1043,7 @@ class SetupMainWindow:
         self.stock_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.stock_table.setSelectionMode(QAbstractItemView.ExtendedSelection)
         self.stock_table.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.stock_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
 
         # Columns / Header
         self.cart_column_1 = QTableWidgetItem()

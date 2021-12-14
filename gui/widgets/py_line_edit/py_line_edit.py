@@ -50,7 +50,10 @@ class PyLineEdit(QLineEdit):
         selection_color = "#FFF",
         bg_color = "#333",
         bg_color_active = "#222",
-        context_color = "#00ABE8"
+        context_color = "#00ABE8",
+        maxlen = 255,
+        read_only = False,
+        validator = None
     ):
         super().__init__()
 
@@ -59,8 +62,13 @@ class PyLineEdit(QLineEdit):
             self.setText(text)
         if place_holder_text:
             self.setPlaceholderText(place_holder_text)
+        if validator:
+            self.setValidator(validator)
 
-        # self.setMaximum(5)
+        self.setMaxLength(maxlen)
+        self.setReadOnly(read_only)
+
+
 
         # SET STYLESHEET
         self.set_stylesheet(

@@ -491,7 +491,7 @@ class Phone:
                            cur2.execute(delete_phone, (key,))
 
                            con.commit()
-                      
+
                        else:
                            print("Record not found in stock")
 

@@ -3,13 +3,15 @@
 # ///////////////////////////////////////////////////////////////
 from gui.uis.windows.main_window.functions_main_window import *
 from gui.uis.splashscreen.splash_screen import *
+from gui.uis.login.login import *
+
 import sys
 import os
 from decimal import Decimal
 # IMPORT QT CORE
 # ///////////////////////////////////////////////////////////////
 from qt_core import *
-
+from datetime import datetime
 # IMPORT SETTINGS
 # ///////////////////////////////////////////////////////////////
 from gui.core.json_settings import Settings
@@ -31,8 +33,8 @@ os.environ["QT_FONT_DPI"] = "96"
 
 # set splashscreen Counter
 counter = 0
+
 user = Active_User()
-user.login("laky1", "laky689393")
 
 # MAIN WINDOW
 # ///////////////////////////////////////////////////////////////
@@ -56,15 +58,29 @@ class MainWindow(QMainWindow):
         self.hide_grips = True # Show/Hide resize grips
         SetupMainWindow.setup_gui(self)
 
+        self.showcomponents()
+        self.login_btn.clicked.connect(lambda: self.login())
+        self.sign_out.clicked.connect(lambda: self.logout())
+
+
+
         self.add_to_cart_btn.clicked.connect(lambda: self.dispatch(self.add_to_cart_btn))
         self.remove_from_cart_btn.clicked.connect(lambda: self.dispatch(self.remove_from_cart_btn))
         self.phone_clear_cart_btn.clicked.connect(lambda: self.dispatch(self.phone_clear_cart_btn))
         self.phone_buyme_btn.clicked.connect(lambda : self.dispatch(self.phone_buyme_btn))
         self.phone_print_btn.clicked.connect(lambda: self.dispatch(self.phone_print_btn))
+        self.phone_clear_btn.clicked.connect(lambda : self.clearforms(flag='phone'))
+        self.table_widget.currentItemChanged.connect(lambda :self.table_row_Change(self.table_widget))
+
+
+        self.phone_type.currentIndexChanged.connect(lambda: self.type_feed_model(self.phone_model,str(self.phone_type.currentText().strip())))
+        self.phone_model.currentIndexChanged.connect(lambda:self.model_feed(str(self.phone_model.currentText().strip()), "phone"))
 
         # stock btn signals
-        # stock_table.clicked.connect(lambda: self.dispatch(self.stock_table))
-
+        self.stock_save.clicked.connect(lambda: self.dispatch(self.stock_save))
+        self.stock_type.currentIndexChanged.connect(lambda: self.type_feed_model(self.stock_model,str(self.stock_type.currentText().strip())))
+        self.stock_model.currentIndexChanged.connect(lambda:self.model_feed(str(self.stock_model.currentText().strip())))
+        self.stock_clear.clicked.connect(lambda: self.clearforms())
 
 
         self.load_sale_tables()
@@ -74,6 +90,56 @@ class MainWindow(QMainWindow):
         # ///////////////////////////////////////////////////////////////
         self.show()
 
+    def login(self):
+        if user.login(str(self.user_name.text()), str(self.user_passsword.text())):
+            self.showcomponents(True)
+            #clear user password in order not to hack
+            user.password = ''
+            self.user_passsword.clear()
+
+            #load the dashbord
+            MainFunctions.set_page(self, self.ui.load_pages.dasboard)
+
+        else:
+            print('wrong username or password')
+
+    def logout(self):
+        # load the login form
+        MainFunctions.set_page(self, self.ui.load_pages.home_page)
+        #hide buttons
+        self.showcomponents(False)
+
+        if  MainFunctions.left_column_is_visible:
+            MainFunctions.toggle_left_column(self)
+        if MainFunctions.right_column_is_visible:
+            MainFunctions.toggle_right_column(self)
+
+
+
+
+    def table_row_Change(self, table_widget, flag = 'stock'):
+        index = self.table_widget.currentIndex() # get hold of row index clicked
+        # print(index.row(), index.column())
+
+        data = []
+        for col in range(table_widget.columnCount()): # iterate through column count
+            # it = table_widget.item(ind.row(), col)
+            data.append(table_widget.item(index.row(), col).text())
+        # feed data to the form
+        print(data)
+        if data:
+            self.customerName.setText(data[0])
+            self.contactName.setText(data[1])
+
+            self.phone_type.setEditText(data[2])
+            self.phone_model.setEditText(data[3])
+            # self.phone_imei.setText(data[1])
+
+            self.phone_sn.setText(data[4])
+            self.phone_price.setText(data[5])
+            self.phone_discount.setText(data[6])
+            self.phone_tax.setText(data[8])
+
     def dispatch(self, obj):
 
         if obj.text() == "Print":
@@ -81,7 +147,11 @@ class MainWindow(QMainWindow):
 
         elif obj.text()  == "Buy / Save":
             print('save was pressde')
-
+            print(user.caches_retail)
+        elif obj.text() == "Save":
+            # stock
+            # self.save_stock()
+            print(user.caches_retail)
         elif obj.text() == "Clear Cart":
             user.caches_retail = {}
             self.load_phone_cart()
@@ -89,11 +159,36 @@ class MainWindow(QMainWindow):
         elif obj.text() == "Remove from Cart":
             print('save was pressde')
         elif obj.text() == "Add to Cart":
-            user.add_to_cart(ph_type= str(self.phone_type.currentText()),ph_model= str(self.phone_model.currentText()),
-                             sn = str(self.phone_sn.text()),ime= str(self.phone_imei.currentText()),price=Decimal(self.phone_price.text()))
-            # print(user.caches_retail)
-            self.load_phone_cart()
+            if not self.phone_sn.text() == '':
+                user.add_to_cart(ph_type= str(self.phone_type.currentText()),ph_model= str(self.phone_model.currentText()),
+                                 sn = str(self.phone_sn.text()),ime= str(self.phone_imei.currentText()),price=Decimal(self.phone_price.text()))
+                # print(user.caches_retail)
+                self.load_phone_cart()
+                self.select_table_row(self.phone_cart)
+                return
+            QMessageBox.information(None, "Received Key Release EVent", f"Nothing to add to cart, make sure sn is not empty \n Thank you" )
 
+    def clearforms(self, flag = "stock"):
+        if flag == 'stock':
+            self.stock_cp.setText("")
+            self.stock_qantity.setText("")
+            self.stock_sp.setText("")
+            self.stock_tax.setText("")
+            self.stock_type.clearEditText()
+            self.stock_model.clearEditText()
+            return
+        if flag == 'phone':
+            self.customerName.setText("")
+            self.contactName.setText("")
+            self.phone_sn.setText("")
+            self.phone_price.setText("")
+            self.phone_type.clearEditText()
+            self.phone_model.clearEditText()
+            self.phone_imei.clearEditText()
+
+            # self.phone_price.setText(str(dic.get('sp', "")))
+            # self.phone_tax.setText(str(dic.get('tax', "")))
+            # self.phone_discount.setText(str(dic.get('0')))
 
     def load_phone_cart(self):
         while (self.phone_cart.rowCount() > 0):
@@ -110,8 +205,8 @@ class MainWindow(QMainWindow):
 
             self.phone_cart.setRowHeight(cart_row_number, 20)
 
-
     def load_sale_tables(self):
+
         result = user.load_sale_phone_table()
         while (self.table_widget.rowCount() > 0):
             self.table_widget.removeRow(0)
@@ -157,7 +252,76 @@ class MainWindow(QMainWindow):
 
             self.stock_table.setRowHeight(cart_row_number, 20)
 
-    # LEFT MENU BTN IS CLICKED
+    def save_stock(self):
+
+        user.savestock(user_id=user.id, name=str(self.stock_type.currentText()).strip(),
+                       model=str(self.stock_model.currentText()).strip(),
+                     cp=str(self.stock_cp.text()).strip(), sp=str(self.stock_sp.text()).strip(),
+                       qty=str(self.stock_qantity.text()).strip(),
+                        date=datetime.now(),tax= str(self.stock_tax.text()).strip(),
+                       suplier = str(self.stock_suplier.currentText()).strip(),
+                        suplier_number='+233684010',prod_code=self.stock_prod_code, code_list=None)
+
+        # LEFT MENU BTN IS CLICKED
+
+    def update_stock(self):
+        pass
+    def delete_stock(self):
+        pass
+
+    def show_required_field(self):
+        pass
+
+    def feed_combo(self, Qobj, feed : list= None ):
+        items = feed
+        # items.append('')
+        print(items)
+        Qobj.clear()
+        Qobj.addItems(items)
+        # Qobj.setCurrentText("")
+
+        # calling completer class to autocomplete
+        self.completer = QCompleter(items)
+        self.completer.setCaseSensitivity(Qt.CaseInsensitive)
+        Qobj.setCompleter(self.completer)
+        print(user.feed_type())
+
+    def type_feed_model(self,Qpassive ,text):
+        if text == "":
+            return
+        self.feed_combo(Qobj= Qpassive, feed = user.feed_model(text))
+
+    def model_feed(self, model_text, flag = "stock"):
+        dic= user.model_feed_rest(model_text)
+        if flag == "stock":
+            self.stock_cp.setText(str(dic.get('cp', "")))
+            self.stock_qantity.setText(str(dic.get('qty', "")))
+            self.stock_sp.setText(str(dic.get('sp', "")))
+            self.stock_tax.setText(str(dic.get('tax', "")))
+            return
+        self.phone_price.setText(str(dic.get('sp', "")))
+        self.phone_tax.setText(str(dic.get('tax', "")))
+        self.phone_discount.setText(str(dic.get('0')))
+
+
+    def select_table_row(self, table_obj):
+        # auto select record if not empty
+        if (table_obj.rowCount()):
+            table_obj.selectRow(0)
+            print(table_obj.currentRow())
+
+    def showcomponents(self, state =False):
+
+        # self.ui.left_menu.setVisible(False)
+        title_comp =["btn_user","btn_top_settings"]
+        left_comp = ["btn_info","report_btn","stock_btn","phone_btn","home_btn"]
+        for comp in title_comp:
+            self.ui.title_bar_frame.findChild(QPushButton, comp).setVisible(state)
+
+        for comp in left_comp:
+            self.ui.left_menu.findChild(QPushButton, comp).setVisible(state)
+
+
     # Run function when btn is clicked
     # Check funtion by object name / btn_id
     # ///////////////////////////////////////////////////////////////
@@ -173,8 +337,9 @@ class MainWindow(QMainWindow):
         if btn.objectName() == "home_btn":
             self.ui.left_menu.select_only_one(btn.objectName())
 
+
             # Load page
-            MainFunctions.set_page(self, self.ui.load_pages.home_page)
+            MainFunctions.set_page(self, self.ui.load_pages.dasboard)
 
         # Open Page 2
         if btn.objectName() == "phone_btn":
@@ -183,12 +348,18 @@ class MainWindow(QMainWindow):
             # Load page
             MainFunctions.set_page(self, self.ui.load_pages.phone_page)
 
-        # service page
-        if btn.objectName() == "service_btn":
-            self.ui.left_menu.select_only_one(btn.objectName())
 
-            # Load page
-            MainFunctions.set_page(self, self.ui.load_pages.service_page)
+           # feed form with data from db
+            self.feed_combo(self.phone_type,user.feed_type())
+            self.clearforms(flag='phone')
+            self.select_table_row(self.phone_cart)
+            self.select_table_row(self.table_widget)
+        # service page
+        # if btn.objectName() == "service_btn":
+        #     self.ui.left_menu.select_only_one(btn.objectName())
+        #
+        #     # Load page
+        #     MainFunctions.set_page(self, self.ui.load_pages.service_page)
 
         # inventory page
         if btn.objectName() == "stock_btn":
@@ -197,8 +368,10 @@ class MainWindow(QMainWindow):
             # Load page
             MainFunctions.set_page(self, self.ui.load_pages.stock)
 
-
-
+           # feed form with data from db
+            self.feed_combo(self.stock_type,user.feed_type())
+            self.clearforms()
+            self.select_table_row(self.stock_table)
 
         # open menu 2 of left colomn stackwiew
 
@@ -378,7 +551,21 @@ class MainWindow(QMainWindow):
         if event.key() == Qt.Key_Escape:
             self.close()
 
+class LoginWindow(QMainWindow):
+    # Load theme
+    settings = Themes()
+    theme = settings.items
 
+    def __init__(self):
+        # QMainWindow.__init__(self)
+        super().__init__()
+        self.ui = Ui_Form()
+        self.ui.setupUi(self)
+
+        # remove the standard tiltle bar
+        self.setWindowFlag(Qt.FramelessWindowHint)
+        self.setAttribute(Qt.WA_TranslucentBackground)
+        self.show()
 
 class SplashScreen(QMainWindow):
     # Load theme
@@ -463,6 +650,7 @@ if __name__ == "__main__":
     app.setWindowIcon(QIcon("icon.ico"))
     # window = MainWindow()
     window = SplashScreen()
+    # window = LoginWindow()
     # EXEC APP
     # ///////////////////////////////////////////////////////////////
     sys.exit(app.exec())
