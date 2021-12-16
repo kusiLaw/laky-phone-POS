@@ -117,7 +117,6 @@
              <widget class="QLabel" name="label">
               <property name="font">
                <font>
-                <family>Segoe Script</family>
                 <pointsize>-1</pointsize>
                 <italic>true</italic>
                </font>
@@ -260,6 +259,11 @@ font-style:italic</string>
                 <width>120</width>
                 <height>16777215</height>
                </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>14</pointsize>
+               </font>
               </property>
               <property name="text">
                <string>Username :</string>

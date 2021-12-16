@@ -53,7 +53,8 @@ class PyLineEdit(QLineEdit):
         context_color = "#00ABE8",
         maxlen = 255,
         read_only = False,
-        validator = None
+        validator = None,
+        echomode = False
     ):
         super().__init__()
 
@@ -65,6 +66,8 @@ class PyLineEdit(QLineEdit):
         if validator:
             self.setValidator(validator)
 
+        if echomode:
+            self.setEchoMode(QLineEdit.Password)
         self.setMaxLength(maxlen)
         self.setReadOnly(read_only)
 

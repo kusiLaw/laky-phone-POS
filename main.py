@@ -551,6 +551,12 @@ class MainWindow(QMainWindow):
         if event.key() == Qt.Key_Escape:
             self.close()
 
+        if (event.key() == Qt.Key_Return) and (self.user_name.hasFocus() or self.user_passsword.hasFocus()):
+            # user on login interface
+            self.login()
+
+
+
 class LoginWindow(QMainWindow):
     # Load theme
     settings = Themes()

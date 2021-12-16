@@ -364,6 +364,7 @@ class SetupMainWindow:
             bg_color=self.themes["app_color"]["bg_three"],
             maxlen=22,
             # validator=QIntValidator()
+            echomode = True
         )
         # self.user_passsword.height = 40
         self.user_passsword.setMinimumHeight(40)
