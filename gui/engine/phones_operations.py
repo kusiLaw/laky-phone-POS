@@ -22,7 +22,7 @@ class PhoneStock:
     user_id = IntegerField(_min=0)
     st_name = CharField(_min=2, _max=24)
     st_ph_model = CharField(_min=2, _max=24)
-    suplier = CharField(_min=2, _max=24)
+    suplier = CharField(_min=0, _max=24)
     sn = CharField()
     cp = Decimalfield(_min=2)
     sp = Decimalfield()
@@ -69,7 +69,7 @@ class PhoneStock:
                     cur.execute(stoct_st, ( self.st_ph_model, ))
                     st_lastid = cur.fetchone()[0] # come as tuple
 
-                    # update stock inself
+                    # update stock inself, maybe name was not correctly spelt
                     stoct_st = "UPDATE  lakydb.`stock` SET phone_name = %s WHERE phone_model = %s "
                     cur.execute(stoct_st, (self.st_name,self.st_ph_model))
 
@@ -79,12 +79,14 @@ class PhoneStock:
                     cur.execute(price_st, (self.qty, self.cp, self.sp, self.tax, self.dat,st_lastid))
 
             else:
-                # not duplicate error is new insertion
+                # not duplicate error, is new insertion
                 price_st = "INSERT INTO  lakydb.`stock_prices` " \
                            "(`Stock_stockId`,`quantity`,`cost_price`,`sale_price`,`tax`,`created_date`,`last_update`)" \
                            "VALUES (%s,%s,%s,%s,%s,%s,%s);"
                 cur.execute(price_st, (st_lastid, self.qty, self.cp, self.sp, self.tax, self.dat, self.dat ))
 
+            # supplier table
+            #  checking if supplier info was given: refer to db EER Diagram
             if not (self.suplier == 'n/a' and self.suplier_number == 'n/a'): # suplier was given with number
                 try: # if duplicate key, get it id
                     suplier_st = "INSERT INTO lakydb.`suplier` (`supliername`,`contact`) VALUES(%s, %s)"
@@ -113,12 +115,15 @@ class PhoneStock:
 
                     print(su_lastid, sply_lastid)
                     try:
+                        #insert the code if not in table
                         suply_st = "INSERT INTO lakydb.`Suply_code` (`suply_code`,`dates`,`Suplier_idsuplier`)" \
                                    "VALUES (%s,%s,%s)"
                         cur.execute(suply_st, (self.prod_code, self.dat, su_lastid))
                         sply_lastid = cur.lastrowid
                     except  errors.Error as err:
                         if err.errno == errorcode.ER_DUP_ENTRY:
+                            # code it table get hold of it
+
                             suply_st = "SELECT  idsuplies FROM Lakydb.`Suply_code` WHERE suply_code = %s "
                             cur.execute(suply_st, (self.prod_code,))
                             sply_lastid = cur.fetchone()[0]
@@ -131,9 +136,11 @@ class PhoneStock:
                         sply_lastid = cur.lastrowid
                     except  errors.Error as err:
                         if err.errno == errorcode.ER_DUP_ENTRY:
+                            # code it table get hold of it
                             suply_st2 = "SELECT  idsuplies FROM Lakydb.`Suply_code` WHERE suply_code = %s "
                             cur.execute(suply_st2, (self.prod_code,))
                             sply_lastid = cur.fetchone()[0]
+
 
                 # inserting on suply code_info
                 if not sply_lastid =='Null': # supply was executed and it code is provided and must be ref
@@ -148,7 +155,7 @@ class PhoneStock:
                             cur.execute(suply_code_info, (self.st_name, self.st_ph_model, self.qty, self.cp, sply_lastid))
 
 
-
+            #checking if serial number is provide and is a seqience type
             if not self.code_list == 'n/a' and isinstance(self.code_list, Sequence):
 
                 if sply_lastid == "Null": # suply was not executed
@@ -174,16 +181,17 @@ class PhoneStock:
 
         except  errors.Error as err:
             if err.errno == errorcode.ER_DUP_ENTRY:
-                print("record already exist")
+                return "record already exist"
 
-            print(err)
-            con.close()
+            # print(err)
+            # con.close()
         except:
-            print('error ocurs')
+            return 'unknown error occured'
         else:
             print('run ok')
         finally:
             con.close()
+
 
     def load_stock(self):
         con = self.con.connect()

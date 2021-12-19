@@ -102,6 +102,11 @@ class MainFunctions():
 
         MainFunctions.start_box_animation(self, left_column_width, width, "right")
 
+    def get_current_stack_page(self):
+        #////self intro
+        return self.ui.load_pages.pages.currentWidget()
+
+
     def start_box_animation(self, left_box_width, right_box_width, direction):
         right_width = 0
         left_width = 0

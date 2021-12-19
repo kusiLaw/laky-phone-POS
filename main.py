@@ -63,14 +63,14 @@ class MainWindow(QMainWindow):
         self.sign_out.clicked.connect(lambda: self.logout())
 
 
-
+        # phone signals
         self.add_to_cart_btn.clicked.connect(lambda: self.dispatch(self.add_to_cart_btn))
         self.remove_from_cart_btn.clicked.connect(lambda: self.dispatch(self.remove_from_cart_btn))
         self.phone_clear_cart_btn.clicked.connect(lambda: self.dispatch(self.phone_clear_cart_btn))
         self.phone_buyme_btn.clicked.connect(lambda : self.dispatch(self.phone_buyme_btn))
         self.phone_print_btn.clicked.connect(lambda: self.dispatch(self.phone_print_btn))
         self.phone_clear_btn.clicked.connect(lambda : self.clearforms(flag='phone'))
-        self.table_widget.currentItemChanged.connect(lambda :self.table_row_Change(self.table_widget))
+        self.table_widget.currentItemChanged.connect(lambda :self.table_row_Change(self.table_widget, flag='phone'))
 
 
         self.phone_type.currentIndexChanged.connect(lambda: self.type_feed_model(self.phone_model,str(self.phone_type.currentText().strip())))
@@ -81,7 +81,7 @@ class MainWindow(QMainWindow):
         self.stock_type.currentIndexChanged.connect(lambda: self.type_feed_model(self.stock_model,str(self.stock_type.currentText().strip())))
         self.stock_model.currentIndexChanged.connect(lambda:self.model_feed(str(self.stock_model.currentText().strip())))
         self.stock_clear.clicked.connect(lambda: self.clearforms())
-
+        self.stock_table.currentItemChanged.connect(lambda :self.table_row_Change( self.stock_table, flag='stock'))
 
         self.load_sale_tables()
         self.load_stock_tables()
@@ -115,30 +115,40 @@ class MainWindow(QMainWindow):
             MainFunctions.toggle_right_column(self)
 
 
-
-
-    def table_row_Change(self, table_widget, flag = 'stock'):
-        index = self.table_widget.currentIndex() # get hold of row index clicked
+    def table_row_Change(self, table_widget, flag = None):
+        index = table_widget.currentIndex() # get hold of row index clicked
         # print(index.row(), index.column())
 
         data = []
         for col in range(table_widget.columnCount()): # iterate through column count
             # it = table_widget.item(ind.row(), col)
             data.append(table_widget.item(index.row(), col).text())
-        # feed data to the form
+
+        # feed data to the form base on index
         print(data)
         if data:
-            self.customerName.setText(data[0])
-            self.contactName.setText(data[1])
+            if flag == 'phone':
+                self.customerName.setText(data[0])
+                self.contactName.setText(data[1])
 
-            self.phone_type.setEditText(data[2])
-            self.phone_model.setEditText(data[3])
-            # self.phone_imei.setText(data[1])
+                self.phone_type.setCurrentText(data[2])
+                self.phone_model.setCurrentText(data[3])
+                # self.phone_imei.setText(data[1])
 
-            self.phone_sn.setText(data[4])
-            self.phone_price.setText(data[5])
-            self.phone_discount.setText(data[6])
-            self.phone_tax.setText(data[8])
+                self.phone_sn.setText(data[4])
+                self.phone_price.setText(data[5])
+                self.phone_discount.setText(data[6])
+                self.phone_tax.setText(data[8])
+
+
+            elif flag == 'stock':
+                self.stock_type.setCurrentText(data[1])
+                self.stock_model.setCurrentText(data[2])
+                self.stock_qantity.setText(data[3])
+                self.stock_cp.setText(data[4])
+                self.stock_sp.setText(data[5])
+                self.stock_tax.setText(data[6])
+
 
     def dispatch(self, obj):
 
@@ -150,8 +160,9 @@ class MainWindow(QMainWindow):
             print(user.caches_retail)
         elif obj.text() == "Save":
             # stock
-            # self.save_stock()
-            print(user.caches_retail)
+            self.save_stock()
+            # print(user.caches_retail)
+
         elif obj.text() == "Clear Cart":
             user.caches_retail = {}
             self.load_phone_cart()
@@ -256,11 +267,17 @@ class MainWindow(QMainWindow):
 
         user.savestock(user_id=user.id, name=str(self.stock_type.currentText()).strip(),
                        model=str(self.stock_model.currentText()).strip(),
-                     cp=str(self.stock_cp.text()).strip(), sp=str(self.stock_sp.text()).strip(),
-                       qty=str(self.stock_qantity.text()).strip(),
-                        date=datetime.now(),tax= str(self.stock_tax.text()).strip(),
+                     cp=Decimal(self.stock_cp.text().strip()),
+                       sp=Decimal(self.stock_sp.text().strip()),
+                       qty=int(self.stock_qantity.text().strip()),
+                        date=datetime.now(),
+                       tax= int(self.stock_tax.text().strip()),
                        suplier = str(self.stock_suplier.currentText()).strip(),
-                        suplier_number='+233684010',prod_code=self.stock_prod_code, code_list=None)
+                        suplier_number='+233684010',
+                       prod_code= str(self.stock_prod_code.currentText()).strip(),
+                       code_list=None)
+
+        self.load_stock_tables()
 
         # LEFT MENU BTN IS CLICKED
 
@@ -551,9 +568,12 @@ class MainWindow(QMainWindow):
         if event.key() == Qt.Key_Escape:
             self.close()
 
-        if (event.key() == Qt.Key_Return) and (self.user_name.hasFocus() or self.user_passsword.hasFocus()):
-            # user on login interface
-            self.login()
+        if event.key() == Qt.Key_Return :
+
+            if self.user_name.hasFocus() or self.user_passsword.hasFocus():
+                # user on login interface
+                self.login()
+            print(MainFunctions.get_current_stack_page(self))
 
 
 

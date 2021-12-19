@@ -68,6 +68,7 @@ class PyLineEdit(QLineEdit):
 
         if echomode:
             self.setEchoMode(QLineEdit.Password)
+
         self.setMaxLength(maxlen)
         self.setReadOnly(read_only)
 
