@@ -60,7 +60,7 @@
         <number>5</number>
        </property>
        <item>
-        <widget class="QFrame" name="footer">
+        <widget class="QFrame" name="header">
          <property name="styleSheet">
           <string notr="true">/**background:rgb(255, 71, 160)</string>
          </property>
@@ -535,13 +535,44 @@ margin-bottom:20px;
         </widget>
        </item>
        <item>
-        <widget class="QFrame" name="header">
+        <widget class="QFrame" name="footer">
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
+         <layout class="QVBoxLayout" name="verticalLayout_33">
+          <item>
+           <widget class="QLabel" name="login_form_info">
+            <property name="font">
+             <font>
+              <pointsize>-1</pointsize>
+              <italic>true</italic>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color:red;
+  font-size: 18px;
+ 
+font-style:italic;
+</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="scaledContents">
+             <bool>true</bool>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignHCenter|Qt::AlignTop</set>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>
@@ -618,8 +649,8 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1164</width>
-            <height>765</height>
+            <width>934</width>
+            <height>608</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -2145,8 +2176,8 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1164</width>
-            <height>765</height>
+            <width>530</width>
+            <height>606</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -2685,8 +2716,8 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1159</width>
-            <height>765</height>
+            <width>1113</width>
+            <height>603</height>
            </rect>
           </property>
           <property name="font">

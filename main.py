@@ -7,6 +7,7 @@ from gui.uis.login.login import *
 
 import sys
 import os
+from time import perf_counter
 from decimal import Decimal
 # IMPORT QT CORE
 # ///////////////////////////////////////////////////////////////
@@ -61,7 +62,8 @@ class MainWindow(QMainWindow):
         self.showcomponents()
         self.login_btn.clicked.connect(lambda: self.login())
         self.sign_out.clicked.connect(lambda: self.logout())
-
+        self.user_name.textChanged.connect(lambda: self.ui.load_pages.login_form_info.setText('') )
+        self.user_passsword.textChanged.connect(lambda: self.ui.load_pages.login_form_info.setText(''))
 
         # phone signals
         self.add_to_cart_btn.clicked.connect(lambda: self.dispatch(self.add_to_cart_btn))
@@ -101,7 +103,10 @@ class MainWindow(QMainWindow):
             MainFunctions.set_page(self, self.ui.load_pages.dasboard)
 
         else:
-            print('wrong username or password')
+            self.ui.load_pages.login_form_info.setText('Wrong username or password')
+
+
+
 
     def logout(self):
         # load the login form
@@ -148,6 +153,8 @@ class MainWindow(QMainWindow):
                 self.stock_cp.setText(data[4])
                 self.stock_sp.setText(data[5])
                 self.stock_tax.setText(data[6])
+
+                #load rest of the field
 
 
     def dispatch(self, obj):
@@ -325,7 +332,7 @@ class MainWindow(QMainWindow):
         # auto select record if not empty
         if (table_obj.rowCount()):
             table_obj.selectRow(0)
-            print(table_obj.currentRow())
+            # print(table_obj.currentRow())
 
     def showcomponents(self, state =False):
 

@@ -395,7 +395,7 @@ class Phone:
 
             for _, val in self.caches_retail.items():
                 # go through  cache if item in stock
-                # raise error if not is stock and continue otherwise
+                # raise error if not in stock and continue otherwise
 
                 cur.execute(statment, (val["ph_model"],))
                 # get quantity and price from db for the particular item

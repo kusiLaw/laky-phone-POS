@@ -105,6 +105,8 @@ class MainFunctions():
     def get_current_stack_page(self):
         #////self intro
         return self.ui.load_pages.pages.currentWidget()
+        # return  self.ui.load_pages.pages.currentIndex()
+
 
 
     def start_box_animation(self, left_box_width, right_box_width, direction):
