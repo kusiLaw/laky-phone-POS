@@ -29,15 +29,15 @@ class PhoneStock:
     qty = IntegerField(_min = 0)
     prod_code = CharField(_min = 0 , _max= 45)
     tax = IntegerField(_min = 0, )
-    suplier_number = CharField()
+    suplier_number = None
     code_list = None
     # id = None
 
     def __init__(self):
         self.con = My_db()
 
-    def save_stock(self, user_id, name, model, cp, sp, qty, dat, tax=0, suplier="n/a",suplier_number = "n/a",
-                   prod_code='n/a', code_list='n/a' ):
+    def save_stock(self, user_id, name, model, cp, sp, qty, dat, tax=0, suplier='unknown',suplier_number = '+233',
+                   prod_code=None, code_list=None ):
         self.user_id = user_id
         self.st_name = name
         self.st_ph_model = model
@@ -85,9 +85,26 @@ class PhoneStock:
                            "VALUES (%s,%s,%s,%s,%s,%s,%s);"
                 cur.execute(price_st, (st_lastid, self.qty, self.cp, self.sp, self.tax, self.dat, self.dat ))
 
+
+
             # supplier table
-            #  checking if supplier info was given: refer to db EER Diagram
-            if not (self.suplier == 'n/a' and self.suplier_number == 'n/a'): # suplier was given with number
+            #if none given used unknown and interface should be '' for both
+            #if number only given used number and name as 'suplier'
+            # if name only given unmber  +233 and interface should be ''
+
+            if not self.suplier =="unknown" and suplier_number == '+233':
+                # print('name only given')
+                self.suplier_number = None
+            if  not suplier_number == '+233' and self.suplier =="unknown" :
+                # print(" number only given")
+                self.suplier = "supplier"
+
+            # else :
+            #     print("both given or not given, allow to go and defualt or duplicate update itself base of contact")
+
+
+            #  checking if suplier_infomation was given: refer to db EER Diagram
+            if not (self.suplier == None and self.suplier_number == None): # suplier was given with number
                 try: # if duplicate key, get it id
                     suplier_st = "INSERT INTO lakydb.`suplier` (`supliername`,`contact`) VALUES(%s, %s)"
                     cur.execute(suplier_st, (self.suplier, self.suplier_number))
@@ -95,28 +112,26 @@ class PhoneStock:
                 except  errors.Error as err:
                     if err.errno == errorcode.ER_DUP_ENTRY:
                         # get id
-                        suplier_st = "SELECT idsuplier FROM lakydb.`suplier` WHERE supliername = %s"
-                        cur.execute(suplier_st, (self.suplier,))
+                        suplier_st = "SELECT idsuplier FROM lakydb.`suplier` WHERE contact = %s"
+
+                        cur.execute(suplier_st, (self.suplier_number,))
                         su_lastid = cur.fetchone()[0] # come as tuple
-                        print(f"printing suplier id from duplicate section{su_lastid}")
+                        # print(f"printing suplier id from duplicate section{su_lastid}")
 
-                        # update suplier contact maybe eror
-                        suplier_st = "UPDATE lakydb.`suplier` SET contact =%s WHERE supliername = %s"
-                        cur.execute(suplier_st, ( self.suplier_number,self.suplier,))
-            elif  not self.suplier_number == "n/a":
-                pass
-                # Todo : i must solved the problem when the supplier number or name  only given
+                        # update suplier contact maybe erorr
+                        suplier_st = "UPDATE lakydb.`suplier` SET contact =%s,supliername =%s WHERE idsuplier = %s"
+                        cur.execute(suplier_st, ( self.suplier_number,self.suplier,su_lastid))
 
 
 
-            # executing on suply code table
-            if not self.prod_code == "n/a":  # prod code was given
+            # executing on orders table
+            if not self.prod_code == "n/a":  # order id was given
                 if not su_lastid == "Null": # suplier executed
 
-                    print(su_lastid, sply_lastid)
+                    # print(su_lastid, sply_lastid)
                     try:
                         #insert the code if not in table
-                        suply_st = "INSERT INTO lakydb.`Suply_code` (`suply_code`,`dates`,`Suplier_idsuplier`)" \
+                        suply_st = "INSERT INTO lakydb.`Orders` (`order_codes`,`dates`,`Suplier_idsuplier`)" \
                                    "VALUES (%s,%s,%s)"
                         cur.execute(suply_st, (self.prod_code, self.dat, su_lastid))
                         sply_lastid = cur.lastrowid
@@ -124,42 +139,43 @@ class PhoneStock:
                         if err.errno == errorcode.ER_DUP_ENTRY:
                             # code it table get hold of it
 
-                            suply_st = "SELECT  idsuplies FROM Lakydb.`Suply_code` WHERE suply_code = %s "
+                            suply_st = "SELECT  idsuplies FROM Lakydb.`Orders` WHERE order_codes = %s "
                             cur.execute(suply_st, (self.prod_code,))
                             sply_lastid = cur.fetchone()[0]
 
                 else:   # but suplier was not executed (not given)
                     try:
-                        suply_st2 = "INSERT INTO lakydb.`Suply_code` (`suply_code`,`dates`)" \
+                        suply_st2 = "INSERT INTO lakydb.`Orders` (`order_codes`,`dates`)" \
                                     "VALUES (%s,%s)"
                         cur.execute(suply_st2, (self.prod_code,  self.dat))
                         sply_lastid = cur.lastrowid
                     except  errors.Error as err:
                         if err.errno == errorcode.ER_DUP_ENTRY:
                             # code it table get hold of it
-                            suply_st2 = "SELECT  idsuplies FROM Lakydb.`Suply_code` WHERE suply_code = %s "
+                            suply_st2 = "SELECT  idsuplies FROM Lakydb.`Orders` WHERE order_codes = %s "
                             cur.execute(suply_st2, (self.prod_code,))
                             sply_lastid = cur.fetchone()[0]
 
 
-                # inserting on suply code_info
+                # inserting on Order_info
                 if not sply_lastid =='Null': # supply was executed and it code is provided and must be ref
                     try:
-                        suply_code_info = "INSERT INTO lakydb.suply_code_info (Suply_code_idsuplies, phone_name, phone_model, quantity, cost_price)" \
+                        suply_code_info = "INSERT INTO lakydb.Order_info (Orders_idorder, phone_name, phone_model, quantity, cost_price)" \
                                           "VALUES(%s, %s, %s, %s, %s)"
                         cur.execute(suply_code_info, (sply_lastid, self.st_name, self.st_ph_model, self.qty, self.cp))
                     except  errors.Error as err:
                         if err.errno == errorcode.ER_DUP_ENTRY:
-                            suply_code_info = "UPDATE lakydb.suply_code_info SET phone_name = %s,phone_model =%s, " \
-                                        "quantity =%s, cost_price= %s WHERE Suply_code_idsuplies = %s "
+                            #order code there in orders, update information
+                            suply_code_info = "UPDATE lakydb.Order_info SET phone_name = %s,phone_model =%s, " \
+                                        "quantity =%s, cost_price= %s WHERE Orders_idorder = %s "
                             cur.execute(suply_code_info, (self.st_name, self.st_ph_model, self.qty, self.cp, sply_lastid))
 
 
             #checking if serial number is provide and is a seqience type
-            if not self.code_list == 'n/a' and isinstance(self.code_list, Sequence):
+            if not self.code_list == None and isinstance(self.code_list, Sequence):
 
-                if sply_lastid == "Null": # suply was not executed
-                    info_st2 = "INSERT INTO lakydb.stock_phone_info(phone_sn,Stock_stockId)" \
+                if sply_lastid == "Null": # oders was not executed
+                    info_st2 = "INSERT INTO lakydb.Order_sn_info(phone_sn,Stock_stockId)" \
                                "VALUES (%s,%s)"
                     for sn in code_list:
                         try:
@@ -167,8 +183,8 @@ class PhoneStock:
                         except  errors.Error as err:
                             if err.errno == errorcode.ER_DUP_ENTRY:
                                 continue
-                else: # suply was executed add it referernce
-                    info_st = "INSERT INTO lakydb.stock_phone_info(phone_sn,Stock_stockId,Suply_idsuplies)" \
+                else: # orders was executed add it referernce
+                    info_st = "INSERT INTO lakydb.Order_sn_info(phone_sn,Stock_stockId,Orders_idorder)" \
                               "VALUES (%s,%s,%s)"
                     for sn in code_list:
                         try:
@@ -177,17 +193,15 @@ class PhoneStock:
                             if err.errno == errorcode.ER_DUP_ENTRY:
                                 continue
 
-            con.commit()
+
 
         except  errors.Error as err:
             if err.errno == errorcode.ER_DUP_ENTRY:
                 return "record already exist"
-
-            # print(err)
-            # con.close()
         except:
             return 'unknown error occured'
         else:
+            con.commit()
             print('run ok')
         finally:
             con.close()
@@ -395,7 +409,7 @@ class Phone:
 
             for _, val in self.caches_retail.items():
                 # go through  cache if item in stock
-                # raise error if not in stock and continue otherwise
+                # raise error if not is stock and continue otherwise
 
                 cur.execute(statment, (val["ph_model"],))
                 # get quantity and price from db for the particular item
@@ -958,7 +972,8 @@ if __name__ == "__main__":
 
     #testing user
     u = Active_User()
-    u.login("laky1", "laky689393")
+    # u.login("laky1", "laky689393")
+
     # # # #USER TEST BUY PHONE
     # # self, ph_type, ph_model, sn, quantity, price):
     # u.add_to_cart('samsung', 'G770', '123564789','',210.05)
@@ -978,8 +993,8 @@ if __name__ == "__main__":
     # a = u.reset_password('laky689393', 'LAKY68', "LAKY68")
     # print(a)
     # u.remove_user(25)
-    # u.create_user("lawrence", 'secretry', 'laky1','laky689393', 'lawrence@txt.com', "sec",
-    #              True, True, True, True, True, )
+    u.create_user("lawrence", 'secretry', 'laky1','laky689393', 'lawrence@txt.com', "sec",
+                 True, True, True, True, True, )
     # u.update_user('23',"perter", 'Lara', "lawrencetxt@gmai.com", "user", True,True, False, False, True)
     # u.remove_user(19)
 

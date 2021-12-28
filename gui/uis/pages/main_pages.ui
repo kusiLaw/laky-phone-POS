@@ -32,7 +32,7 @@
    <item>
     <widget class="QStackedWidget" name="pages">
      <property name="currentIndex">
-      <number>0</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="home_page">
       <property name="font">
@@ -2716,8 +2716,8 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1113</width>
-            <height>603</height>
+            <width>1159</width>
+            <height>765</height>
            </rect>
           </property>
           <property name="font">
@@ -3072,7 +3072,7 @@ QTabBar::tab:selected, QTabBar::tab:hover {
                            <item row="2" column="0">
                             <widget class="QLabel" name="label_61">
                              <property name="text">
-                              <string>product code:</string>
+                              <string>Order ID:</string>
                              </property>
                             </widget>
                            </item>

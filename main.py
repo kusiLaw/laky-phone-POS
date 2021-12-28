@@ -21,11 +21,13 @@ from gui.core.json_themes import Themes
 # ///////////////////////////////////////////////////////////////
 # MAIN WINDOW
 from gui.uis.windows.main_window import *
+from mysql.connector import errorcode, errors
 
 # IMPORT PY ONE DARK WIDGETS
 # ///////////////////////////////////////////////////////////////
 from gui.widgets import *
 from gui.engine.phones_operations import Active_User
+from gui.engine.discriptor import *
 
 # ADJUST QT FONT DPI FOR HIGHT SCALE AN 4K MONITOR
 # ///////////////////////////////////////////////////////////////
@@ -37,9 +39,26 @@ counter = 0
 
 user = Active_User()
 
+# user.create_user("lawrence", 'secretry', 'laky', 'laky', 'lawrence@txt.com', "sec",
+#               True, True, True, True, True, )
+
+
+
 # MAIN WINDOW
 # ///////////////////////////////////////////////////////////////
 class MainWindow(QMainWindow):
+    name = CharField(_min=2, _max=24)
+    model = CharField(_min=2, _max=24)
+    suplier = CharField(_min=0, _max=24)
+    number = CharField(_min=0, _max=24)
+    sn = CharField()
+    cp = Decimalfield(_min=2)
+    sp = Decimalfield()
+    qty = IntegerField(_min=0)
+    order_id = CharField(_min=0, _max=45)
+    tax = IntegerField(_min=0, )
+
+
     def __init__(self):
         super().__init__()
 
@@ -102,10 +121,20 @@ class MainWindow(QMainWindow):
             #load the dashbord
             MainFunctions.set_page(self, self.ui.load_pages.dasboard)
 
+            try:
+                for x in ("T", "F", "G", "F"):
+                    user.savestock(user_id=user.id, name="Infinix", model=f"{x}20r", cp=123.215, sp=400.32, qty=12,
+                                   date='2020-12-26', tax=0, suplier='changer', suplier_number='+23302152458', prod_code='OD-Y17',
+                                   code_list=(f'sn-132456-1', f'sn-132456-4', f'sn-132456-5', f'sn-132456-41', f'sn-132456-50'))
+
+
+            except  errors.Error as err:
+                if err.errno == errorcode.ER_DUP_ENTRY:
+                    return "record already exist"
+                else:
+                    print(err)
         else:
             self.ui.load_pages.login_form_info.setText('Wrong username or password')
-
-
 
 
     def logout(self):
@@ -125,6 +154,8 @@ class MainWindow(QMainWindow):
         # print(index.row(), index.column())
 
         data = []
+        print(table_widget.Count())
+
         for col in range(table_widget.columnCount()): # iterate through column count
             # it = table_widget.item(ind.row(), col)
             data.append(table_widget.item(index.row(), col).text())
@@ -249,9 +280,10 @@ class MainWindow(QMainWindow):
 
     def load_stock_tables(self):
         result = user.load_stock()
+        print("loading stock table")
         while (self.stock_table.rowCount() > 0):
             self.stock_table.removeRow(0)
-        print(result)
+        # print(result)
 
         for tup in result:
             cart_row_number = self.stock_table.rowCount()
@@ -271,18 +303,25 @@ class MainWindow(QMainWindow):
             self.stock_table.setRowHeight(cart_row_number, 20)
 
     def save_stock(self):
+        try:
+            self.name = str(self.stock_type.currentText()).strip()
+            self.model = str(self.stock_model.currentText()).strip()
+            self.number ='+233684010'
+            self.suplier = str(self.stock_suplier.currentText()).strip()
+            self.cp = str(self.stock_cp.text().strip())
+            self.sp = str(self.stock_sp.text().strip())
+            self.qty = int(self.stock_qantity.text().strip())
+            self.order_id = str(self.stock_prod_code.currentText()).strip()
+            self.tax = int(self.stock_tax.text().strip())
+        except ValueError as ex:
+            QMessageBox.information(self, "Received Key Release EVent",
+                                    str(ex))
 
-        user.savestock(user_id=user.id, name=str(self.stock_type.currentText()).strip(),
-                       model=str(self.stock_model.currentText()).strip(),
-                     cp=Decimal(self.stock_cp.text().strip()),
-                       sp=Decimal(self.stock_sp.text().strip()),
-                       qty=int(self.stock_qantity.text().strip()),
-                        date=datetime.now(),
-                       tax= int(self.stock_tax.text().strip()),
-                       suplier = str(self.stock_suplier.currentText()).strip(),
-                        suplier_number='+233684010',
-                       prod_code= str(self.stock_prod_code.currentText()).strip(),
-                       code_list=None)
+        # user.savestock(user_id=user.id, name=self.name, model=self.model, cp=self.cp,
+        #                sp= self.sp ,qty=self.qty, date=datetime.now(),
+        #                tax= self.tax, suplier = self.suplier,suplier_number=self.number,
+        #                prod_code= self.order_id,
+        #                code_list=None)
 
         self.load_stock_tables()
 

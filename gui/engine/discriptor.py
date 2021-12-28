@@ -59,14 +59,17 @@ class Decimalfield(BaseValidator):
         if value and value < self.low_bound:
             raise ValueError(f'{self.name} must not be less than {self.low_bound}')
         try:
-            w = decimal.getcontext()
-            w.prec = 2
-            w.rounding = decimal.ROUND_HALF_UP
-            print("prec:", w.prec)
-            print("rounding", w.rounding)
+            # will set this when perform calculations
+            # w = decimal.getcontext()
+            # w.prec = 2
+            # w.rounding = decimal.ROUND_HALF_UP
+
+            # print("prec:", w.prec)
+            # print("rounding", w.rounding)
             d = Decimal(str(value))
+            # print(d)
         except ValueError as ex:
-            print("Improper value")
+            return "Improper value"
         else:
             return d
 

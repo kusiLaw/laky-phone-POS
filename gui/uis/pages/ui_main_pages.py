@@ -1171,7 +1171,7 @@ class Ui_MainPages(object):
         self.scrollArea_3.setWidgetResizable(True)
         self.stockContents = QWidget()
         self.stockContents.setObjectName(u"stockContents")
-        self.stockContents.setGeometry(QRect(0, 0, 1113, 603))
+        self.stockContents.setGeometry(QRect(0, 0, 1159, 765))
         self.stockContents.setFont(font4)
         self.stockContents.setStyleSheet(u"")
         self.verticalLayout_9 = QVBoxLayout(self.stockContents)
@@ -1945,7 +1945,7 @@ class Ui_MainPages(object):
 
         self.retranslateUi(MainPages)
 
-        self.pages.setCurrentIndex(0)
+        self.pages.setCurrentIndex(4)
         self.stock_parent_tab.setCurrentIndex(0)
 
 
@@ -1997,7 +1997,7 @@ class Ui_MainPages(object):
         self.label_29.setText(QCoreApplication.translate("MainPages", u"It it recommende to read individual item or . For more details please to the documentation ", None))
         self.label_48.setText(QCoreApplication.translate("MainPages", u"Type :", None))
         self.label_60.setText(QCoreApplication.translate("MainPages", u"Model :", None))
-        self.label_61.setText(QCoreApplication.translate("MainPages", u"product code:", None))
+        self.label_61.setText(QCoreApplication.translate("MainPages", u"Order ID:", None))
         self.label_33.setText(QCoreApplication.translate("MainPages", u"Date:", None))
         self.label_37.setText(QCoreApplication.translate("MainPages", u"Prefer code :", None))
         self.label_35.setText(QCoreApplication.translate("MainPages", u"Contact:", None))
