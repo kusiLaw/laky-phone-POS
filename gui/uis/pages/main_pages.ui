@@ -649,8 +649,8 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>934</width>
-            <height>608</height>
+            <width>1164</width>
+            <height>765</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -2176,8 +2176,8 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>530</width>
-            <height>606</height>
+            <width>1164</width>
+            <height>765</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -2545,6 +2545,16 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
                       <property name="title">
                        <string>GroupBox</string>
                       </property>
+                      <widget class="QDateEdit" name="dateEdit">
+                       <property name="geometry">
+                        <rect>
+                         <x>50</x>
+                         <y>60</y>
+                         <width>201</width>
+                         <height>71</height>
+                        </rect>
+                       </property>
+                      </widget>
                      </widget>
                     </item>
                    </layout>
@@ -2962,7 +2972,7 @@ QTabBar::tab:selected, QTabBar::tab:hover {
                               <string notr="true">color:#d0d0d0</string>
                              </property>
                              <property name="text">
-                              <string>Type :</string>
+                              <string>Brand :</string>
                              </property>
                             </widget>
                            </item>
@@ -3004,6 +3014,9 @@ QTabBar::tab:selected, QTabBar::tab:hover {
                            </item>
                            <item row="1" column="0">
                             <widget class="QLabel" name="label_60">
+                             <property name="styleSheet">
+                              <string notr="true">color:#d0d0d0</string>
+                             </property>
                              <property name="text">
                               <string>Model :</string>
                              </property>
@@ -3105,7 +3118,7 @@ QTabBar::tab:selected, QTabBar::tab:hover {
                                <number>0</number>
                               </property>
                               <item>
-                               <widget class="QDateTimeEdit" name="dateTimeEdit"/>
+                               <widget class="QDateEdit" name="dateEdit_2"/>
                               </item>
                              </layout>
                             </widget>
@@ -3406,6 +3419,9 @@ QTabBar::tab:selected, QTabBar::tab:hover {
                            </item>
                            <item row="1" column="0">
                             <widget class="QLabel" name="label_62">
+                             <property name="styleSheet">
+                              <string notr="true">color:#d0d0d0</string>
+                             </property>
                              <property name="text">
                               <string>SP/Unit</string>
                              </property>
@@ -3413,6 +3429,9 @@ QTabBar::tab:selected, QTabBar::tab:hover {
                            </item>
                            <item row="0" column="0">
                             <widget class="QLabel" name="label_63">
+                             <property name="styleSheet">
+                              <string notr="true">color:#d0d0d0</string>
+                             </property>
                              <property name="text">
                               <string>CP/Unit:</string>
                              </property>
@@ -3420,6 +3439,9 @@ QTabBar::tab:selected, QTabBar::tab:hover {
                            </item>
                            <item row="2" column="0">
                             <widget class="QLabel" name="label_32">
+                             <property name="styleSheet">
+                              <string notr="true">color:#d0d0d0</string>
+                             </property>
                              <property name="text">
                               <string>Quantity:</string>
                              </property>

@@ -515,7 +515,7 @@ class SetupMainWindow:
             context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
             bg_color=self.themes["app_color"]["bg_three"],
-            maxlen=12,
+            maxlen=7,
             validator=QDoubleValidator(0.99,99.99,2)
         )
 
@@ -827,10 +827,11 @@ class SetupMainWindow:
         self.stock_type = PyComBox(
 
             color=self.themes["app_color"]["text_active"],
-            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color=self.themes["app_color"]["bg_three"],
             radius=0,
             bg_color_hover=self.themes["app_color"]["context_color"],
             items=[],
+            maxlen=20,
             editable=True
         )
 
@@ -840,10 +841,11 @@ class SetupMainWindow:
         self.stock_model = PyComBox(
 
             color=self.themes["app_color"]["text_active"],
-            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color=self.themes["app_color"]["bg_three"],
             radius=0,
             bg_color_hover=self.themes["app_color"]["context_color"],
             items=[],
+            maxlen=20,
             editable=True
         )
 
@@ -853,10 +855,11 @@ class SetupMainWindow:
         self.stock_prod_code = PyComBox(
 
             color=self.themes["app_color"]["text_active"],
-            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color=self.themes["app_color"]["bg_three"],
             radius=8,
             bg_color_hover=self.themes["app_color"]["context_color"],
             items=[],
+            maxlen=25,
             editable=True
         )
 
@@ -866,10 +869,11 @@ class SetupMainWindow:
         self.stock_suplier = PyComBox(
 
             color=self.themes["app_color"]["text_active"],
-            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color=self.themes["app_color"]["bg_three"],
             radius=0,
             bg_color_hover=self.themes["app_color"]["context_color"],
             items=[],
+            maxlen=25,
             editable=True
         )
 
@@ -878,7 +882,7 @@ class SetupMainWindow:
         self.stock_unique_code = PyComBox(
 
             color=self.themes["app_color"]["text_active"],
-            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color=self.themes["app_color"]["bg_three"],
             radius=0,
             bg_color_hover=self.themes["app_color"]["context_color"],
             items=['SN Number only'],
@@ -891,9 +895,9 @@ class SetupMainWindow:
 
             context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
-            bg_color=self.themes["app_color"]["dark_one"],
-            maxlen = 12,
-            validator = QDoubleValidator(0.99, 99.99, 2)
+            bg_color=self.themes["app_color"]["bg_three"],
+            maxlen = 9,
+            validator = QDoubleValidator(0.99, 9999999.99, 2)
         )
 
         self.ui.load_pages.stock_cp_layout.addWidget(self.stock_cp)
@@ -903,7 +907,9 @@ class SetupMainWindow:
 
             context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
-            bg_color=self.themes["app_color"]["dark_one"]
+            bg_color=self.themes["app_color"]["bg_three"],
+            maxlen = 9,
+            validator = QDoubleValidator(0.99, 99.99, 0)
 
         )
 
@@ -913,7 +919,9 @@ class SetupMainWindow:
 
             context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
-            bg_color=self.themes["app_color"]["dark_one"]
+            bg_color=self.themes["app_color"]["bg_three"],
+            maxlen=9,
+            validator=QDoubleValidator(0.99, 9999999.99, 2)
 
         )
 
@@ -923,7 +931,9 @@ class SetupMainWindow:
 
             context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
-            bg_color=self.themes["app_color"]["dark_one"]
+            bg_color=self.themes["app_color"]["bg_three"],
+            maxlen = 3,
+            validator=QDoubleValidator(0.99, 99999.99,1)
 
         )
 
@@ -934,7 +944,9 @@ class SetupMainWindow:
 
             context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
-            bg_color=self.themes["app_color"]["dark_one"]
+            bg_color=self.themes["app_color"]["bg_three"],
+            maxlen=15,
+            validator=QDoubleValidator(0.99, 99.99, 2)
 
         )
 
@@ -947,7 +959,7 @@ class SetupMainWindow:
             width=70,
             active_color=self.themes["app_color"]["context_color"],
             circle_color=self.themes["app_color"]["text_active"],
-            bg_color=self.themes["app_color"]["dark_one"]
+            bg_color=self.themes["app_color"]["bg_three"]
 
         )
 

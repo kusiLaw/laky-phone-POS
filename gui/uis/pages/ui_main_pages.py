@@ -299,7 +299,7 @@ class Ui_MainPages(object):
         self.scrollArea.setWidgetResizable(True)
         self.contents = QWidget()
         self.contents.setObjectName(u"contents")
-        self.contents.setGeometry(QRect(0, 0, 934, 608))
+        self.contents.setGeometry(QRect(0, 0, 1164, 765))
         self.verticalLayout_4 = QVBoxLayout(self.contents)
         self.verticalLayout_4.setSpacing(0)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
@@ -906,7 +906,7 @@ class Ui_MainPages(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.Contents = QWidget()
         self.Contents.setObjectName(u"Contents")
-        self.Contents.setGeometry(QRect(0, 0, 530, 606))
+        self.Contents.setGeometry(QRect(0, 0, 1164, 765))
         self.verticalLayout_2 = QVBoxLayout(self.Contents)
         self.verticalLayout_2.setSpacing(0)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
@@ -1083,6 +1083,9 @@ class Ui_MainPages(object):
         self.verticalLayout_19.setContentsMargins(0, 0, 0, 0)
         self.service_cost_group = QGroupBox(self.service_cost_section)
         self.service_cost_group.setObjectName(u"service_cost_group")
+        self.dateEdit = QDateEdit(self.service_cost_group)
+        self.dateEdit.setObjectName(u"dateEdit")
+        self.dateEdit.setGeometry(QRect(50, 60, 201, 71))
 
         self.verticalLayout_19.addWidget(self.service_cost_group)
 
@@ -1285,6 +1288,7 @@ class Ui_MainPages(object):
 
         self.label_60 = QLabel(self.sdp_form_layout_4)
         self.label_60.setObjectName(u"label_60")
+        self.label_60.setStyleSheet(u"color:#d0d0d0")
 
         self.formLayout_8.setWidget(1, QFormLayout.LabelRole, self.label_60)
 
@@ -1329,10 +1333,10 @@ class Ui_MainPages(object):
         self.toInsrt.setSpacing(0)
         self.toInsrt.setObjectName(u"toInsrt")
         self.toInsrt.setContentsMargins(0, 0, 0, 0)
-        self.dateTimeEdit = QDateTimeEdit(self.widget)
-        self.dateTimeEdit.setObjectName(u"dateTimeEdit")
+        self.dateEdit_2 = QDateEdit(self.widget)
+        self.dateEdit_2.setObjectName(u"dateEdit_2")
 
-        self.toInsrt.addWidget(self.dateTimeEdit)
+        self.toInsrt.addWidget(self.dateEdit_2)
 
 
         self.formLayout_8.setWidget(3, QFormLayout.FieldRole, self.widget)
@@ -1462,16 +1466,19 @@ class Ui_MainPages(object):
 
         self.label_62 = QLabel(self.sdp_sn_layout_4)
         self.label_62.setObjectName(u"label_62")
+        self.label_62.setStyleSheet(u"color:#d0d0d0")
 
         self.gridLayout_11.addWidget(self.label_62, 1, 0, 1, 1)
 
         self.label_63 = QLabel(self.sdp_sn_layout_4)
         self.label_63.setObjectName(u"label_63")
+        self.label_63.setStyleSheet(u"color:#d0d0d0")
 
         self.gridLayout_11.addWidget(self.label_63, 0, 0, 1, 1)
 
         self.label_32 = QLabel(self.sdp_sn_layout_4)
         self.label_32.setObjectName(u"label_32")
+        self.label_32.setStyleSheet(u"color:#d0d0d0")
 
         self.gridLayout_11.addWidget(self.label_32, 2, 0, 1, 1)
 
@@ -1995,7 +2002,7 @@ class Ui_MainPages(object):
         self.service_cost_group.setTitle(QCoreApplication.translate("MainPages", u"GroupBox", None))
         self.label_24.setText(QCoreApplication.translate("MainPages", u"IMPORTANT NOTICES", None))
         self.label_29.setText(QCoreApplication.translate("MainPages", u"It it recommende to read individual item or . For more details please to the documentation ", None))
-        self.label_48.setText(QCoreApplication.translate("MainPages", u"Type :", None))
+        self.label_48.setText(QCoreApplication.translate("MainPages", u"Brand :", None))
         self.label_60.setText(QCoreApplication.translate("MainPages", u"Model :", None))
         self.label_61.setText(QCoreApplication.translate("MainPages", u"Order ID:", None))
         self.label_33.setText(QCoreApplication.translate("MainPages", u"Date:", None))

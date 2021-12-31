@@ -8,6 +8,7 @@ from gui.uis.login.login import *
 import sys
 import os
 from time import perf_counter
+from datetime import datetime
 from decimal import Decimal
 # IMPORT QT CORE
 # ///////////////////////////////////////////////////////////////
@@ -52,8 +53,8 @@ class MainWindow(QMainWindow):
     suplier = CharField(_min=0, _max=24)
     number = CharField(_min=0, _max=24)
     sn = CharField()
-    cp = Decimalfield(_min=2)
-    sp = Decimalfield()
+    cp = Decimalfield(_min=1)
+    sp = Decimalfield(_min=1)
     qty = IntegerField(_min=0)
     order_id = CharField(_min=0, _max=45)
     tax = IntegerField(_min=0, )
@@ -77,6 +78,8 @@ class MainWindow(QMainWindow):
         # ///////////////////////////////////////////////////////////////
         self.hide_grips = True # Show/Hide resize grips
         SetupMainWindow.setup_gui(self)
+
+        # print(datetime.now().strftime('%Y/%m/%d %H:%M'))
 
         self.showcomponents()
         self.login_btn.clicked.connect(lambda: self.login())
@@ -104,8 +107,10 @@ class MainWindow(QMainWindow):
         self.stock_clear.clicked.connect(lambda: self.clearforms())
         self.stock_table.currentItemChanged.connect(lambda :self.table_row_Change( self.stock_table, flag='stock'))
 
-        self.load_sale_tables()
-        self.load_stock_tables()
+        self.stock_cp.editingFinished.connect(lambda: self.stock_cp.setText(self.decimal_Input(self.stock_cp.text())))
+        self.stock_sp.editingFinished.connect(lambda: self.stock_sp.setText(self.decimal_Input(self.stock_sp.text())))
+        self.stock_tax.editingFinished.connect(lambda: self.stock_tax.setText(self.tax_Input(self.stock_tax.text())))
+
 
         # SHOW MAIN WINDOW
         # ///////////////////////////////////////////////////////////////
@@ -154,11 +159,14 @@ class MainWindow(QMainWindow):
         # print(index.row(), index.column())
 
         data = []
-        print(table_widget.Count())
-
+        # print(table_widget.rowCount())
+        # if not table_widget.rowCount() < 1:
+        #go through the columns to get data
         for col in range(table_widget.columnCount()): # iterate through column count
-            # it = table_widget.item(ind.row(), col)
-            data.append(table_widget.item(index.row(), col).text())
+            # print(index.row())
+            if not index.row() < 0: #select row at lest 0
+                # if not table_widget.item(index.row(), col):
+                data.append(table_widget.item(index.row(), col).text())
 
         # feed data to the form base on index
         print(data)
@@ -180,10 +188,10 @@ class MainWindow(QMainWindow):
             elif flag == 'stock':
                 self.stock_type.setCurrentText(data[1])
                 self.stock_model.setCurrentText(data[2])
-                self.stock_qantity.setText(data[3])
-                self.stock_cp.setText(data[4])
-                self.stock_sp.setText(data[5])
-                self.stock_tax.setText(data[6])
+                self.stock_qantity.setText(data[3] )
+                self.stock_cp.setText(self.decimal_Input(data[4]))
+                self.stock_sp.setText(self.decimal_Input(data[5]))
+                self.stock_tax.setText( self.tax_Input(data[6]) )
 
                 #load rest of the field
 
@@ -280,7 +288,7 @@ class MainWindow(QMainWindow):
 
     def load_stock_tables(self):
         result = user.load_stock()
-        print("loading stock table")
+
         while (self.stock_table.rowCount() > 0):
             self.stock_table.removeRow(0)
         # print(result)
@@ -303,19 +311,36 @@ class MainWindow(QMainWindow):
             self.stock_table.setRowHeight(cart_row_number, 20)
 
     def save_stock(self):
+        # supplier table
+        # if none given used unknown and interface should be '' for both
+        # if number only given used number and name as 'suplier'
+        # if name only given unmber  +233 and interface should be ''
         try:
-            self.name = str(self.stock_type.currentText()).strip()
+            self.name = str(self.stock_type.currentText()).strip().capitalize()
+            print(self.name)
             self.model = str(self.stock_model.currentText()).strip()
-            self.number ='+233684010'
-            self.suplier = str(self.stock_suplier.currentText()).strip()
-            self.cp = str(self.stock_cp.text().strip())
-            self.sp = str(self.stock_sp.text().strip())
+            # " ".join('ththt      tkt'.strip().split()).capitalize()
+            self.number =str(self.stock_suplier_contact.text()).strip() or "+233"
+
+            if not str(self.stock_suplier_contact.text()).strip(): #num not given
+                self.suplier =  "unknown"
+            else:
+                #num given, so suplier name or name "suplier" is used
+                self.suplier = str(self.stock_suplier.currentText()).strip() or "Suplier"
+
+            if str(self.stock_cp.text().strip()) == "" or str(self.stock_sp.text().strip()) =="":
+                raise ValueError("invalid price value")
+
+            self.cp = Decimal(self.stock_cp.text().strip())
+            self.sp = Decimal(self.stock_sp.text().strip())
             self.qty = int(self.stock_qantity.text().strip())
             self.order_id = str(self.stock_prod_code.currentText()).strip()
-            self.tax = int(self.stock_tax.text().strip())
-        except ValueError as ex:
+            self.tax = int(self.stock_tax.text().strip()) or 0
+        except (ValueError )as ex:
             QMessageBox.information(self, "Received Key Release EVent",
                                     str(ex))
+            return
+
 
         # user.savestock(user_id=user.id, name=self.name, model=self.model, cp=self.cp,
         #                sp= self.sp ,qty=self.qty, date=datetime.now(),
@@ -324,8 +349,16 @@ class MainWindow(QMainWindow):
         #                code_list=None)
 
         self.load_stock_tables()
-
+        self.select_table_row(self.stock_table, flag='stock')
         # LEFT MENU BTN IS CLICKED
+
+    def decimal_Input(self, val):
+        return f"{Decimal(str(val)):.2f}"
+
+    def tax_Input(self, val):
+        if int(val) > 100:
+            return "100"
+        return val
 
     def update_stock(self):
         pass
@@ -338,7 +371,7 @@ class MainWindow(QMainWindow):
     def feed_combo(self, Qobj, feed : list= None ):
         items = feed
         # items.append('')
-        print(items)
+        # print(items)
         Qobj.clear()
         Qobj.addItems(items)
         # Qobj.setCurrentText("")
@@ -347,7 +380,7 @@ class MainWindow(QMainWindow):
         self.completer = QCompleter(items)
         self.completer.setCaseSensitivity(Qt.CaseInsensitive)
         Qobj.setCompleter(self.completer)
-        print(user.feed_type())
+        # print(user.feed_type())
 
     def type_feed_model(self,Qpassive ,text):
         if text == "":
@@ -356,22 +389,28 @@ class MainWindow(QMainWindow):
 
     def model_feed(self, model_text, flag = "stock"):
         dic= user.model_feed_rest(model_text)
-        if flag == "stock":
-            self.stock_cp.setText(str(dic.get('cp', "")))
-            self.stock_qantity.setText(str(dic.get('qty', "")))
-            self.stock_sp.setText(str(dic.get('sp', "")))
-            self.stock_tax.setText(str(dic.get('tax', "")))
-            return
-        self.phone_price.setText(str(dic.get('sp', "")))
-        self.phone_tax.setText(str(dic.get('tax', "")))
-        self.phone_discount.setText(str(dic.get('0')))
+        if dic:
+            if flag == "stock":
+                self.stock_cp.setText(str(dic.get('cp', "")))
+                self.stock_qantity.setText(str(dic.get('qty', "")))
+                self.stock_sp.setText(str(dic.get('sp', "")))
+                self.stock_tax.setText(str(dic.get('tax', "")))
+                return
+            self.phone_price.setText(str(dic.get('sp', "")))
+            self.phone_tax.setText(str(dic.get('tax', "")))
+            self.phone_discount.setText(str(dic.get('0')))
 
 
-    def select_table_row(self, table_obj):
+    def select_table_row(self, table_obj, flag = None):
         # auto select record if not empty
-        if (table_obj.rowCount()):
+        if table_obj.rowCount():
             table_obj.selectRow(0)
             # print(table_obj.currentRow())
+
+            #if table has only one row, currentItemChanged never call to feed form so
+            if table_obj.currentIndex() == 0: #only one record in take
+                self.table_row_Change(table_obj, flag) #call this fn to feed more
+
 
     def showcomponents(self, state =False):
 
@@ -413,6 +452,7 @@ class MainWindow(QMainWindow):
 
 
            # feed form with data from db
+            self.load_sale_tables()
             self.feed_combo(self.phone_type,user.feed_type())
             self.clearforms(flag='phone')
             self.select_table_row(self.phone_cart)
@@ -432,10 +472,10 @@ class MainWindow(QMainWindow):
             MainFunctions.set_page(self, self.ui.load_pages.stock)
 
            # feed form with data from db
+            self.load_stock_tables()
             self.feed_combo(self.stock_type,user.feed_type())
             self.clearforms()
-            self.select_table_row(self.stock_table)
-
+            self.select_table_row(self.stock_table,flag="stock")
         # open menu 2 of left colomn stackwiew
 
         # get top settings
@@ -583,7 +623,7 @@ class MainWindow(QMainWindow):
             # top_info.set_active_tab(False)
 
             # DEBUG
-        print(f"Button {btn.objectName()}, clicked!")
+        # print(f"Button {btn.objectName()}, clicked!")
 
 
 
@@ -597,7 +637,7 @@ class MainWindow(QMainWindow):
         btn = SetupMainWindow.setup_btns(self)
 
         # DEBUG
-        print(f"Button {btn.objectName()}, released!")
+        # print(f"Button {btn.objectName()}, released!")
 
     # RESIZE EVENT
     # ///////////////////////////////////////////////////////////////

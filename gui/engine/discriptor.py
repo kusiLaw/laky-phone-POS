@@ -1,4 +1,4 @@
-from decimal import Decimal
+from decimal import Decimal, InvalidOperation
 import decimal
 import re
 
@@ -68,8 +68,8 @@ class Decimalfield(BaseValidator):
             # print("rounding", w.rounding)
             d = Decimal(str(value))
             # print(d)
-        except ValueError as ex:
-            return "Improper value"
+        except (ValueError,InvalidOperation) as ex:
+            return ex
         else:
             return d
 

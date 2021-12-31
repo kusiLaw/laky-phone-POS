@@ -29,7 +29,8 @@ class PyComBox(QComboBox):
             bg_color_hover,
             items = None,
             editable = True,
-            height = 30
+            height = 30,
+            maxlen= None
     ):
         super().__init__()
 
@@ -39,11 +40,16 @@ class PyComBox(QComboBox):
         if items:
             self.addItems(items)
 
-        # calling completer class to autocomplete
-        self.completer = QCompleter(items)
-        self.completer.setCaseSensitivity(Qt.CaseInsensitive)
-        self.setCompleter(self.completer)
-        # set stylesheet
+        if editable:
+            # calling completer class to autocomplete
+            self.completer = QCompleter(items)
+            self.completer.setCaseSensitivity(Qt.CaseInsensitive)
+            self.setCompleter(self.completer)
+            # set stylesheet
+
+            if maxlen:
+                self.lineEdit().setMaxLength(maxlen)
+
 
         custom_style = style.format(
             _color=color,
