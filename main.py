@@ -110,7 +110,7 @@ class MainWindow(QMainWindow):
         self.stock_cp.editingFinished.connect(lambda: self.stock_cp.setText(self.decimal_Input(self.stock_cp.text())))
         self.stock_sp.editingFinished.connect(lambda: self.stock_sp.setText(self.decimal_Input(self.stock_sp.text())))
         self.stock_tax.editingFinished.connect(lambda: self.stock_tax.setText(self.tax_Input(self.stock_tax.text())))
-
+        self.stock_sn_list.itemDoubleClicked.connect(lambda : self.stock_sn_list.takeItem(self.stock_sn_list.currentRow()))
 
         # SHOW MAIN WINDOW
         # ///////////////////////////////////////////////////////////////

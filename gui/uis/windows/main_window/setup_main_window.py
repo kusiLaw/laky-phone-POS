@@ -965,6 +965,23 @@ class SetupMainWindow:
 
         self.ui.load_pages.stock_qr_layout.addWidget(self.stock_qr)
 
+
+
+        self.stock_sn_list = Pylist(
+            context_color=self.themes["app_color"]["context_color"],
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["bg_three"],
+
+        )
+
+        self.ui.load_pages.stock_list_frame.addWidget(self.stock_sn_list)
+
+        self.stock_sn_list.addItem('item 5')
+        self.stock_sn_list.addItem('item 10')
+        self.stock_sn_list.addItem('item 3')
+        self.stock_sn_list.insertItem(0,"begin")
+
+
         self.stock_save = PyPushButton2(
             text="Save",
             radius=8,

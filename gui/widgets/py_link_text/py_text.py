@@ -5,7 +5,8 @@ style = '''
     
     color: {_color};
 
-QPushButton:hover {{
+QPushButton:hover,
+QPushButton:link{{
 	background-color: {_bg_color_hover};
 }}
 QPushButton:pressed {{	

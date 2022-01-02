@@ -78,3 +78,5 @@ from .py_combobox import PyComBox
 
 # PyPicture
 from .py_pic import PyPicture
+
+from .py_list import Pylist

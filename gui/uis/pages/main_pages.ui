@@ -649,8 +649,8 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1164</width>
-            <height>765</height>
+            <width>934</width>
+            <height>608</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -2176,8 +2176,8 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1164</width>
-            <height>765</height>
+            <width>530</width>
+            <height>606</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -2945,6 +2945,18 @@ QTabBar::tab:selected, QTabBar::tab:hover {
                         <enum>QFrame::Raised</enum>
                        </property>
                        <layout class="QHBoxLayout" name="horizontalLayout_14">
+                        <property name="leftMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="topMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="rightMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="bottomMargin">
+                         <number>0</number>
+                        </property>
                         <item>
                          <widget class="QFrame" name="sdp_form_layout_4">
                           <property name="minimumSize">
@@ -2960,12 +2972,30 @@ QTabBar::tab:selected, QTabBar::tab:hover {
                            </size>
                           </property>
                           <property name="frameShape">
-                           <enum>QFrame::StyledPanel</enum>
+                           <enum>QFrame::NoFrame</enum>
                           </property>
                           <property name="frameShadow">
                            <enum>QFrame::Raised</enum>
                           </property>
                           <layout class="QFormLayout" name="formLayout_8">
+                           <property name="horizontalSpacing">
+                            <number>0</number>
+                           </property>
+                           <property name="verticalSpacing">
+                            <number>10</number>
+                           </property>
+                           <property name="leftMargin">
+                            <number>0</number>
+                           </property>
+                           <property name="topMargin">
+                            <number>10</number>
+                           </property>
+                           <property name="rightMargin">
+                            <number>0</number>
+                           </property>
+                           <property name="bottomMargin">
+                            <number>0</number>
+                           </property>
                            <item row="0" column="0">
                             <widget class="QLabel" name="label_48">
                              <property name="styleSheet">
@@ -3147,6 +3177,21 @@ QTabBar::tab:selected, QTabBar::tab:hover {
                            <enum>QFrame::Raised</enum>
                           </property>
                           <layout class="QGridLayout" name="gridLayout_11">
+                           <property name="leftMargin">
+                            <number>0</number>
+                           </property>
+                           <property name="topMargin">
+                            <number>0</number>
+                           </property>
+                           <property name="rightMargin">
+                            <number>0</number>
+                           </property>
+                           <property name="bottomMargin">
+                            <number>0</number>
+                           </property>
+                           <property name="spacing">
+                            <number>0</number>
+                           </property>
                            <item row="2" column="2">
                             <widget class="QFrame" name="frame_38">
                              <property name="frameShape">
@@ -3156,6 +3201,9 @@ QTabBar::tab:selected, QTabBar::tab:hover {
                               <enum>QFrame::Raised</enum>
                              </property>
                              <layout class="QVBoxLayout" name="verticalLayout_24">
+                              <property name="spacing">
+                               <number>0</number>
+                              </property>
                               <property name="leftMargin">
                                <number>0</number>
                               </property>
@@ -3470,7 +3518,7 @@ QTabBar::tab:selected, QTabBar::tab:hover {
                                <number>0</number>
                               </property>
                               <property name="leftMargin">
-                               <number>10</number>
+                               <number>0</number>
                               </property>
                               <property name="topMargin">
                                <number>0</number>
@@ -3496,6 +3544,9 @@ QTabBar::tab:selected, QTabBar::tab:hover {
                               <enum>QFrame::Raised</enum>
                              </property>
                              <layout class="QVBoxLayout" name="stock_tax_layout">
+                              <property name="spacing">
+                               <number>0</number>
+                              </property>
                               <property name="leftMargin">
                                <number>0</number>
                               </property>
@@ -3555,7 +3606,7 @@ QTabBar::tab:selected, QTabBar::tab:hover {
                              </property>
                              <layout class="QVBoxLayout" name="stock_unique_code_layout">
                               <property name="spacing">
-                               <number>70</number>
+                               <number>0</number>
                               </property>
                               <property name="leftMargin">
                                <number>0</number>
@@ -3579,7 +3630,7 @@ QTabBar::tab:selected, QTabBar::tab:hover {
                          <widget class="QFrame" name="frame_84">
                           <property name="minimumSize">
                            <size>
-                            <width>250</width>
+                            <width>0</width>
                             <height>0</height>
                            </size>
                           </property>
@@ -3590,7 +3641,8 @@ QTabBar::tab:selected, QTabBar::tab:hover {
                            </size>
                           </property>
                           <property name="styleSheet">
-                           <string notr="true"/>
+                           <string notr="true">
+</string>
                           </property>
                           <property name="frameShape">
                            <enum>QFrame::NoFrame</enum>
@@ -3612,20 +3664,57 @@ QTabBar::tab:selected, QTabBar::tab:hover {
                             <number>0</number>
                            </property>
                            <property name="bottomMargin">
-                            <number>0</number>
+                            <number>5</number>
                            </property>
                            <item>
-                            <widget class="QFrame" name="frame_85">
+                            <widget class="QFrame" name="frame_52">
                              <property name="styleSheet">
-                              <string notr="true">background: #282a36</string>
+                              <string notr="true">
+</string>
                              </property>
                              <property name="frameShape">
-                              <enum>QFrame::StyledPanel</enum>
+                              <enum>QFrame::NoFrame</enum>
                              </property>
                              <property name="frameShadow">
                               <enum>QFrame::Raised</enum>
                              </property>
-                             <layout class="QHBoxLayout" name="cart_imei_list_layout">
+                             <layout class="QVBoxLayout" name="stock_list_frame">
+                              <property name="spacing">
+                               <number>0</number>
+                              </property>
+                              <property name="leftMargin">
+                               <number>0</number>
+                              </property>
+                              <property name="topMargin">
+                               <number>10</number>
+                              </property>
+                              <property name="rightMargin">
+                               <number>0</number>
+                              </property>
+                              <property name="bottomMargin">
+                               <number>0</number>
+                              </property>
+                             </layout>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QFrame" name="frame_53">
+                             <property name="maximumSize">
+                              <size>
+                               <width>16777215</width>
+                               <height>30</height>
+                              </size>
+                             </property>
+                             <property name="frameShape">
+                              <enum>QFrame::NoFrame</enum>
+                             </property>
+                             <property name="frameShadow">
+                              <enum>QFrame::Raised</enum>
+                             </property>
+                             <layout class="QHBoxLayout" name="fr">
+                              <property name="spacing">
+                               <number>0</number>
+                              </property>
                               <property name="leftMargin">
                                <number>0</number>
                               </property>
@@ -3638,6 +3727,26 @@ QTabBar::tab:selected, QTabBar::tab:hover {
                               <property name="bottomMargin">
                                <number>0</number>
                               </property>
+                              <item>
+                               <widget class="QLabel" name="label_42">
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>80</width>
+                                  <height>16777215</height>
+                                 </size>
+                                </property>
+                                <property name="text">
+                                 <string>Total :</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="stock_sn_total">
+                                <property name="text">
+                                 <string>0</string>
+                                </property>
+                               </widget>
+                              </item>
                              </layout>
                             </widget>
                            </item>
@@ -3945,7 +4054,7 @@ QTabBar::tab:selected, QTabBar::tab:hover {
                        <property name="minimumSize">
                         <size>
                          <width>0</width>
-                         <height>157</height>
+                         <height>180</height>
                         </size>
                        </property>
                        <property name="styleSheet">
