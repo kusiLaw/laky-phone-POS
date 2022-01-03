@@ -976,10 +976,10 @@ class SetupMainWindow:
 
         self.ui.load_pages.stock_list_frame.addWidget(self.stock_sn_list)
 
-        self.stock_sn_list.addItem('item 5')
-        self.stock_sn_list.addItem('item 10')
-        self.stock_sn_list.addItem('item 3')
-        self.stock_sn_list.insertItem(0,"begin")
+        # self.stock_sn_list.addItem('item 5')
+        # self.stock_sn_list.addItem('item 10')
+        # self.stock_sn_list.addItem('item 3')
+        # self.stock_sn_list.insertItem(0, "begin")
 
 
         self.stock_save = PyPushButton2(

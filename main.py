@@ -104,6 +104,9 @@ class MainWindow(QMainWindow):
         self.stock_save.clicked.connect(lambda: self.dispatch(self.stock_save))
         self.stock_type.currentIndexChanged.connect(lambda: self.type_feed_model(self.stock_model,str(self.stock_type.currentText().strip())))
         self.stock_model.currentIndexChanged.connect(lambda:self.model_feed(str(self.stock_model.currentText().strip())))
+        self.stock_prod_code.currentIndexChanged.connect(lambda:self.order_id_feed_rest())
+
+
         self.stock_clear.clicked.connect(lambda: self.clearforms())
         self.stock_table.currentItemChanged.connect(lambda :self.table_row_Change( self.stock_table, flag='stock'))
 
@@ -116,6 +119,10 @@ class MainWindow(QMainWindow):
         # ///////////////////////////////////////////////////////////////
         self.show()
 
+        user.login('laky','laky')
+        MainFunctions.set_page(self, self.ui.load_pages.dasboard)
+        self.showcomponents(True)
+
     def login(self):
         if user.login(str(self.user_name.text()), str(self.user_passsword.text())):
             self.showcomponents(True)
@@ -126,18 +133,18 @@ class MainWindow(QMainWindow):
             #load the dashbord
             MainFunctions.set_page(self, self.ui.load_pages.dasboard)
 
-            try:
-                for x in ("T", "F", "G", "F"):
-                    user.savestock(user_id=user.id, name="Infinix", model=f"{x}20r", cp=123.215, sp=400.32, qty=12,
-                                   date='2020-12-26', tax=0, suplier='changer', suplier_number='+23302152458', prod_code='OD-Y17',
-                                   code_list=(f'sn-132456-1', f'sn-132456-4', f'sn-132456-5', f'sn-132456-41', f'sn-132456-50'))
-
-
-            except  errors.Error as err:
-                if err.errno == errorcode.ER_DUP_ENTRY:
-                    return "record already exist"
-                else:
-                    print(err)
+            # try:
+            #     for x in ("T", "F", "G", "F"):
+            #         user.savestock(user_id=user.id, name="Infinix", model=f"{x}20r", cp=125.90, sp=401.32, qty=8,
+            #                        date='2020-12-26', tax=0, suplier='Adams bee', suplier_number='+23302152222', prod_code='ADMB-157',
+            #                        code_list=(f'sn-232456-1', f'sn-232456-4', f'sn-232456-5', f'sn-232456-41', f'sn-232456-50'))
+            #
+            #
+            # except  errors.Error as err:
+            #     if err.errno == errorcode.ER_DUP_ENTRY:
+            #         return "record already exist"
+            #     else:
+            #         print(err)
         else:
             self.ui.load_pages.login_form_info.setText('Wrong username or password')
 
@@ -194,7 +201,7 @@ class MainWindow(QMainWindow):
                 self.stock_tax.setText( self.tax_Input(data[6]) )
 
                 #load rest of the field
-
+                self.order_id_feed()
 
     def dispatch(self, obj):
 
@@ -400,6 +407,41 @@ class MainWindow(QMainWindow):
             self.phone_tax.setText(str(dic.get('tax', "")))
             self.phone_discount.setText(str(dic.get('0')))
 
+    def order_id_feed(self):
+        result = user.feed_order_id(str(self.stock_model.currentText())) #list
+        self.feed_combo(self.stock_prod_code, result)
+
+    def order_id_feed_rest(self):
+        result = user.order_id_feed_rest(str(self.stock_prod_code.currentText())) #dic
+
+        self.stock_suplier.setCurrentText(result.get('suplier', ''))
+        self.stock_suplier_contact.setText(result.get('contact', ''))
+        self.stock_sn_list.clear()
+        for sn in result['sn']:
+            self.stock_sn_list.insertItem(0,sn)
+
+    def feed_suplier(self, internal_op = True):
+        """
+        feed suplier combo
+        :arg internal_op set to true if function was called internal or external by signal
+        :param internal_op:
+        :return:
+        """
+
+        self.suplier_cached = {}
+        result = user.feed_suplier()
+
+        if result:
+            # cache it
+            print(result)
+            for li in result:
+                self.suplier_cached[li[0]] = li[1]  #name as key contact as value
+
+            # fetch from caache.
+            print(self.suplier_cached)
+            self.feed_combo(self.stock_suplier, list(self.suplier_cached.keys()))
+
+
 
     def select_table_row(self, table_obj, flag = None):
         # auto select record if not empty
@@ -474,6 +516,7 @@ class MainWindow(QMainWindow):
            # feed form with data from db
             self.load_stock_tables()
             self.feed_combo(self.stock_type,user.feed_type())
+            self.feed_suplier()
             self.clearforms()
             self.select_table_row(self.stock_table,flag="stock")
         # open menu 2 of left colomn stackwiew

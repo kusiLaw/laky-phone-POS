@@ -2945,6 +2945,9 @@ QTabBar::tab:selected, QTabBar::tab:hover {
                         <enum>QFrame::Raised</enum>
                        </property>
                        <layout class="QHBoxLayout" name="horizontalLayout_14">
+                        <property name="spacing">
+                         <number>10</number>
+                        </property>
                         <property name="leftMargin">
                          <number>0</number>
                         </property>
@@ -3167,7 +3170,7 @@ QTabBar::tab:selected, QTabBar::tab:hover {
                           <property name="maximumSize">
                            <size>
                             <width>750</width>
-                            <height>16777215</height>
+                            <height>201</height>
                            </size>
                           </property>
                           <property name="frameShape">
@@ -3668,6 +3671,12 @@ QTabBar::tab:selected, QTabBar::tab:hover {
                            </property>
                            <item>
                             <widget class="QFrame" name="frame_52">
+                             <property name="maximumSize">
+                              <size>
+                               <width>16777215</width>
+                               <height>16777215</height>
+                              </size>
+                             </property>
                              <property name="styleSheet">
                               <string notr="true">
 </string>

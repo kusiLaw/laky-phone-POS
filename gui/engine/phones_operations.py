@@ -279,9 +279,11 @@ class PhoneStock:
         try:
             cur.execute(statement, (key, ))
             result = cur.fetchone()
+            h = dict()
+            h = dict()
             if result:
                 result = dict(zip(cur.column_names, result))
-            #     print(result)
+
             # print(result, 'ygghghg')
         except  errors.Error as err:
             return {}
@@ -293,6 +295,90 @@ class PhoneStock:
         finally:
             con.close()
 
+    def feed_order_id(self,key):
+        """
+        it pre-suplies the 'order id combobox' with order information from database
+        :param key: key
+        :return: list
+        """
+
+        statement= "SELECT distinct orders.order_codes  FROM lakydb.orders left join lakydb.order_info on  orders.idorder = order_info.Orders_idorder " \
+        "where order_info.phone_model = %s"
+        con = self.con.connect()
+        cur = con.cursor()
+
+        try:
+            cur.execute(statement, (key,))
+            result = cur.fetchall()
+            if result:
+                result = [x[0] for x in result]
+                # print(result)
+            # print(result, 'ygghghg')
+        except  errors.Error as err:
+            return []
+        except:
+            return []
+        else:
+            return result
+
+        finally:
+            con.close()
+
+    def order_id_feed_rest(self, key):
+        statement = "SELECT suplier.supliername, suplier.contact,orders.dates, Order_sn_info.phone_sn  FROM lakydb.orders " \
+                    "left join lakydb.Order_sn_info on  orders.idorder = Order_sn_info.Orders_idorder " \
+                    " right join lakydb.suplier on Suplier.idsuplier = orders.Suplier_idsuplier where orders.order_codes = %s order by orders.dates asc;"
+        con = self.con.connect()
+        cur = con.cursor()
+
+        try:
+            cur.execute(statement, (key,))
+            result = cur.fetchall()
+
+            h = {'sn': list(), 'suplier': None, 'contact': None,'date': None}
+            if result:
+                for tup in result:
+                    h['suplier'] = str(tup[0]) # for suplier name
+                    h['contact'] = str(tup[1]) # for suplier contact
+                    h['date'] = tup[2]  # for  date
+                    h.get('sn').append(tup[3])
+
+                    # for item in tup:
+                    #     h[item] = item
+                # print(result, 're')
+                # print(h)
+        except  errors.Error as err:
+
+            return {}
+        except:
+
+            return {}
+        else:
+            return h
+
+        finally:
+            con.close()
+
+    def feed_suplier(self):
+        statement ="SELECT supliername, contact FROM lakydb.Suplier"
+        con = self.con.connect()
+        cur = con.cursor()
+
+        try:
+            cur.execute(statement)
+            result = cur.fetchall()
+
+        except  errors.Error as err:
+
+            return {}
+        except:
+
+            return {}
+        else:
+            return result
+
+        finally:
+            con.close()
 
 class Phone:
     caches_whole = {}
