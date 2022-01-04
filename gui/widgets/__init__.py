@@ -80,3 +80,5 @@ from .py_combobox import PyComBox
 from .py_pic import PyPicture
 
 from .py_list import Pylist
+
+from .py_datetime import Py_datetime

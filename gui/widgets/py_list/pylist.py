@@ -36,6 +36,8 @@ class Pylist(QListWidget):
         # if sort:
         #     self.setSortingEnabled(True)
 
+        self.setToolTip("Double click to remove item")
+        self.setCursor(Qt.PointingHandCursor)
         style_format = style.format(
             _radius=radius,
             _border_size=border_size,

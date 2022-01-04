@@ -1334,15 +1334,10 @@ class Ui_MainPages(object):
         self.widget = QWidget(self.sdp_form_layout_4)
         self.widget.setObjectName(u"widget")
         self.widget.setStyleSheet(u"")
-        self.toInsrt = QVBoxLayout(self.widget)
-        self.toInsrt.setSpacing(0)
-        self.toInsrt.setObjectName(u"toInsrt")
-        self.toInsrt.setContentsMargins(0, 0, 0, 0)
-        self.dateEdit_2 = QDateEdit(self.widget)
-        self.dateEdit_2.setObjectName(u"dateEdit_2")
-
-        self.toInsrt.addWidget(self.dateEdit_2)
-
+        self.stock_datetime_frame = QVBoxLayout(self.widget)
+        self.stock_datetime_frame.setSpacing(0)
+        self.stock_datetime_frame.setObjectName(u"stock_datetime_frame")
+        self.stock_datetime_frame.setContentsMargins(0, 0, 0, 0)
 
         self.formLayout_8.setWidget(3, QFormLayout.FieldRole, self.widget)
 

@@ -49,7 +49,8 @@ class PyComBox(QComboBox):
 
             if maxlen:
                 self.lineEdit().setMaxLength(maxlen)
-
+        else:
+            self.setCursor(Qt.PointingHandCursor)
 
         custom_style = style.format(
             _color=color,

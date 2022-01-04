@@ -976,10 +976,15 @@ class SetupMainWindow:
 
         self.ui.load_pages.stock_list_frame.addWidget(self.stock_sn_list)
 
-        # self.stock_sn_list.addItem('item 5')
-        # self.stock_sn_list.addItem('item 10')
-        # self.stock_sn_list.addItem('item 3')
-        # self.stock_sn_list.insertItem(0, "begin")
+
+        self.stock_datetime = Py_datetime(
+
+            context_color=self.themes["app_color"]["context_color"],
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["bg_three"],
+        )
+
+        self.ui.load_pages.stock_datetime_frame.addWidget(self.stock_datetime)
 
 
         self.stock_save = PyPushButton2(

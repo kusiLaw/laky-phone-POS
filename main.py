@@ -114,6 +114,8 @@ class MainWindow(QMainWindow):
         self.stock_sp.editingFinished.connect(lambda: self.stock_sp.setText(self.decimal_Input(self.stock_sp.text())))
         self.stock_tax.editingFinished.connect(lambda: self.stock_tax.setText(self.tax_Input(self.stock_tax.text())))
         self.stock_sn_list.itemDoubleClicked.connect(lambda : self.stock_sn_list.takeItem(self.stock_sn_list.currentRow()))
+        self.stock_sn_list.currentItemChanged.connect(lambda:self.count_sn())
+
 
         # SHOW MAIN WINDOW
         # ///////////////////////////////////////////////////////////////
@@ -416,9 +418,13 @@ class MainWindow(QMainWindow):
 
         self.stock_suplier.setCurrentText(result.get('suplier', ''))
         self.stock_suplier_contact.setText(result.get('contact', ''))
+        self.stock_datetime.setDate(result.get('date', datetime.now()))
         self.stock_sn_list.clear()
         for sn in result['sn']:
             self.stock_sn_list.insertItem(0,sn)
+
+        #count total item in sn
+        self.count_sn()
 
     def feed_suplier(self, internal_op = True):
         """
@@ -464,6 +470,11 @@ class MainWindow(QMainWindow):
 
         for comp in left_comp:
             self.ui.left_menu.findChild(QPushButton, comp).setVisible(state)
+
+    def count_sn(self):
+        self.ui.load_pages.stock_sn_total.setText(str(self.stock_sn_list.count()))
+
+
 
 
     # Run function when btn is clicked

@@ -3134,7 +3134,7 @@ QTabBar::tab:selected, QTabBar::tab:hover {
                              <property name="styleSheet">
                               <string notr="true"/>
                              </property>
-                             <layout class="QVBoxLayout" name="toInsrt">
+                             <layout class="QVBoxLayout" name="stock_datetime_frame">
                               <property name="spacing">
                                <number>0</number>
                               </property>
@@ -3150,9 +3150,6 @@ QTabBar::tab:selected, QTabBar::tab:hover {
                               <property name="bottomMargin">
                                <number>0</number>
                               </property>
-                              <item>
-                               <widget class="QDateEdit" name="dateEdit_2"/>
-                              </item>
                              </layout>
                             </widget>
                            </item>
@@ -3644,8 +3641,7 @@ QTabBar::tab:selected, QTabBar::tab:hover {
                            </size>
                           </property>
                           <property name="styleSheet">
-                           <string notr="true">
-</string>
+                           <string notr="true"/>
                           </property>
                           <property name="frameShape">
                            <enum>QFrame::NoFrame</enum>
@@ -3678,8 +3674,7 @@ QTabBar::tab:selected, QTabBar::tab:hover {
                               </size>
                              </property>
                              <property name="styleSheet">
-                              <string notr="true">
-</string>
+                              <string notr="true"/>
                              </property>
                              <property name="frameShape">
                               <enum>QFrame::NoFrame</enum>
