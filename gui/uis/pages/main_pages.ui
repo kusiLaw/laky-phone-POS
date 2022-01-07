@@ -1062,7 +1062,7 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
                         <number>5</number>
                        </property>
                        <property name="rightMargin">
-                        <number>5</number>
+                        <number>10</number>
                        </property>
                        <property name="bottomMargin">
                         <number>10</number>
@@ -1071,12 +1071,15 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
                         <number>0</number>
                        </property>
                        <property name="verticalSpacing">
-                        <number>12</number>
+                        <number>5</number>
                        </property>
                        <item row="2" column="0">
                         <widget class="QLabel" name="label_7">
                          <property name="text">
                           <string>Model :</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                          </property>
                         </widget>
                        </item>
@@ -1096,6 +1099,9 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
                          </property>
                          <property name="text">
                           <string>Type :</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                          </property>
                         </widget>
                        </item>
@@ -1136,6 +1142,9 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
                          </property>
                          <property name="text">
                           <string>SN :</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                          </property>
                         </widget>
                        </item>
@@ -1336,16 +1345,13 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
                     </property>
                     <item>
                      <widget class="QGroupBox" name="cost_group">
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
                       <property name="title">
                        <string>Cost</string>
                       </property>
-                      <layout class="QFormLayout" name="formLayout_3">
-                       <property name="horizontalSpacing">
-                        <number>7</number>
-                       </property>
-                       <property name="verticalSpacing">
-                        <number>12</number>
-                       </property>
+                      <layout class="QGridLayout" name="gridLayout_7">
                        <property name="leftMargin">
                         <number>15</number>
                        </property>
@@ -1358,6 +1364,19 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
                        <property name="bottomMargin">
                         <number>0</number>
                        </property>
+                       <property name="horizontalSpacing">
+                        <number>7</number>
+                       </property>
+                       <property name="verticalSpacing">
+                        <number>12</number>
+                       </property>
+                       <item row="1" column="2">
+                        <widget class="QLabel" name="label_11">
+                         <property name="text">
+                          <string>tax :</string>
+                         </property>
+                        </widget>
+                       </item>
                        <item row="0" column="0">
                         <widget class="QLabel" name="label_9">
                          <property name="text">
@@ -1372,99 +1391,11 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
                          </property>
                         </widget>
                        </item>
-                       <item row="2" column="0">
-                        <widget class="QLabel" name="label_11">
-                         <property name="text">
-                          <string>tax :</string>
-                         </property>
-                        </widget>
-                       </item>
                        <item row="3" column="0">
                         <widget class="QLabel" name="label_12">
                          <property name="text">
                           <string>paymant :</string>
                          </property>
-                        </widget>
-                       </item>
-                       <item row="0" column="1">
-                        <widget class="QFrame" name="frame_26">
-                         <property name="styleSheet">
-                          <string notr="true">\</string>
-                         </property>
-                         <property name="frameShape">
-                          <enum>QFrame::NoFrame</enum>
-                         </property>
-                         <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
-                         </property>
-                         <layout class="QVBoxLayout" name="phone_price_edit">
-                          <property name="leftMargin">
-                           <number>0</number>
-                          </property>
-                          <property name="topMargin">
-                           <number>0</number>
-                          </property>
-                          <property name="rightMargin">
-                           <number>0</number>
-                          </property>
-                          <property name="bottomMargin">
-                           <number>0</number>
-                          </property>
-                         </layout>
-                        </widget>
-                       </item>
-                       <item row="1" column="1">
-                        <widget class="QFrame" name="frame_27">
-                         <property name="styleSheet">
-                          <string notr="true">\</string>
-                         </property>
-                         <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
-                         </property>
-                         <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
-                         </property>
-                         <layout class="QVBoxLayout" name="phone_discount_edit">
-                          <property name="leftMargin">
-                           <number>0</number>
-                          </property>
-                          <property name="topMargin">
-                           <number>0</number>
-                          </property>
-                          <property name="rightMargin">
-                           <number>0</number>
-                          </property>
-                          <property name="bottomMargin">
-                           <number>0</number>
-                          </property>
-                         </layout>
-                        </widget>
-                       </item>
-                       <item row="2" column="1">
-                        <widget class="QFrame" name="frame_28">
-                         <property name="styleSheet">
-                          <string notr="true">\</string>
-                         </property>
-                         <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
-                         </property>
-                         <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
-                         </property>
-                         <layout class="QVBoxLayout" name="phone_tax_edit">
-                          <property name="leftMargin">
-                           <number>0</number>
-                          </property>
-                          <property name="topMargin">
-                           <number>0</number>
-                          </property>
-                          <property name="rightMargin">
-                           <number>0</number>
-                          </property>
-                          <property name="bottomMargin">
-                           <number>0</number>
-                          </property>
-                         </layout>
                         </widget>
                        </item>
                        <item row="3" column="1">
@@ -1492,6 +1423,104 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
                            <number>0</number>
                           </property>
                          </layout>
+                        </widget>
+                       </item>
+                       <item row="1" column="1">
+                        <widget class="QFrame" name="frame_27">
+                         <property name="styleSheet">
+                          <string notr="true"/>
+                         </property>
+                         <property name="frameShape">
+                          <enum>QFrame::StyledPanel</enum>
+                         </property>
+                         <property name="frameShadow">
+                          <enum>QFrame::Raised</enum>
+                         </property>
+                         <layout class="QVBoxLayout" name="phone_discount_edit">
+                          <property name="leftMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>0</number>
+                          </property>
+                         </layout>
+                        </widget>
+                       </item>
+                       <item row="0" column="1">
+                        <widget class="QFrame" name="frame_26">
+                         <property name="styleSheet">
+                          <string notr="true"/>
+                         </property>
+                         <property name="frameShape">
+                          <enum>QFrame::NoFrame</enum>
+                         </property>
+                         <property name="frameShadow">
+                          <enum>QFrame::Raised</enum>
+                         </property>
+                         <layout class="QVBoxLayout" name="phone_price_edit">
+                          <property name="leftMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>0</number>
+                          </property>
+                         </layout>
+                        </widget>
+                       </item>
+                       <item row="1" column="3">
+                        <widget class="QFrame" name="frame_28">
+                         <property name="styleSheet">
+                          <string notr="true">\</string>
+                         </property>
+                         <property name="frameShape">
+                          <enum>QFrame::StyledPanel</enum>
+                         </property>
+                         <property name="frameShadow">
+                          <enum>QFrame::Raised</enum>
+                         </property>
+                         <layout class="QVBoxLayout" name="phone_tax_edit">
+                          <property name="leftMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>0</number>
+                          </property>
+                         </layout>
+                        </widget>
+                       </item>
+                       <item row="0" column="2">
+                        <widget class="QLabel" name="label_6">
+                         <property name="text">
+                          <string>Total:</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="0" column="3">
+                        <widget class="QLabel" name="label_43">
+                         <property name="text">
+                          <string>0</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignCenter</set>
+                         </property>
                         </widget>
                        </item>
                       </layout>

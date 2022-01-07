@@ -459,10 +459,11 @@ class Ui_MainPages(object):
         self.gridLayout_2 = QGridLayout(self.phone_group)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
         self.gridLayout_2.setHorizontalSpacing(0)
-        self.gridLayout_2.setVerticalSpacing(12)
-        self.gridLayout_2.setContentsMargins(10, 5, 5, 10)
+        self.gridLayout_2.setVerticalSpacing(5)
+        self.gridLayout_2.setContentsMargins(10, 5, 10, 10)
         self.label_7 = QLabel(self.phone_group)
         self.label_7.setObjectName(u"label_7")
+        self.label_7.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
 
         self.gridLayout_2.addWidget(self.label_7, 2, 0, 1, 1)
 
@@ -470,6 +471,7 @@ class Ui_MainPages(object):
         self.label_5.setObjectName(u"label_5")
         self.label_5.setMinimumSize(QSize(60, 0))
         self.label_5.setMaximumSize(QSize(60, 16777215))
+        self.label_5.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.gridLayout_2.addWidget(self.label_5, 0, 0, 1, 1)
 
@@ -488,6 +490,7 @@ class Ui_MainPages(object):
         self.label_8 = QLabel(self.phone_group)
         self.label_8.setObjectName(u"label_8")
         self.label_8.setStyleSheet(u"")
+        self.label_8.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
 
         self.gridLayout_2.addWidget(self.label_8, 3, 0, 1, 1)
 
@@ -575,63 +578,31 @@ class Ui_MainPages(object):
         self.verticalLayout_8.setContentsMargins(10, 0, 10, 0)
         self.cost_group = QGroupBox(self.phoneform_cost_section)
         self.cost_group.setObjectName(u"cost_group")
-        self.formLayout_3 = QFormLayout(self.cost_group)
-        self.formLayout_3.setObjectName(u"formLayout_3")
-        self.formLayout_3.setHorizontalSpacing(7)
-        self.formLayout_3.setVerticalSpacing(12)
-        self.formLayout_3.setContentsMargins(15, 5, 20, 0)
+        self.cost_group.setStyleSheet(u"")
+        self.gridLayout_7 = QGridLayout(self.cost_group)
+        self.gridLayout_7.setObjectName(u"gridLayout_7")
+        self.gridLayout_7.setHorizontalSpacing(7)
+        self.gridLayout_7.setVerticalSpacing(12)
+        self.gridLayout_7.setContentsMargins(15, 5, 20, 0)
+        self.label_11 = QLabel(self.cost_group)
+        self.label_11.setObjectName(u"label_11")
+
+        self.gridLayout_7.addWidget(self.label_11, 1, 2, 1, 1)
+
         self.label_9 = QLabel(self.cost_group)
         self.label_9.setObjectName(u"label_9")
 
-        self.formLayout_3.setWidget(0, QFormLayout.LabelRole, self.label_9)
+        self.gridLayout_7.addWidget(self.label_9, 0, 0, 1, 1)
 
         self.label_10 = QLabel(self.cost_group)
         self.label_10.setObjectName(u"label_10")
 
-        self.formLayout_3.setWidget(1, QFormLayout.LabelRole, self.label_10)
-
-        self.label_11 = QLabel(self.cost_group)
-        self.label_11.setObjectName(u"label_11")
-
-        self.formLayout_3.setWidget(2, QFormLayout.LabelRole, self.label_11)
+        self.gridLayout_7.addWidget(self.label_10, 1, 0, 1, 1)
 
         self.label_12 = QLabel(self.cost_group)
         self.label_12.setObjectName(u"label_12")
 
-        self.formLayout_3.setWidget(3, QFormLayout.LabelRole, self.label_12)
-
-        self.frame_26 = QFrame(self.cost_group)
-        self.frame_26.setObjectName(u"frame_26")
-        self.frame_26.setStyleSheet(u"\\")
-        self.frame_26.setFrameShape(QFrame.NoFrame)
-        self.frame_26.setFrameShadow(QFrame.Raised)
-        self.phone_price_edit = QVBoxLayout(self.frame_26)
-        self.phone_price_edit.setObjectName(u"phone_price_edit")
-        self.phone_price_edit.setContentsMargins(0, 0, 0, 0)
-
-        self.formLayout_3.setWidget(0, QFormLayout.FieldRole, self.frame_26)
-
-        self.frame_27 = QFrame(self.cost_group)
-        self.frame_27.setObjectName(u"frame_27")
-        self.frame_27.setStyleSheet(u"\\")
-        self.frame_27.setFrameShape(QFrame.StyledPanel)
-        self.frame_27.setFrameShadow(QFrame.Raised)
-        self.phone_discount_edit = QVBoxLayout(self.frame_27)
-        self.phone_discount_edit.setObjectName(u"phone_discount_edit")
-        self.phone_discount_edit.setContentsMargins(0, 0, 0, 0)
-
-        self.formLayout_3.setWidget(1, QFormLayout.FieldRole, self.frame_27)
-
-        self.frame_28 = QFrame(self.cost_group)
-        self.frame_28.setObjectName(u"frame_28")
-        self.frame_28.setStyleSheet(u"\\")
-        self.frame_28.setFrameShape(QFrame.StyledPanel)
-        self.frame_28.setFrameShadow(QFrame.Raised)
-        self.phone_tax_edit = QVBoxLayout(self.frame_28)
-        self.phone_tax_edit.setObjectName(u"phone_tax_edit")
-        self.phone_tax_edit.setContentsMargins(0, 0, 0, 0)
-
-        self.formLayout_3.setWidget(2, QFormLayout.FieldRole, self.frame_28)
+        self.gridLayout_7.addWidget(self.label_12, 3, 0, 1, 1)
 
         self.payment = QFrame(self.cost_group)
         self.payment.setObjectName(u"payment")
@@ -642,7 +613,51 @@ class Ui_MainPages(object):
         self.phone_payment_edit.setObjectName(u"phone_payment_edit")
         self.phone_payment_edit.setContentsMargins(0, 0, 0, 0)
 
-        self.formLayout_3.setWidget(3, QFormLayout.FieldRole, self.payment)
+        self.gridLayout_7.addWidget(self.payment, 3, 1, 1, 1)
+
+        self.frame_27 = QFrame(self.cost_group)
+        self.frame_27.setObjectName(u"frame_27")
+        self.frame_27.setStyleSheet(u"")
+        self.frame_27.setFrameShape(QFrame.StyledPanel)
+        self.frame_27.setFrameShadow(QFrame.Raised)
+        self.phone_discount_edit = QVBoxLayout(self.frame_27)
+        self.phone_discount_edit.setObjectName(u"phone_discount_edit")
+        self.phone_discount_edit.setContentsMargins(0, 0, 0, 0)
+
+        self.gridLayout_7.addWidget(self.frame_27, 1, 1, 1, 1)
+
+        self.frame_26 = QFrame(self.cost_group)
+        self.frame_26.setObjectName(u"frame_26")
+        self.frame_26.setStyleSheet(u"")
+        self.frame_26.setFrameShape(QFrame.NoFrame)
+        self.frame_26.setFrameShadow(QFrame.Raised)
+        self.phone_price_edit = QVBoxLayout(self.frame_26)
+        self.phone_price_edit.setObjectName(u"phone_price_edit")
+        self.phone_price_edit.setContentsMargins(0, 0, 0, 0)
+
+        self.gridLayout_7.addWidget(self.frame_26, 0, 1, 1, 1)
+
+        self.frame_28 = QFrame(self.cost_group)
+        self.frame_28.setObjectName(u"frame_28")
+        self.frame_28.setStyleSheet(u"\\")
+        self.frame_28.setFrameShape(QFrame.StyledPanel)
+        self.frame_28.setFrameShadow(QFrame.Raised)
+        self.phone_tax_edit = QVBoxLayout(self.frame_28)
+        self.phone_tax_edit.setObjectName(u"phone_tax_edit")
+        self.phone_tax_edit.setContentsMargins(0, 0, 0, 0)
+
+        self.gridLayout_7.addWidget(self.frame_28, 1, 3, 1, 1)
+
+        self.label_6 = QLabel(self.cost_group)
+        self.label_6.setObjectName(u"label_6")
+
+        self.gridLayout_7.addWidget(self.label_6, 0, 2, 1, 1)
+
+        self.label_43 = QLabel(self.cost_group)
+        self.label_43.setObjectName(u"label_43")
+        self.label_43.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_7.addWidget(self.label_43, 0, 3, 1, 1)
 
 
         self.verticalLayout_8.addWidget(self.cost_group)
@@ -1991,10 +2006,12 @@ class Ui_MainPages(object):
         self.label_16.setText(QCoreApplication.translate("MainPages", u"Bar/QR reader :", None))
         self.label_17.setText(QCoreApplication.translate("MainPages", u".....................................", None))
         self.cost_group.setTitle(QCoreApplication.translate("MainPages", u"Cost", None))
+        self.label_11.setText(QCoreApplication.translate("MainPages", u"tax :", None))
         self.label_9.setText(QCoreApplication.translate("MainPages", u"Price :", None))
         self.label_10.setText(QCoreApplication.translate("MainPages", u"discount :", None))
-        self.label_11.setText(QCoreApplication.translate("MainPages", u"tax :", None))
         self.label_12.setText(QCoreApplication.translate("MainPages", u"paymant :", None))
+        self.label_6.setText(QCoreApplication.translate("MainPages", u"Total:", None))
+        self.label_43.setText(QCoreApplication.translate("MainPages", u"0", None))
         self.label_23.setText(QCoreApplication.translate("MainPages", u"Search :", None))
         self.service_customer_group.setTitle(QCoreApplication.translate("MainPages", u"Customer", None))
         self.label_13.setText(QCoreApplication.translate("MainPages", u"Name : ", None))
