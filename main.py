@@ -101,7 +101,8 @@ class MainWindow(QMainWindow):
         self.phone_model.currentIndexChanged.connect(lambda:self.model_feed(str(self.phone_model.currentText().strip()), "phone"))
 
         # stock btn signals
-        self.stock_save.clicked.connect(lambda: self.dispatch(self.stock_save))
+        self.stock_save.clicked.connect(lambda: self.save_stock())
+
         self.stock_type.currentIndexChanged.connect(lambda: self.type_feed_model(self.stock_model,str(self.stock_type.currentText().strip())))
         self.stock_model.currentIndexChanged.connect(lambda:self.model_feed(str(self.stock_model.currentText().strip())))
         self.stock_prod_code.currentIndexChanged.connect(lambda:self.order_id_feed_rest())
@@ -227,7 +228,7 @@ class MainWindow(QMainWindow):
         elif obj.text() == "Add to Cart":
             if not self.phone_sn.text() == '':
                 user.add_to_cart(ph_type= str(self.phone_type.currentText()),ph_model= str(self.phone_model.currentText()),
-                                 sn = str(self.phone_sn.text()),ime= str(self.phone_imei.currentText()),price=Decimal(self.phone_price.text()))
+                                 sn = str(self.phone_sn.text()),price=Decimal(self.phone_price.text()))
                 # print(user.caches_retail)
                 self.load_phone_cart()
                 self.select_table_row(self.phone_cart)
@@ -274,8 +275,8 @@ class MainWindow(QMainWindow):
             self.phone_cart.setItem(cart_row_number, 0, QTableWidgetItem(str(val["ph_type"]))) # Add name
             self.phone_cart.setItem(cart_row_number, 1, QTableWidgetItem(str(val["ph_model"]))) # Add nick
             self.phone_cart.setItem(cart_row_number, 2, QTableWidgetItem(str(val["sn"]))) # Add pass
-            self.phone_cart.setItem(cart_row_number, 3, QTableWidgetItem(str(val["ime"]))) # Add pass
-            self.phone_cart.setItem(cart_row_number, 4, QTableWidgetItem(str(val["price"]))) # Add pass
+            # self.phone_cart.setItem(cart_row_number, 3, QTableWidgetItem(str(val["ime"]))) # Add pass
+            self.phone_cart.setItem(cart_row_number, 3, QTableWidgetItem(str(val["price"]))) # Add pass
 
             self.phone_cart.setRowHeight(cart_row_number, 20)
 

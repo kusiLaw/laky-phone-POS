@@ -32,7 +32,7 @@
    <item>
     <widget class="QStackedWidget" name="pages">
      <property name="currentIndex">
-      <number>4</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="home_page">
       <property name="font">
@@ -649,8 +649,8 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>934</width>
-            <height>608</height>
+            <width>1164</width>
+            <height>765</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -1048,6 +1048,9 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
                     </property>
                     <item>
                      <widget class="QGroupBox" name="phone_group">
+                      <property name="styleSheet">
+                       <string notr="true">/**background:red**/</string>
+                      </property>
                       <property name="title">
                        <string>Phone</string>
                       </property>
@@ -1070,63 +1073,8 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
                        <property name="verticalSpacing">
                         <number>12</number>
                        </property>
-                       <item row="0" column="1">
-                        <widget class="QFrame" name="frame_22">
-                         <property name="minimumSize">
-                          <size>
-                           <width>100</width>
-                           <height>0</height>
-                          </size>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true"/>
-                         </property>
-                         <property name="frameShape">
-                          <enum>QFrame::NoFrame</enum>
-                         </property>
-                         <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
-                         </property>
-                         <layout class="QVBoxLayout" name="phone_type_edit">
-                          <property name="spacing">
-                           <number>0</number>
-                          </property>
-                          <property name="leftMargin">
-                           <number>0</number>
-                          </property>
-                          <property name="topMargin">
-                           <number>0</number>
-                          </property>
-                          <property name="rightMargin">
-                           <number>0</number>
-                          </property>
-                          <property name="bottomMargin">
-                           <number>0</number>
-                          </property>
-                         </layout>
-                        </widget>
-                       </item>
                        <item row="2" column="0">
                         <widget class="QLabel" name="label_7">
-                         <property name="text">
-                          <string>Imei / meid :</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="0" column="2">
-                        <widget class="QLabel" name="label_6">
-                         <property name="minimumSize">
-                          <size>
-                           <width>60</width>
-                           <height>0</height>
-                          </size>
-                         </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>60</width>
-                           <height>16777215</height>
-                          </size>
-                         </property>
                          <property name="text">
                           <string>Model :</string>
                          </property>
@@ -1153,47 +1101,11 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
                        </item>
                        <item row="2" column="1" colspan="3">
                         <widget class="QFrame" name="frame_9">
+                         <property name="styleSheet">
+                          <string notr="true">/**background:green**/</string>
+                         </property>
                          <property name="frameShape">
                           <enum>QFrame::StyledPanel</enum>
-                         </property>
-                         <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
-                         </property>
-                         <layout class="QVBoxLayout" name="phone_imei_edit">
-                          <property name="spacing">
-                           <number>0</number>
-                          </property>
-                          <property name="leftMargin">
-                           <number>0</number>
-                          </property>
-                          <property name="topMargin">
-                           <number>0</number>
-                          </property>
-                          <property name="rightMargin">
-                           <number>0</number>
-                          </property>
-                          <property name="bottomMargin">
-                           <number>0</number>
-                          </property>
-                         </layout>
-                        </widget>
-                       </item>
-                       <item row="0" column="3">
-                        <widget class="QFrame" name="frame_24">
-                         <property name="minimumSize">
-                          <size>
-                           <width>100</width>
-                           <height>0</height>
-                          </size>
-                         </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>16777215</width>
-                           <height>16777215</height>
-                          </size>
-                         </property>
-                         <property name="frameShape">
-                          <enum>QFrame::NoFrame</enum>
                          </property>
                          <property name="frameShadow">
                           <enum>QFrame::Raised</enum>
@@ -1338,6 +1250,42 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
                             </property>
                            </widget>
                           </item>
+                         </layout>
+                        </widget>
+                       </item>
+                       <item row="0" column="1" colspan="3">
+                        <widget class="QFrame" name="frame_22">
+                         <property name="minimumSize">
+                          <size>
+                           <width>100</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">/**background:green**/</string>
+                         </property>
+                         <property name="frameShape">
+                          <enum>QFrame::NoFrame</enum>
+                         </property>
+                         <property name="frameShadow">
+                          <enum>QFrame::Raised</enum>
+                         </property>
+                         <layout class="QVBoxLayout" name="phone_type_edit">
+                          <property name="spacing">
+                           <number>0</number>
+                          </property>
+                          <property name="leftMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>0</number>
+                          </property>
                          </layout>
                         </widget>
                        </item>

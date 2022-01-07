@@ -448,18 +448,18 @@ class SetupMainWindow:
 
         self.ui.load_pages.phone_model_edit.addWidget(self.phone_model)
 
-
-        self.phone_imei = PyComBox(
-
-            color=self.themes["app_color"]["text_active"],
-            bg_color=self.themes["app_color"]["dark_one"],
-            radius = 8,
-            bg_color_hover = self.themes["app_color"]["context_color"],
-            items = ['item 1', 'item 2', 'item 2']
-
-        )
-
-        self.ui.load_pages.phone_imei_edit.addWidget(self.phone_imei)
+        #
+        # self.phone_imei = PyComBox(
+        #
+        #     color=self.themes["app_color"]["text_active"],
+        #     bg_color=self.themes["app_color"]["dark_one"],
+        #     radius = 8,
+        #     bg_color_hover = self.themes["app_color"]["context_color"],
+        #     items = ['item 1', 'item 2', 'item 2']
+        #
+        # )
+        #
+        # self.ui.load_pages.phone_imei_edit.addWidget(self.phone_imei)
 
         self.phone_payment = PyComBox(
 
@@ -658,11 +658,11 @@ class SetupMainWindow:
         self.phone_print_btn.setMinimumHeight(30)
         self.ui.load_pages.phone_print_layout.addWidget(self.phone_print_btn)
 
-        def printInput(message = None):
-            QMessageBox.information(None, "Received Key Release EVent", f"You Pres: " )
-            print(self.phone_price.text())
-
-        self.phone_print_btn.clicked.connect(lambda messasage: printInput(messasage))
+        # def printInput(message = None):
+        #     QMessageBox.information(None, "Received Key Release EVent", f"You Pres: " )
+        #     print(self.phone_price.text())
+        #
+        # self.phone_print_btn.clicked.connect(lambda messasage: printInput(messasage))
         # self.phone_print_btn.clicked.connect(printInput(message='hjkhjghjgh'))
 
         # Search
@@ -782,7 +782,7 @@ class SetupMainWindow:
             scroll_bar_btn_color = self.themes["app_color"]["dark_four"],
             context_color = self.themes["app_color"]["context_color"]
         )
-        self.phone_cart.setColumnCount(5)
+        self.phone_cart.setColumnCount(4)
         self.phone_cart.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.phone_cart.setSelectionMode(QAbstractItemView.ExtendedSelection)
         self.phone_cart.setSelectionBehavior(QAbstractItemView.SelectRows)
@@ -802,9 +802,9 @@ class SetupMainWindow:
         self.cart_column_3.setTextAlignment(Qt.AlignCenter)
         self.cart_column_3.setText("S/N")
 
-        self.cart_column_4 = QTableWidgetItem()
-        self.cart_column_4.setTextAlignment(Qt.AlignCenter)
-        self.cart_column_4.setText("Imei")
+        # self.cart_column_4 = QTableWidgetItem()
+        # self.cart_column_4.setTextAlignment(Qt.AlignCenter)
+        # self.cart_column_4.setText("Imei")
 
         self.cart_column_5 = QTableWidgetItem()
         self.cart_column_5.setTextAlignment(Qt.AlignCenter)
@@ -814,8 +814,8 @@ class SetupMainWindow:
         self.phone_cart.setHorizontalHeaderItem(0, self.cart_column_1)
         self.phone_cart.setHorizontalHeaderItem(1, self.cart_column_2)
         self.phone_cart.setHorizontalHeaderItem(2, self.cart_column_3)
-        self.phone_cart.setHorizontalHeaderItem(3, self.cart_column_4)
-        self.phone_cart.setHorizontalHeaderItem(4, self.cart_column_5)
+        # self.phone_cart.setHorizontalHeaderItem(3, self.cart_column_4)
+        self.phone_cart.setHorizontalHeaderItem(3, self.cart_column_5)
 
         self.ui.load_pages.phone_cart_layout.addWidget(self.phone_cart)
 
