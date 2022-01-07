@@ -58,14 +58,14 @@ class MainWindow(QMainWindow):
     qty = IntegerField(_min=0)
     order_id = CharField(_min=0, _max=45)
     tax = IntegerField(_min=0, )
-
+    suplier_cached = {}
 
     def __init__(self):
         super().__init__()
 
         # SETUP MAIN WINDOw
         # Load widgets from "gui\uis\main_window\ui_main.py"
-        # ///////////////////////////////////////////////////////////////
+        # ///////////////////////////////////////////////////////////////l
         self.ui = UI_MainWindow()
         self.ui.setup_ui(self)
 
@@ -105,7 +105,7 @@ class MainWindow(QMainWindow):
         self.stock_type.currentIndexChanged.connect(lambda: self.type_feed_model(self.stock_model,str(self.stock_type.currentText().strip())))
         self.stock_model.currentIndexChanged.connect(lambda:self.model_feed(str(self.stock_model.currentText().strip())))
         self.stock_prod_code.currentIndexChanged.connect(lambda:self.order_id_feed_rest())
-
+        self.stock_suplier.currentIndexChanged.connect(lambda:self.feed_suplier(internal_op=False))
 
         self.stock_clear.clicked.connect(lambda: self.clearforms())
         self.stock_table.currentItemChanged.connect(lambda :self.table_row_Change( self.stock_table, flag='stock'))
@@ -114,7 +114,7 @@ class MainWindow(QMainWindow):
         self.stock_sp.editingFinished.connect(lambda: self.stock_sp.setText(self.decimal_Input(self.stock_sp.text())))
         self.stock_tax.editingFinished.connect(lambda: self.stock_tax.setText(self.tax_Input(self.stock_tax.text())))
         self.stock_sn_list.itemDoubleClicked.connect(lambda : self.stock_sn_list.takeItem(self.stock_sn_list.currentRow()))
-        self.stock_sn_list.currentItemChanged.connect(lambda:self.count_sn())
+        self.stock_sn_list.itemClicked.connect(lambda:self.count_sn())
 
 
         # SHOW MAIN WINDOW
@@ -236,12 +236,20 @@ class MainWindow(QMainWindow):
 
     def clearforms(self, flag = "stock"):
         if flag == 'stock':
+            print('clearing')
             self.stock_cp.setText("")
             self.stock_qantity.setText("")
             self.stock_sp.setText("")
             self.stock_tax.setText("")
+            self.stock_suplier_contact.setText("")
             self.stock_type.clearEditText()
             self.stock_model.clearEditText()
+            self.stock_suplier.clearEditText()
+            self.stock_prod_code.clearEditText()
+            self.stock_datetime.setDate(datetime.now())
+            self.stock_sn_list.clear()
+
+
             return
         if flag == 'phone':
             self.customerName.setText("")
@@ -324,42 +332,71 @@ class MainWindow(QMainWindow):
         # if none given used unknown and interface should be '' for both
         # if number only given used number and name as 'suplier'
         # if name only given unmber  +233 and interface should be ''
-        try:
-            self.name = str(self.stock_type.currentText()).strip().capitalize()
-            print(self.name)
-            self.model = str(self.stock_model.currentText()).strip()
-            # " ".join('ththt      tkt'.strip().split()).capitalize()
-            self.number =str(self.stock_suplier_contact.text()).strip() or "+233"
 
-            if not str(self.stock_suplier_contact.text()).strip(): #num not given
+        try:
+            # descriptor take care of it assignment
+            self.name = self.remove_white_spaces(self.stock_type.currentText())
+            self.model = self.remove_white_spaces(self.stock_model.currentText()).upper()
+            self.number =self.remove_white_spaces(self.stock_suplier_contact.text(), space='') or "+233"
+            self.qty = int(self.stock_qantity.text().strip()) or 0
+
+
+            if self.number == "+233" : #num not given
                 self.suplier =  "unknown"
+                print('number not given' , self.name, self.number)
             else:
                 #num given, so suplier name or name "suplier" is used
-                self.suplier = str(self.stock_suplier.currentText()).strip() or "Suplier"
+                self.suplier = self.remove_white_spaces(self.stock_suplier.currentText()) or "Suplier"
+                print('number given', self.name, self.number)
 
-            if str(self.stock_cp.text().strip()) == "" or str(self.stock_sp.text().strip()) =="":
-                raise ValueError("invalid price value")
 
-            self.cp = Decimal(self.stock_cp.text().strip())
-            self.sp = Decimal(self.stock_sp.text().strip())
-            self.qty = int(self.stock_qantity.text().strip())
-            self.order_id = str(self.stock_prod_code.currentText()).strip()
+            try:
+                self.cp = Decimal(self.stock_cp.text().strip())
+                self.sp = Decimal(self.stock_sp.text().strip())
+            except:
+                raise ValueError("invalid value for cp/unit or sp/unit")
+
+
+            self.order_id = self.remove_white_spaces(self.stock_prod_code.currentText(), space='') or "n/a"
             self.tax = int(self.stock_tax.text().strip()) or 0
+
+            #todo: delete this
+            self.stock_sn_list.clear()
+            for sn in ['sn-R58M24TY3HA', 'sn-R58M24TY3HB', 'sn-R58M24TY3HC', 'sn-R58M24TY3HD']:
+                self.stock_sn_list.insertItem(0, sn)
+
+            sn_list = [self.stock_sn_list.item(x).text() for x in range(self.stock_sn_list.count())]
+
+            print("exceptions pass")
+
         except (ValueError )as ex:
             QMessageBox.information(self, "Received Key Release EVent",
                                     str(ex))
-            return
+        else:
 
 
-        # user.savestock(user_id=user.id, name=self.name, model=self.model, cp=self.cp,
-        #                sp= self.sp ,qty=self.qty, date=datetime.now(),
-        #                tax= self.tax, suplier = self.suplier,suplier_number=self.number,
-        #                prod_code= self.order_id,
-        #                code_list=None)
 
-        self.load_stock_tables()
-        self.select_table_row(self.stock_table, flag='stock')
-        # LEFT MENU BTN IS CLICKED
+            print(self.name, self.model,
+                  self.number,self.suplier,
+                  self.cp,self.sp, self.stock_datetime.text(),
+                  self.qty,self.order_id,self.tax,sn_list,
+                  self.stock_datetime.text().split("-"),
+                  self.stock_datetime.toPydate()
+                  )
+                #sn
+
+
+            user.savestock(user_id=user.id, name=self.name, model=self.model, cp=self.cp,
+                           sp= self.sp ,qty=self.qty,
+                           dat=self.stock_datetime.toPydate(),
+                           tax= self.tax, suplier = self.suplier,suplier_number=self.number,
+                           prod_code= self.order_id,
+                           code_list=sn_list)
+
+
+            self.load_stock_tables()
+            self.select_table_row(self.stock_table, flag='stock')
+
 
     def decimal_Input(self, val):
         return f"{Decimal(str(val)):.2f}"
@@ -404,6 +441,7 @@ class MainWindow(QMainWindow):
                 self.stock_qantity.setText(str(dic.get('qty', "")))
                 self.stock_sp.setText(str(dic.get('sp', "")))
                 self.stock_tax.setText(str(dic.get('tax', "")))
+                self.order_id_feed()
                 return
             self.phone_price.setText(str(dic.get('sp', "")))
             self.phone_tax.setText(str(dic.get('tax', "")))
@@ -415,10 +453,10 @@ class MainWindow(QMainWindow):
 
     def order_id_feed_rest(self):
         result = user.order_id_feed_rest(str(self.stock_prod_code.currentText())) #dic
-
+        print(result)
         self.stock_suplier.setCurrentText(result.get('suplier', ''))
         self.stock_suplier_contact.setText(result.get('contact', ''))
-        self.stock_datetime.setDate(result.get('date', datetime.now()))
+        self.stock_datetime.setDate(result.get('dates', datetime.now()))
         self.stock_sn_list.clear()
         for sn in result['sn']:
             self.stock_sn_list.insertItem(0,sn)
@@ -434,18 +472,25 @@ class MainWindow(QMainWindow):
         :return:
         """
 
-        self.suplier_cached = {}
-        result = user.feed_suplier()
 
-        if result:
-            # cache it
-            print(result)
-            for li in result:
-                self.suplier_cached[li[0]] = li[1]  #name as key contact as value
+        if not internal_op: #exteernal call, and before currentindex change call with inter_op=false there must be items in combo
+            self.stock_suplier_contact.setText(self.suplier_cached.get(self.stock_suplier.currentText(), ""))
+            print("external call",self.suplier_cached)
+        else:
+            result = user.feed_suplier()
 
-            # fetch from caache.
-            print(self.suplier_cached)
-            self.feed_combo(self.stock_suplier, list(self.suplier_cached.keys()))
+            if result:
+                # cache it
+                # print(result)
+                for li in result:
+                    self.suplier_cached[li[0]] = li[1]  #name as key, contact as value
+
+                # fetch from caache.
+                # print(self.suplier_cached)
+                self.feed_combo(self.stock_suplier, list(self.suplier_cached.keys()))
+
+                print("internal call", self.suplier_cached)
+
 
 
 
@@ -474,6 +519,9 @@ class MainWindow(QMainWindow):
     def count_sn(self):
         self.ui.load_pages.stock_sn_total.setText(str(self.stock_sn_list.count()))
 
+    def remove_white_spaces(self,text , space = ' '):
+        if isinstance(text, str):
+            return space.join(text.strip().split()).title()
 
 
 

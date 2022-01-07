@@ -1,5 +1,5 @@
 from qt_core import *
-
+from datetime import datetime
 style = '''
 QDateTimeEdit {{
 	background-color: {_bg_color};
@@ -69,4 +69,9 @@ class Py_datetime(QDateTimeEdit):
             _context_color = context_color
         )
         self.setStyleSheet(style_format)
-        self.setDisplayFormat("MMMM d yyyy")
+        self.setDisplayFormat("d-MM-yyyy")
+        self.setMinimumDate(datetime(2020, 1,1))
+
+
+    def toPydate(self):
+        return datetime(self.date().year(),self.date().month(),self.date().day())

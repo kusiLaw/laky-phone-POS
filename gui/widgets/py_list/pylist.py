@@ -20,8 +20,7 @@ QListWidget:focus {{
 
 class Pylist(QListWidget):
     def __init__(self,
-        text = "",
-        place_holder_text = "",
+
         radius = 8,
         border_size = 2,
         color = "#FFF",
@@ -38,6 +37,7 @@ class Pylist(QListWidget):
 
         self.setToolTip("Double click to remove item")
         self.setCursor(Qt.PointingHandCursor)
+
         style_format = style.format(
             _radius=radius,
             _border_size=border_size,
