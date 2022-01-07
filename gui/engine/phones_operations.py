@@ -129,9 +129,9 @@ class PhoneStock:
                         print("order inserted with suplier ref")
                     except  errors.Error as err:
                         if err.errno == errorcode.ER_DUP_ENTRY:
-                            # code it table get hold of it
+                            # code in table get hold of it
 
-                            suply_st = "SELECT  idsuplies FROM Lakydb.`Orders` WHERE order_codes = %s "
+                            suply_st = "SELECT  idorder FROM Lakydb.`Orders` WHERE order_codes = %s "
                             cur.execute(suply_st, (self.prod_code,))
                             sply_lastid = cur.fetchone()[0]
 
@@ -145,7 +145,7 @@ class PhoneStock:
                     except  errors.Error as err:
                         if err.errno == errorcode.ER_DUP_ENTRY:
                             # code it table get hold of it
-                            suply_st2 = "SELECT  idsuplies FROM Lakydb.`Orders` WHERE order_codes = %s "
+                            suply_st2 = "SELECT  idorder FROM Lakydb.`Orders` WHERE order_codes = %s "
                             cur.execute(suply_st2, (self.prod_code,))
                             sply_lastid = cur.fetchone()[0]
 
