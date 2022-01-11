@@ -84,6 +84,7 @@ class MainWindow(QMainWindow):
         self.showcomponents()
         self.login_btn.clicked.connect(lambda: self.login())
         self.sign_out.clicked.connect(lambda: self.logout())
+        self.reset_pass.clicked.connect(lambda : self.reset_passwrd())
         self.user_name.textChanged.connect(lambda: self.ui.load_pages.login_form_info.setText('') )
         self.user_passsword.textChanged.connect(lambda: self.ui.load_pages.login_form_info.setText(''))
 
@@ -122,9 +123,16 @@ class MainWindow(QMainWindow):
         # ///////////////////////////////////////////////////////////////
         self.show()
 
-        user.login('laky','laky')
+        user.login('laky','11111')
         MainFunctions.set_page(self, self.ui.load_pages.dasboard)
         self.showcomponents(True)
+
+        self.ui.load_pages.dash_user_name.setText(" ".join([user.fname,user.lname]))
+
+        self.ui.load_pages.dash_role.setText(user.role)
+        self.ui.load_pages.dash_email.setText(user.email)
+        self.ui.load_pages.dash_last_seen.setText(str(user.last_seen))
+
 
     def login(self):
         if user.login(str(self.user_name.text()), str(self.user_passsword.text())):
@@ -132,8 +140,14 @@ class MainWindow(QMainWindow):
             #clear user password in order not to hack
             user.password = ''
             self.user_passsword.clear()
-
+            user.has_login = True
             #load the dashbord
+            self.ui.load_pages.dash_user_name.setText(" ".join([user.fname, user.lname]))
+
+            self.ui.load_pages.dash_role.setText(user.role)
+            self.ui.load_pages.dash_email.setText(user.email)
+            self.ui.load_pages.dash_last_seen.setText(str(user.last_seen))
+
             MainFunctions.set_page(self, self.ui.load_pages.dasboard)
 
             # try:
@@ -162,6 +176,27 @@ class MainWindow(QMainWindow):
             MainFunctions.toggle_left_column(self)
         if MainFunctions.right_column_is_visible:
             MainFunctions.toggle_right_column(self)
+
+    def reset_passwrd(self):
+
+        if not self.comfirm_pass.text() == self.new_pass.text():
+            QMessageBox.information(None, "password not same","password not same")
+            #
+            return
+        if not self.old_pass.text() or not len(self.comfirm_pass.text()) > 4 or not len(self.new_pass.text()) >= 4:
+            QMessageBox.information(None, "weak password", "password lenght must be more than 4 digit")
+            return
+        if user.reset_password( old_password= self.old_pass.text(),
+                                new_password= self.new_pass.text(),
+                                user_name= user.username ,
+                                user_id= user.id):
+            QMessageBox.information(None, "Rese Password", "Password reset ok")
+            self.old_pass.setText('')
+            self.new_pass.setText('')
+            self.comfirm_pass.setText('')
+            self.logout()
+        else:
+            QMessageBox.information(None, "Reset Password", "Wrong password")
 
 
     def table_row_Change(self, table_widget, flag = None):
@@ -204,7 +239,7 @@ class MainWindow(QMainWindow):
                 self.stock_tax.setText( self.tax_Input(data[6]) )
 
                 #load rest of the field
-                self.order_id_feed()
+                self.order_id_feed(self.stock_model.currentText())
 
     def dispatch(self, obj):
 
@@ -226,9 +261,9 @@ class MainWindow(QMainWindow):
         elif obj.text() == "Remove from Cart":
             print('save was pressde')
         elif obj.text() == "Add to Cart":
-            if not self.phone_sn.text() == '':
+            if not self.phone_sn.currentText() == '':
                 user.add_to_cart(ph_type= str(self.phone_type.currentText()),ph_model= str(self.phone_model.currentText()),
-                                 sn = str(self.phone_sn.text()),price=Decimal(self.phone_price.text()))
+                                 sn = str(self.phone_sn.currentText()),price=Decimal(self.phone_price.text()))
                 # print(user.caches_retail)
                 self.load_phone_cart()
                 self.select_table_row(self.phone_cart)
@@ -255,7 +290,7 @@ class MainWindow(QMainWindow):
         if flag == 'phone':
             self.customerName.setText("")
             self.contactName.setText("")
-            self.phone_sn.setText("")
+            self.phone_sn.setCurrentText("")
             self.phone_price.setText("")
             self.phone_type.clearEditText()
             self.phone_model.clearEditText()
@@ -442,14 +477,21 @@ class MainWindow(QMainWindow):
                 self.stock_qantity.setText(str(dic.get('qty', "")))
                 self.stock_sp.setText(str(dic.get('sp', "")))
                 self.stock_tax.setText(str(dic.get('tax', "")))
-                self.order_id_feed()
+                self.order_id_feed(model_text)#self.stock_model.currentText())
                 return
             self.phone_price.setText(str(dic.get('sp', "")))
-            self.phone_tax.setText(str(dic.get('tax', "")))
+            # self.phone_tax.setText(str(dic.get('tax', "")))
             self.phone_discount.setText(str(dic.get('0')))
 
-    def order_id_feed(self):
-        result = user.feed_order_id(str(self.stock_model.currentText())) #list
+            # self.order_id_feed(model_text, tab_call= flag)
+            self.model_feed_phone_sn(model_text)
+
+
+    def order_id_feed(self, model_text , tab_call = None):
+        result = user.feed_order_id(str(model_text)) #list self.stock_model.currentText()
+        # if  tab_call == 'phone':
+        #     self.feed_combo(self.phone_sn, result)
+        #     return
         self.feed_combo(self.stock_prod_code, result)
 
     def order_id_feed_rest(self):
@@ -492,8 +534,11 @@ class MainWindow(QMainWindow):
 
                 print("internal call", self.suplier_cached)
 
+    def model_feed_phone_sn(self, model_text,has_bought=False ):
 
-
+        result = user.feed_phone_sn(model_text,has_bought )
+        if result:
+            self.feed_combo(self.phone_sn, result)
 
     def select_table_row(self, table_obj, flag = None):
         # auto select record if not empty

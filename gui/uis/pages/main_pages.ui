@@ -586,32 +586,265 @@ font-style:italic;
       <layout class="QVBoxLayout" name="verticalLayout_31">
        <item>
         <widget class="QFrame" name="frame">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>170</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_10">
+          <item>
+           <widget class="QFrame" name="frame_55">
+            <property name="minimumSize">
+             <size>
+              <width>300</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_30">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="label">
+               <property name="styleSheet">
+                <string notr="true">color:#777;
+font-size: 40px;
+text-transform: uppercase;
+font-weight: 700;
+text-align: center;
+text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
+               </property>
+               <property name="text">
+                <string>DASHBOARD</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QFrame" name="frame_60">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>500</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_15">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <spacer name="horizontalSpacer">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>426</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QFrame" name="frame_54">
+               <property name="maximumSize">
+                <size>
+                 <width>500</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">font-size: 20px;
+color:#777;
+
+font-weight: 700;</string>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QFormLayout" name="formLayout_3">
+                <property name="horizontalSpacing">
+                 <number>10</number>
+                </property>
+                <property name="verticalSpacing">
+                 <number>10</number>
+                </property>
+                <property name="leftMargin">
+                 <number>150</number>
+                </property>
+                <property name="topMargin">
+                 <number>15</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_44">
+                  <property name="text">
+                   <string>Name :</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QLabel" name="dash_user_name">
+                  <property name="styleSheet">
+                   <string notr="true">text-style: italic</string>
+                  </property>
+                  <property name="text">
+                   <string>unknown</string>
+                  </property>
+                  <property name="wordWrap">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="label_45">
+                  <property name="text">
+                   <string>Role :</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QLabel" name="dash_role">
+                  <property name="text">
+                   <string>unknown</string>
+                  </property>
+                  <property name="wordWrap">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QLabel" name="label_50">
+                  <property name="text">
+                   <string>Email :</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QLabel" name="dash_email">
+                  <property name="text">
+                   <string>unknown</string>
+                  </property>
+                  <property name="wordWrap">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="0">
+                 <widget class="QLabel" name="label_64">
+                  <property name="text">
+                   <string>Last Seen</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="1">
+                 <widget class="QLabel" name="dash_last_seen">
+                  <property name="text">
+                   <string>unknown</string>
+                  </property>
+                  <property name="wordWrap">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="Line" name="line_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QFrame" name="frame_24">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">/**background:yellow**/</string>
+         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_30">
-          <item>
-           <widget class="QLabel" name="label">
-            <property name="styleSheet">
-             <string notr="true">
-font-size: 40px;
-text-transform: uppercase;
-font-weight: 700;
-text-align: center;
-text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
-            </property>
-            <property name="text">
-             <string>Dashboard</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-         </layout>
         </widget>
        </item>
       </layout>
@@ -1148,50 +1381,13 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
                          </property>
                         </widget>
                        </item>
-                       <item row="3" column="1">
-                        <widget class="QFrame" name="frame_10">
-                         <property name="styleSheet">
-                          <string notr="true"/>
-                         </property>
-                         <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
-                         </property>
-                         <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
-                         </property>
-                         <layout class="QVBoxLayout" name="phone_sn_edit">
-                          <property name="spacing">
-                           <number>0</number>
-                          </property>
-                          <property name="leftMargin">
-                           <number>0</number>
-                          </property>
-                          <property name="topMargin">
-                           <number>0</number>
-                          </property>
-                          <property name="rightMargin">
-                           <number>0</number>
-                          </property>
-                          <property name="bottomMargin">
-                           <number>0</number>
-                          </property>
-                         </layout>
-                        </widget>
-                       </item>
-                       <item row="3" column="2">
-                        <widget class="QLabel" name="label_18">
-                         <property name="text">
-                          <string>Qty</string>
-                         </property>
-                        </widget>
-                       </item>
                        <item row="5" column="0">
                         <widget class="QLabel" name="label_16">
                          <property name="styleSheet">
                           <string notr="true"/>
                          </property>
                          <property name="text">
-                          <string>Bar/QR reader :</string>
+                          <string>Bar/QR :</string>
                          </property>
                         </widget>
                        </item>
@@ -1298,6 +1494,36 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
                          </layout>
                         </widget>
                        </item>
+                       <item row="3" column="1" colspan="3">
+                        <widget class="QFrame" name="frame_10">
+                         <property name="styleSheet">
+                          <string notr="true"/>
+                         </property>
+                         <property name="frameShape">
+                          <enum>QFrame::StyledPanel</enum>
+                         </property>
+                         <property name="frameShadow">
+                          <enum>QFrame::Raised</enum>
+                         </property>
+                         <layout class="QVBoxLayout" name="phone_sn_edit">
+                          <property name="spacing">
+                           <number>0</number>
+                          </property>
+                          <property name="leftMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>0</number>
+                          </property>
+                         </layout>
+                        </widget>
+                       </item>
                       </layout>
                      </widget>
                     </item>
@@ -1370,13 +1596,6 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
                        <property name="verticalSpacing">
                         <number>12</number>
                        </property>
-                       <item row="1" column="2">
-                        <widget class="QLabel" name="label_11">
-                         <property name="text">
-                          <string>tax :</string>
-                         </property>
-                        </widget>
-                       </item>
                        <item row="0" column="0">
                         <widget class="QLabel" name="label_9">
                          <property name="text">
@@ -1386,6 +1605,9 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
                        </item>
                        <item row="1" column="0">
                         <widget class="QLabel" name="label_10">
+                         <property name="styleSheet">
+                          <string notr="true"/>
+                         </property>
                          <property name="text">
                           <string>discount :</string>
                          </property>
@@ -1431,7 +1653,7 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
                           <string notr="true"/>
                          </property>
                          <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
+                          <enum>QFrame::NoFrame</enum>
                          </property>
                          <property name="frameShadow">
                           <enum>QFrame::Raised</enum>
@@ -1485,12 +1707,12 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
                           <string notr="true">\</string>
                          </property>
                          <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
+                          <enum>QFrame::NoFrame</enum>
                          </property>
                          <property name="frameShadow">
                           <enum>QFrame::Raised</enum>
                          </property>
-                         <layout class="QVBoxLayout" name="phone_tax_edit">
+                         <layout class="QVBoxLayout" name="phone_total_item_frame">
                           <property name="leftMargin">
                            <number>0</number>
                           </property>
@@ -1509,17 +1731,75 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
                        <item row="0" column="2">
                         <widget class="QLabel" name="label_6">
                          <property name="text">
-                          <string>Total:</string>
+                          <string>Total price:</string>
                          </property>
                         </widget>
                        </item>
-                       <item row="0" column="3">
-                        <widget class="QLabel" name="label_43">
+                       <item row="3" column="2">
+                        <widget class="QLabel" name="label_46">
                          <property name="text">
-                          <string>0</string>
+                          <string>Trans code :</string>
                          </property>
-                         <property name="alignment">
-                          <set>Qt::AlignCenter</set>
+                        </widget>
+                       </item>
+                       <item row="3" column="3">
+                        <widget class="QFrame" name="frame_56">
+                         <property name="frameShape">
+                          <enum>QFrame::NoFrame</enum>
+                         </property>
+                         <property name="frameShadow">
+                          <enum>QFrame::Raised</enum>
+                         </property>
+                         <layout class="QVBoxLayout" name="phone_tans_code_frame">
+                          <property name="spacing">
+                           <number>0</number>
+                          </property>
+                          <property name="leftMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>0</number>
+                          </property>
+                         </layout>
+                        </widget>
+                       </item>
+                       <item row="0" column="3">
+                        <widget class="QFrame" name="frame_57">
+                         <property name="frameShape">
+                          <enum>QFrame::NoFrame</enum>
+                         </property>
+                         <property name="frameShadow">
+                          <enum>QFrame::Raised</enum>
+                         </property>
+                         <layout class="QVBoxLayout" name="phone_total_price_frame">
+                          <property name="spacing">
+                           <number>0</number>
+                          </property>
+                          <property name="leftMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>0</number>
+                          </property>
+                         </layout>
+                        </widget>
+                       </item>
+                       <item row="1" column="2">
+                        <widget class="QLabel" name="label_11">
+                         <property name="text">
+                          <string>Total items:</string>
                          </property>
                         </widget>
                        </item>
@@ -2703,8 +2983,8 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1159</width>
-            <height>765</height>
+            <width>1028</width>
+            <height>629</height>
            </rect>
           </property>
           <property name="font">
@@ -2962,13 +3242,13 @@ QTabBar::tab:selected, QTabBar::tab:hover {
                             <number>0</number>
                            </property>
                            <property name="verticalSpacing">
-                            <number>10</number>
+                            <number>18</number>
                            </property>
                            <property name="leftMargin">
                             <number>0</number>
                            </property>
                            <property name="topMargin">
-                            <number>10</number>
+                            <number>20</number>
                            </property>
                            <property name="rightMargin">
                             <number>0</number>

@@ -378,6 +378,40 @@ class PhoneStock:
         finally:
             con.close()
 
+    def feed_phone_sn(self, model_text, has_bought = False):
+        if has_bought is None:
+            statement = "select Order_sn_info.phone_sn from lakydb.Order_sn_info " \
+                        "right join	lakydb.stock on Order_sn_info.Stock_stockId = stock.stockId " \
+                        "where stock.phone_model = %s "
+        else:
+            statement = "select Order_sn_info.phone_sn from lakydb.Order_sn_info" \
+                        " right join	lakydb.stock on Order_sn_info.Stock_stockId = stock.stockId " \
+                        "where stock.phone_model = %s and  Order_sn_info.has_bought = %s"
+                        #"{0}".format(has_bought)
+        con = self.con.connect()
+        cur = con.cursor()
+
+        try:
+            if   has_bought is None:
+                cur.execute(statement, (model_text,))
+            else:
+                cur.execute(statement,(model_text,has_bought))
+
+            result = cur.fetchall()
+            result = [val[0] for val in result]
+        except  errors.Error as err:
+            print(err)
+            return []
+        except:
+
+            return []
+        else:
+            return result
+
+        finally:
+            con.close()
+
+
 class Phone:
     caches_whole = {}
     caches_retail = {}
@@ -789,7 +823,9 @@ class Active_User(PhoneStock, Phone):
         self.lname = None
         self.fname = None
         self.email = None
+        self.last_seen = None
         self.has_login = False
+        self.username = None
 
         self.can_take_stock = False
         self.can_manage_user = False
@@ -806,7 +842,7 @@ class Active_User(PhoneStock, Phone):
         self.password = password
 
         statement = "SELECT users.idUsers, users.User_Name, users.User_Password, User_Email, users.Fname," \
-                    " users.Lname, user_privilages.roles, user_privilages.can_manage_users,user_privilages.can_view_chart, " \
+                    " users.Lname,users.last_seen, user_privilages.roles, user_privilages.can_manage_users,user_privilages.can_view_chart, " \
                     "user_privilages.can_manage_stock,user_privilages.can_view_privacy, user_privilages.managing_role FROM " \
                     "lakydb.users inner join lakydb.user_privilages on users.idUsers = user_privilages.Users_idUsers where" \
                     " users.User_Name =%s"
@@ -820,7 +856,7 @@ class Active_User(PhoneStock, Phone):
         if result:
             # if record id not empty, bundled with it column names
             result = dict(zip(cur.column_names, result))
-            # print(result)
+            print(result)
 
             # if the password from the data base is same when compared the access grant
             if Encryption.passcheck(self.password, result['User_Password']):
@@ -832,6 +868,8 @@ class Active_User(PhoneStock, Phone):
                 self.lname = result['Lname']
                 self.fname = result['Fname']
                 self.email = result['User_Email']
+                self.last_seen = result["last_seen"] or datetime.now()
+                self.username = result["User_Name"]
 
                 self.can_take_stock = bool(result['can_manage_stock'])
                 self.can_manage_user = bool(result['can_manage_users'])
@@ -902,14 +940,14 @@ class Active_User(PhoneStock, Phone):
         finally:
             con.close()
 
-    def reset_password(self,old_password, current_password, confirm_password, user_name = None):
+    def reset_password(self,old_password, new_password, confirm_password= None, user_name = None, user_id = None):
 
-        if not current_password == confirm_password:
-            print('password not same')
-            return
-        if not len(current_password) >= 4:
-            print("weak password")
-            return
+        # if not current_password == confirm_password:
+        #     print('password not same')
+        #     return
+        # if not len(current_password) >= 4:
+        #     print("weak password")
+        #     return
 
         con = self.con.connect()
         cur = con.cursor()
@@ -919,7 +957,7 @@ class Active_User(PhoneStock, Phone):
                     " users.User_Name =%s"
 
         if self.has_login:
-            cur.execute(statement, (self.username,))
+            cur.execute(statement, (user_name,))
             result = cur.fetchone()
             # print(result)
             if result:
@@ -929,7 +967,7 @@ class Active_User(PhoneStock, Phone):
                 if Encryption.passcheck(old_password, result['User_Password']):
                     # verified update password
                     statement = "UPDATE  lakydb.users SET User_Password= %s WHERE users.idUsers =%s"
-                    cur.execute(statement, (Encryption.passcrypt(current_password), self.id,))
+                    cur.execute(statement, (Encryption.passcrypt(new_password), user_id,))
                     print("reset success")
                     con.commit()
                     con.close()

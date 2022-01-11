@@ -263,8 +263,8 @@ class SetupMainWindow:
         # custom py_line_edit
 
         # RIGHT COLUMN SECTION
-        self.pro_pic = PyPicture()
-        self.ui.right_column.pro_pic_frame.addWidget(self.pro_pic)
+        # self.pro_pic = PyPicture()
+        # self.ui.right_column.pro_pic_frame.addWidget(self.pro_pic)
 
         self.sign_out = PyPushButton2(
             text="sign out",
@@ -308,22 +308,22 @@ class SetupMainWindow:
         # p = Active_User("Laky3" "laky689393")
         # self.reset_pass.clicked.connect(p.login())
 
-        self.current_pass = PyLineEdit(
+        self.old_pass = PyLineEdit(
 
             context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
             bg_color=self.themes["app_color"]["dark_one"],
-
+            echomode=True
         )
 
-        self.ui.right_column.current_password_frame.addWidget(self.current_pass)
+        self.ui.right_column.current_password_frame.addWidget(self.old_pass)
 
         self.new_pass = PyLineEdit(
 
             context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
             bg_color=self.themes["app_color"]["dark_one"],
-
+            echomode=True
         )
 
         self.ui.right_column.new_password_frame.addWidget(self.new_pass)
@@ -333,7 +333,7 @@ class SetupMainWindow:
             context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
             bg_color=self.themes["app_color"]["bg_three"],
-
+            echomode=True
         )
 
         self.ui.right_column.confirm_password_frame.addWidget(self.comfirm_pass)
@@ -412,14 +412,14 @@ class SetupMainWindow:
 
         self.ui.load_pages.customer_contact_edit.addWidget(self.contactName)
 
-        self.curt_id = PyLineEdit(
-            context_color=self.themes["app_color"]["context_color"],
-            color=self.themes["app_color"]["text_active"],
-            bg_color=self.themes["app_color"]["bg_three"],
-
-        )
-
-        self.ui.load_pages.cutomer_cart_id_edit.addWidget(self.curt_id)
+        # self.curt_id = PyLineEdit(
+        #     context_color=self.themes["app_color"]["context_color"],
+        #     color=self.themes["app_color"]["text_active"],
+        #     bg_color=self.themes["app_color"]["bg_three"],
+        #
+        # )
+        #
+        # self.ui.load_pages.cutomer_cart_id_edit.addWidget(self.curt_id)
 
         # phone section
         self.phone_type = PyComBox(
@@ -499,10 +499,12 @@ class SetupMainWindow:
         self.ui.load_pages.phone_qr.addWidget(self.qr_toggle)
 
 
-        self.phone_sn = PyLineEdit(
-            context_color=self.themes["app_color"]["context_color"],
+        self.phone_sn = PyComBox(
             color=self.themes["app_color"]["text_active"],
-            bg_color=self.themes["app_color"]["bg_three"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            radius=8,
+            bg_color_hover=self.themes["app_color"]["context_color"],
+            editable=True
 
         )
 
@@ -521,27 +523,51 @@ class SetupMainWindow:
 
         self.ui.load_pages.phone_price_edit.addWidget(self.phone_price)
 
+
         self.phone_discount = PyLineEdit(
             context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
             bg_color=self.themes["app_color"]["bg_three"],
             maxlen = 2,
+            read_only=True,
             validator = QIntValidator()
         )
 
         self.ui.load_pages.phone_discount_edit.addWidget(self.phone_discount)
 
 
-        self.phone_tax = PyLineEdit(
+        self.phone_total_price = PyLineEdit(
             context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
             bg_color=self.themes["app_color"]["bg_three"],
-            maxlen= 8,
-            read_only  = True
+            read_only=True,
+            validator = QIntValidator()
         )
 
-        self.ui.load_pages.phone_tax_edit.addWidget(self.phone_tax)
+        self.ui.load_pages.phone_total_price_frame.addWidget(self.phone_total_price)
 
+
+
+
+        self.phone_pay_code = PyLineEdit(
+            context_color=self.themes["app_color"]["context_color"],
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["bg_three"],
+            maxlen= 30,
+
+        )
+
+        self.ui.load_pages.phone_tans_code_frame.addWidget(self.phone_pay_code)
+
+        self.total_item = PyLineEdit(
+            context_color=self.themes["app_color"]["context_color"],
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["bg_three"],
+            maxlen=30,
+            read_only=True
+        )
+
+        self.ui.load_pages.phone_total_item_frame.addWidget(self.total_item)
 
         # buttons section
 
