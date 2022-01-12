@@ -89,7 +89,7 @@ class MainWindow(QMainWindow):
         self.user_passsword.textChanged.connect(lambda: self.ui.load_pages.login_form_info.setText(''))
 
         # phone signals
-        self.add_to_cart_btn.clicked.connect(lambda: self.dispatch(self.add_to_cart_btn))
+        self.add_to_cart_btn.clicked.connect(lambda: self.add_to_cart())
         self.remove_from_cart_btn.clicked.connect(lambda: self.dispatch(self.remove_from_cart_btn))
         self.phone_clear_cart_btn.clicked.connect(lambda: self.dispatch(self.phone_clear_cart_btn))
         self.phone_buyme_btn.clicked.connect(lambda : self.dispatch(self.phone_buyme_btn))
@@ -260,15 +260,38 @@ class MainWindow(QMainWindow):
 
         elif obj.text() == "Remove from Cart":
             print('save was pressde')
-        elif obj.text() == "Add to Cart":
-            if not self.phone_sn.currentText() == '':
-                user.add_to_cart(ph_type= str(self.phone_type.currentText()),ph_model= str(self.phone_model.currentText()),
-                                 sn = str(self.phone_sn.currentText()),price=Decimal(self.phone_price.text()))
-                # print(user.caches_retail)
+
+
+    def add_to_cart(self):
+        if not self.phone_sn.currentText() == '' and not self.phone_price == '':
+
+            if not Decimal(self.phone_price.text()) < Decimal(self.cost_price) :
+                print('not lesser')
+                user.add_to_cart(ph_type=str(self.phone_type.currentText()), ph_model=str(self.phone_model.currentText()),
+                                 sn=str(self.phone_sn.currentText()), price=Decimal(self.phone_price.text()),cp=Decimal(self.cost_price))
+                print(user.caches_retail)
+                sp = Decimal(0)
+                store_cp=Decimal(0)
+
+                #sum the total price in the dict
+                for _, item in user.caches_retail.items():
+                    sp += item['price']
+                    store_cp +=item['cost_price']
+
+                self.phone_total_price.setText(str(sp))
+                # print(store_cp)
+                self.total_item.setText(str(len(user.caches_retail.keys())))
+
+
                 self.load_phone_cart()
                 self.select_table_row(self.phone_cart)
-                return
-            QMessageBox.information(None, "Received Key Release EVent", f"Nothing to add to cart, make sure sn is not empty \n Thank you" )
+            else:
+                QMessageBox.information(self, "Invalid Saling Price",
+                                        f"Saling price can not be lesser than Price of {self.cost_price} \n Thank you")
+
+            return
+        QMessageBox.information(None, "Received Key Release EVent",
+                                f"Nothing to add to cart, make sure sn is not empty \n Thank you")
 
     def clearforms(self, flag = "stock"):
         if flag == 'stock':
@@ -288,13 +311,13 @@ class MainWindow(QMainWindow):
 
             return
         if flag == 'phone':
+
             self.customerName.setText("")
             self.contactName.setText("")
             self.phone_sn.setCurrentText("")
             self.phone_price.setText("")
-            self.phone_type.clearEditText()
-            self.phone_model.clearEditText()
-            self.phone_imei.clearEditText()
+            self.phone_type.setCurrentText("")
+            self.phone_model.setCurrentText("")
 
             # self.phone_price.setText(str(dic.get('sp', "")))
             # self.phone_tax.setText(str(dic.get('tax', "")))
@@ -433,7 +456,6 @@ class MainWindow(QMainWindow):
             self.load_stock_tables()
             self.select_table_row(self.stock_table, flag='stock')
 
-
     def decimal_Input(self, val):
         return f"{Decimal(str(val)):.2f}"
 
@@ -471,6 +493,7 @@ class MainWindow(QMainWindow):
 
     def model_feed(self, model_text, flag = "stock"):
         dic= user.model_feed_rest(model_text)
+        # print(dic, "model_feed")
         if dic:
             if flag == "stock":
                 self.stock_cp.setText(str(dic.get('cp', "")))
@@ -479,9 +502,13 @@ class MainWindow(QMainWindow):
                 self.stock_tax.setText(str(dic.get('tax', "")))
                 self.order_id_feed(model_text)#self.stock_model.currentText())
                 return
-            self.phone_price.setText(str(dic.get('sp', "")))
-            # self.phone_tax.setText(str(dic.get('tax', "")))
-            self.phone_discount.setText(str(dic.get('0')))
+            tax = dic.get('sp', 1)
+            if not tax or tax == 0:
+                tax = 1
+            self.phone_price.setText(str( dic.get('sp', "")) )
+            self.cost_price = dic.get('cp', 0) # to compare before save
+
+            # self.phone_discount.setText(str(dic.get('0')))
 
             # self.order_id_feed(model_text, tab_call= flag)
             self.model_feed_phone_sn(model_text)
@@ -496,7 +523,7 @@ class MainWindow(QMainWindow):
 
     def order_id_feed_rest(self):
         result = user.order_id_feed_rest(str(self.stock_prod_code.currentText())) #dic
-        print(result)
+        print(result, "oder_id_feed")
         self.stock_suplier.setCurrentText(result.get('suplier', ''))
         self.stock_suplier_contact.setText(result.get('contact', ''))
         self.stock_datetime.setDate(result.get('dates', datetime.now()))

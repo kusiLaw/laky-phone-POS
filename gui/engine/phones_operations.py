@@ -422,6 +422,7 @@ class Phone:
     ime = CharField(_min=2, _max=24)
     sn = CharField()
     price = Decimalfield(_min=2)
+    cost_p = Decimalfield(_min=2)
     quantity =IntegerField(_min= 1)
     discount = IntegerField()
 
@@ -434,7 +435,7 @@ class Phone:
 
     def add_to_cart(self,  ph_type, ph_model,  sn, price,
                     cust_name="unknown", cust_num="unknown",
-                    payment="Cash", tax=0, discount=0):
+                    payment="Cash", tax=0, cp = 0, discount=0):
         # self.user_id = user_id
         self.ph_type = ph_type
         self.ph_model = ph_model
@@ -447,7 +448,7 @@ class Phone:
             # "user_id": self.user_id,
             "ph_type": self.ph_type,
             "ph_model": self.ph_model,
-
+            "cost_price": cp,
             "sn": self.sn,
             "price": self.price,
             # "discount" : self.discount
