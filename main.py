@@ -96,7 +96,9 @@ class MainWindow(QMainWindow):
         self.phone_print_btn.clicked.connect(lambda: self.dispatch(self.phone_print_btn))
         self.phone_clear_btn.clicked.connect(lambda : self.clearforms(flag='phone'))
         self.table_widget.currentItemChanged.connect(lambda :self.table_row_Change(self.table_widget, flag='phone'))
-
+        # self.phone_cart.itemClicked.connect(lambda :self.remove_from_cart(self.phone_cart))
+        self.phone_cart.itemDoubleClicked.connect(lambda :self.remove_from_cart(self.phone_cart))
+        self.remove_from_cart_btn.clicked.connect(lambda :self.remove_from_cart(self.phone_cart))
 
         self.phone_type.currentIndexChanged.connect(lambda: self.type_feed_model(self.phone_model,str(self.phone_type.currentText().strip())))
         self.phone_model.currentIndexChanged.connect(lambda:self.model_feed(str(self.phone_model.currentText().strip()), "phone"))
@@ -117,7 +119,7 @@ class MainWindow(QMainWindow):
         self.stock_tax.editingFinished.connect(lambda: self.stock_tax.setText(self.tax_Input(self.stock_tax.text())))
         self.stock_sn_list.itemDoubleClicked.connect(lambda : self.stock_sn_list.takeItem(self.stock_sn_list.currentRow()))
         self.stock_sn_list.itemClicked.connect(lambda:self.count_sn())
-
+        self.stock_search.textChanged.connect(lambda:self.find_name(self.stock_search, self.stock_table, self.stock_search_key.currentText() ))
 
         # SHOW MAIN WINDOW
         # ///////////////////////////////////////////////////////////////
@@ -198,13 +200,32 @@ class MainWindow(QMainWindow):
         else:
             QMessageBox.information(None, "Reset Password", "Wrong password")
 
+    def find_name(self, line_edit , table, col_to_sch, flag= 'stock'):
+        # self.stock_search
+        col = {
+
+           "stock": {
+               'Model': 2,
+               'Type/Brand': 1
+           },
+
+            "phone":{}
+        }
+
+        ind = col[flag][col_to_sch]
+        if ind:
+            name = line_edit.text().lower()
+            for row in range(table.rowCount()):
+                item = table.item(row, ind)
+                # if the search is *not* in the item's text *do not hide* the row
+                table.setRowHidden(row, name not in item.text().lower())
 
     def table_row_Change(self, table_widget, flag = None):
         index = table_widget.currentIndex() # get hold of row index clicked
-        # print(index.row(), index.column())
+        print("row and colunm index",index.row(), index.column())
 
         data = []
-        # print(table_widget.rowCount())
+        print("row count",table_widget.rowCount(),"col count", table_widget.columnCount())
         # if not table_widget.rowCount() < 1:
         #go through the columns to get data
         for col in range(table_widget.columnCount()): # iterate through column count
@@ -241,15 +262,25 @@ class MainWindow(QMainWindow):
                 #load rest of the field
                 self.order_id_feed(self.stock_model.currentText())
 
+    def remove_from_cart(self,table_widget):
+        index = table_widget.currentIndex()
+        item = table_widget.item(index.row(), 2) # 2 for s/n according to the table
+        #del from cache
+        try:
+         del user.caches_retail[item.text()]
+        except:
+            pass
+
+        self.load_phone_cart()
+
+
     def dispatch(self, obj):
 
-        if obj.text() == "Print":
-            print("print was pressed")
 
-        elif obj.text()  == "Buy / Save":
-            print('save was pressde')
-            print(user.caches_retail)
-        elif obj.text() == "Save":
+
+
+
+        if obj.text() == "Save":
             # stock
             self.save_stock()
             # print(user.caches_retail)

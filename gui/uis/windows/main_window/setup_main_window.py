@@ -1071,8 +1071,8 @@ class SetupMainWindow:
             bg_color=self.themes["app_color"]["dark_one"],
             radius=0,
             bg_color_hover=self.themes["app_color"]["context_color"],
-            items=['SN Number only', 'Imei Number only', 'Meid Number only'],
-            editable=True
+            items=['Model', 'Type/Brand', 'Order ID','Suplier'],
+            editable=False
         )
 
         self.ui.load_pages.stock_search_key_layout.addWidget(self.stock_search_key)
@@ -1157,7 +1157,7 @@ class SetupMainWindow:
         self.stock_table.setHorizontalHeaderItem(6, self.cart_column_7)
         self.stock_table.setHorizontalHeaderItem(7, self.cart_column_8)
         self.stock_table.setHorizontalHeaderItem(8, self.cart_column_9)
-        self.stock_table.setHorizontalHeaderItem(8, self.cart_column_10)
+        self.stock_table.setHorizontalHeaderItem(9, self.cart_column_10)
 
         self.ui.load_pages.stock_table_frame.addWidget(self.stock_table)
 
