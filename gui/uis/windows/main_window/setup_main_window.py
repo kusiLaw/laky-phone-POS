@@ -37,7 +37,7 @@ from gui.core.json_themes import Themes
 # ///////////////////////////////////////////////////////////////
 from gui.widgets import *
 
-
+from datetime import datetime
 # from core import Active_User
 # from gui.engine.phones_operations import Active_User
 
@@ -412,14 +412,23 @@ class SetupMainWindow:
 
         self.ui.load_pages.customer_contact_edit.addWidget(self.contactName)
 
-        # self.curt_id = PyLineEdit(
-        #     context_color=self.themes["app_color"]["context_color"],
-        #     color=self.themes["app_color"]["text_active"],
-        #     bg_color=self.themes["app_color"]["bg_three"],
-        #
-        # )
-        #
-        # self.ui.load_pages.cutomer_cart_id_edit.addWidget(self.curt_id)
+        self.phone_order_id = PyLineEdit(
+            context_color=self.themes["app_color"]["context_color"],
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["bg_three"],
+            read_only = True,
+        )
+
+        self.ui.load_pages.phone_order_id_frame.addWidget(self.phone_order_id)
+
+        self.phone_datetime = Py_datetime(
+
+            context_color=self.themes["app_color"]["context_color"],
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["bg_three"],
+        )
+        self.phone_datetime.setDate(datetime.now())
+        self.ui.load_pages.phone_date_frame.addWidget(self.phone_datetime)
 
         # phone section
         self.phone_type = PyComBox(
