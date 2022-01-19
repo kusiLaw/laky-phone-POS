@@ -41,6 +41,7 @@ table_main.setStyle([
     # ('GRID', (0,0) , (-1, -1), 1, 'red'),
     ('LEFTPADDING', (0,0), (-1, 2), 0),
     ('BOTTOMPADDING', (0,0), (-1, -2), 0)
+
 ])
 
 
