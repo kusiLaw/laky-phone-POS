@@ -296,13 +296,14 @@ class MainWindow(QMainWindow):
     def add_to_cart(self):
         if not self.phone_sn.currentText() == '' and not self.phone_price == '':
 
-            if not Decimal(self.phone_price.text()) < Decimal(self.cost_price) :
+            if not Decimal(self.phone_price.text()) < Decimal(self.cost_price) :# to compare before save at model feed
                 print('not lesser')
                 user.add_to_cart(ph_type=str(self.phone_type.currentText()), ph_model=str(self.phone_model.currentText()),
                                  sn=str(self.phone_sn.currentText()), price=Decimal(self.phone_price.text()),cp=Decimal(self.cost_price))
-                print(user.caches_retail)
-                sp = Decimal(0)
-                store_cp=Decimal(0)
+
+
+                sp = Decimal(0)  # to sum the tatol saling perice in the cart(dict)
+                store_cp=Decimal(0)   # to sum the tatol cost perice in the cart(dict)
 
                 #sum the total price in the dict
                 for _, item in user.caches_retail.items():
@@ -310,7 +311,6 @@ class MainWindow(QMainWindow):
                     store_cp +=item['cost_price']
 
                 self.phone_total_price.setText(str(sp))
-                # print(store_cp)
                 self.total_item.setText(str(len(user.caches_retail.keys())))
 
 
@@ -452,7 +452,7 @@ class MainWindow(QMainWindow):
 
             #todo: delete this
             self.stock_sn_list.clear()
-            for sn in ['sn-R58M24TY3HA', 'sn-R58M24TY3HB', 'sn-R58M24TY3HC', 'sn-R58M24TY3HD']:
+            for sn in ['t-32344523i2e', 't-32344523i2i', 't-32344523i2a', 't-32344523i2f']:
                 self.stock_sn_list.insertItem(0, sn)
 
             sn_list = [self.stock_sn_list.item(x).text() for x in range(self.stock_sn_list.count())]
@@ -537,7 +537,7 @@ class MainWindow(QMainWindow):
             if not tax or tax == 0:
                 tax = 1
             self.phone_price.setText(str( dic.get('sp', "")) )
-            self.cost_price = dic.get('cp', 0) # to compare before save
+            self.cost_price = dic.get('cp', 0) # to compare before save, a change in combobox update with current data
 
             # self.phone_discount.setText(str(dic.get('0')))
 
@@ -595,8 +595,16 @@ class MainWindow(QMainWindow):
     def model_feed_phone_sn(self, model_text,has_bought=False ):
 
         result = user.feed_phone_sn(model_text,has_bought )
+        # print('I am about to feed sn using ', model_text)
+
         if result:
             self.feed_combo(self.phone_sn, result)
+            return
+
+        #empty clear sn
+        self.phone_sn.clear()
+        # print(' sn empty using',  model_text)
+
 
     def select_table_row(self, table_obj, flag = None):
         # auto select record if not empty

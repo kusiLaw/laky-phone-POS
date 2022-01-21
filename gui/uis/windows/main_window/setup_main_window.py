@@ -1029,8 +1029,8 @@ class SetupMainWindow:
             bg_color=self.themes["app_color"]["dark_one"],
             bg_color_hover=self.themes["app_color"]["dark_three"],
             bg_color_pressed=self.themes["app_color"]["dark_four"],
-            hover_border_color=self.themes["app_color"]["green"]
-
+            hover_border_color=self.themes["app_color"]["green"],
+        show_boader_color = True
         )
         # self.phone_delete_btn.setMinimumHeight(30)
         self.ui.load_pages.stock_save_layout.addWidget(self.stock_save)
