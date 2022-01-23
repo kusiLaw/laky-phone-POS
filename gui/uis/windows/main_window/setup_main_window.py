@@ -489,7 +489,7 @@ class SetupMainWindow:
             bg_color=self.themes["app_color"]["dark_one"],
             radius=8,
             bg_color_hover=self.themes["app_color"]["context_color"],
-            items=['Cash', 'Paypal', 'mtn momo'],
+            items=['Transaction code', 'Contact', 'model', 'Date'],
             editable=False
         )
 

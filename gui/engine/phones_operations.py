@@ -476,21 +476,22 @@ class Phone:
 
         }
 
-    def buyphone(self, cache, customer_name, customer_number ):
+    def buyphone(self, cache_to_use, customer_name = None, customer_number= '+233' ):
 
-        if not (cache == "retail" or  cache == "wholesale"):
+        if not (cache_to_use == "retail" or  cache_to_use == "wholesale"):
             print('specified caches not implemented' )
             return
-        if cache == 'retail' and not len(self.caches_retail):
+        if cache_to_use == 'retail' and not len(self.caches_retail):
             print("Nothing in retail cart to buy")
             return
-        if cache == 'wholesale' and not len(self.caches_whole) :
+        if cache_to_use == 'wholesale' and not len(self.caches_whole) :
             print("Nothing in wholesale cart to buy")
             return
 
         self.customer_number =customer_number
         self.customer_name = customer_name
         tran = Transcode()
+        transcode = tran.transact_code()
 
         con = self.con.connect()
         cur = con.cursor()
@@ -508,12 +509,12 @@ class Phone:
             try:
 
                 # "on duplicate key update customer_name = %(name)s "
-                cur.execute(cust, (tran.transact_code(), self.discount))
+                cur.execute(cust, (transcode, self.discount))
                 trans_lastid = cur.lastrowid
             except  errors.Error as err:
                 if err.errno == errorcode.ER_DUP_ENTRY:
                     print("sales duplicate key catch")
-                    cur.execute(cust, (tran.transact_code(), self.discount))
+                    cur.execute(cust, (transcode, self.discount))
                     trans_lastid = cur.lastrowid
                 else:
                     print(err.msg)
@@ -540,7 +541,7 @@ class Phone:
                     result = dict(zip(cur.column_names, result))
                     print(result) #result["quantity"]
 
-                    quantity_bought =  1 if cache == "retail" else val['quantity']
+                    quantity_bought =  1 if cache_to_use == "retail" else val.get('quantity', 1)
 
                     if not result.get('quantity') - quantity_bought < 0 :
                         # stock available process to buy
@@ -634,6 +635,8 @@ class Phone:
         else:
             con.commit()
             print('run ok')
+            # patche the cache  to imform the printer
+            self.caches_retail['transcode'] = transcode
         finally:
             con.close()
 

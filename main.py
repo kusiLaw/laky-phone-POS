@@ -4,6 +4,8 @@
 from gui.uis.windows.main_window.functions_main_window import *
 from gui.uis.splashscreen.splash_screen import *
 from gui.uis.login.login import *
+from gui.engine.my_exceptions import InvalidSalesPrice, OutOfStockException,Invalid_Item_Purchase
+
 
 import sys
 import os
@@ -92,7 +94,7 @@ class MainWindow(QMainWindow):
         self.add_to_cart_btn.clicked.connect(lambda: self.add_to_cart())
         self.remove_from_cart_btn.clicked.connect(lambda: self.dispatch(self.remove_from_cart_btn))
         self.phone_clear_cart_btn.clicked.connect(lambda: self.dispatch(self.phone_clear_cart_btn))
-        self.phone_buyme_btn.clicked.connect(lambda : self.dispatch(self.phone_buyme_btn))
+        self.phone_buyme_btn.clicked.connect(lambda : self.buy_phone())
         self.phone_print_btn.clicked.connect(lambda: self.dispatch(self.phone_print_btn))
         self.phone_clear_btn.clicked.connect(lambda : self.clearforms(flag='phone'))
         self.table_widget.currentItemChanged.connect(lambda :self.table_row_Change(self.table_widget, flag='phone'))
@@ -209,7 +211,12 @@ class MainWindow(QMainWindow):
                'Type/Brand': 1
            },
 
-            "phone":{}
+            "phone":{
+                'Transaction code': 7,
+                'Model': 3,
+                'Contact': 2,
+                'Date': 9,
+            }
         }
 
         ind = col[flag][col_to_sch]
@@ -486,6 +493,18 @@ class MainWindow(QMainWindow):
 
             self.load_stock_tables()
             self.select_table_row(self.stock_table, flag='stock')
+
+    def buy_phone(self):
+        print(user.caches_retail)
+        try:
+
+            user.buyphone('retail', customer_name = self.customerName.text() or None, customer_number=self.contactName.text() or '+233')
+        except (ValueError, InvalidSalesPrice, OutOfStockException,Invalid_Item_Purchase) as ex:
+            print(ex)
+        # except:print('save unknown error')
+        else:
+            #successfull save,  patch the cache with trans code, set to form
+            self.phone_order_id.setText(user.get('transcode' , ''))
 
     def decimal_Input(self, val):
         return f"{Decimal(str(val)):.2f}"
