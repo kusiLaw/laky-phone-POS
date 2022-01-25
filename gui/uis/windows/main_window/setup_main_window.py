@@ -489,7 +489,7 @@ class SetupMainWindow:
             bg_color=self.themes["app_color"]["dark_one"],
             radius=8,
             bg_color_hover=self.themes["app_color"]["context_color"],
-            items=['Transaction code', 'Contact', 'model', 'Date'],
+            items=['Transaction code', 'Contact', 'Model', 'Date'],
             editable=False
         )
 
@@ -746,19 +746,19 @@ class SetupMainWindow:
 
         self.column_2 = QTableWidgetItem()
         self.column_2.setTextAlignment(Qt.AlignCenter)
-        self.column_2.setText("Customer Contact")
+        self.column_2.setText("Contact")
 
         self.column_3 = QTableWidgetItem()
         self.column_3.setTextAlignment(Qt.AlignCenter)
-        self.column_3.setText("Phone Type")
+        self.column_3.setText("Type")
 
         self.column_4 = QTableWidgetItem()
         self.column_4.setTextAlignment(Qt.AlignCenter)
-        self.column_4.setText("Phone Model")
+        self.column_4.setText("Model")
 
         self.column_5 = QTableWidgetItem()
         self.column_5.setTextAlignment(Qt.AlignCenter)
-        self.column_5.setText("Serial Number")
+        self.column_5.setText("SN")
 
         self.column_6 = QTableWidgetItem()
         self.column_6.setTextAlignment(Qt.AlignCenter)
@@ -770,7 +770,7 @@ class SetupMainWindow:
 
         self.column_8 = QTableWidgetItem()
         self.column_8.setTextAlignment(Qt.AlignCenter)
-        self.column_8.setText("Transaction Code")
+        self.column_8.setText("Trans Code")
 
         self.column_9 = QTableWidgetItem()
         self.column_9.setTextAlignment(Qt.AlignCenter)
@@ -1169,6 +1169,83 @@ class SetupMainWindow:
         self.stock_table.setHorizontalHeaderItem(9, self.cart_column_10)
 
         self.ui.load_pages.stock_table_frame.addWidget(self.stock_table)
+
+
+
+
+#////////////////////////////////////////////////////////////////////////////////////
+            # DASHBOARD
+
+
+        self.stock_sale_progress = PyCircularProgress(
+                    progress_color = self.themes["app_color"]["context_color"],
+                    text_color = self.themes["app_color"]["context_color"],
+                    progress_width = 15,
+                    font_size=24,
+
+                )
+
+        self.stock_sale_progress.width = 280  # 270
+        self.stock_sale_progress.height = 280  # 270
+        self.stock_sale_progress.value = 50
+        self.stock_sale_progress.setFixedSize(self.stock_sale_progress.width, self.stock_sale_progress.height)
+
+
+        self.ui.load_pages.stock_per_chart_frame.addWidget(self.stock_sale_progress)
+
+        self.daily_sale_avg_progress = PyCircularProgress(
+            progress_color=self.themes["app_color"]["context_color"],
+            text_color=self.themes["app_color"]["red"],
+            progress_width = 15,
+            font_size=24,
+        )
+
+        self.daily_sale_avg_progress.width = 280  # 270
+        self.daily_sale_avg_progress.height = 280  # 270
+        self.daily_sale_avg_progress.value = 20
+        self.daily_sale_avg_progress.setFixedSize(self.daily_sale_avg_progress.width, self.daily_sale_avg_progress.height)
+        # self.daily_sale_avg_progress.move(25, 100)  # (15,15)
+
+        self.ui.load_pages.daily_sale_avg_frame.addWidget(self.daily_sale_avg_progress)
+
+
+
+        self.dash_table = PyTableWidget(
+            radius=8,
+            color=self.themes["app_color"]["text_foreground"],
+            selection_color=self.themes["app_color"]["context_color"],
+            bg_color=self.themes["app_color"]["dark_two"],
+            header_horizontal_color=self.themes["app_color"]["dark_two"],
+            header_vertical_color=self.themes["app_color"]["dark_two"],
+            bottom_line_color=self.themes["app_color"]["dark_two"],
+            grid_line_color=self.themes["app_color"]["bg_one"],
+            scroll_bar_bg_color=self.themes["app_color"]["bg_one"],
+            scroll_bar_btn_color=self.themes["app_color"]["dark_four"],
+            context_color=self.themes["app_color"]["dark_two"]
+        )
+        self.dash_table.setColumnCount(2)
+        self.dash_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.dash_table.setSelectionMode(QAbstractItemView.ExtendedSelection)
+        self.dash_table.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.dash_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+
+        # Columns / Header
+        self.cart_column_1 = QTableWidgetItem()
+        self.cart_column_1.setTextAlignment(Qt.AlignCenter)
+        self.cart_column_1.setText("Model")
+
+        self.cart_column_2 = QTableWidgetItem()
+        self.cart_column_2.setTextAlignment(Qt.AlignCenter)
+        self.cart_column_2.setText("Purchase")
+
+
+
+        # Set column
+        self.dash_table.setHorizontalHeaderItem(0, self.cart_column_1)
+        self.dash_table.setHorizontalHeaderItem(1, self.cart_column_2)
+
+
+        self.ui.load_pages.dash_purchase_frame.addWidget(self.dash_table)
 
     # ///////////////////////////////////////////////////////////////
         # END - EXAMPLE CUSTOM WIDGETS

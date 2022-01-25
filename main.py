@@ -104,6 +104,9 @@ class MainWindow(QMainWindow):
 
         self.phone_type.currentIndexChanged.connect(lambda: self.type_feed_model(self.phone_model,str(self.phone_type.currentText().strip())))
         self.phone_model.currentIndexChanged.connect(lambda:self.model_feed(str(self.phone_model.currentText().strip()), "phone"))
+        self.phone_search_edit.textChanged.connect( lambda: self.find_name(self.phone_search_edit,self.table_widget , self.phone_search_key.currentText(), flag='phone'))
+
+
 
         # stock btn signals
         self.stock_save.clicked.connect(lambda: self.save_stock())
@@ -130,7 +133,7 @@ class MainWindow(QMainWindow):
         user.login('laky','11111')
         MainFunctions.set_page(self, self.ui.load_pages.dasboard)
         self.showcomponents(True)
-
+        self.load_high_purchase()
         self.ui.load_pages.dash_user_name.setText(" ".join([user.fname,user.lname]))
 
         self.ui.load_pages.dash_role.setText(user.role)
@@ -147,10 +150,10 @@ class MainWindow(QMainWindow):
             user.has_login = True
             #load the dashbord
             self.ui.load_pages.dash_user_name.setText(" ".join([user.fname, user.lname]))
-
             self.ui.load_pages.dash_role.setText(user.role)
             self.ui.load_pages.dash_email.setText(user.email)
             self.ui.load_pages.dash_last_seen.setText(str(user.last_seen))
+            self.load_high_purchase()
 
             MainFunctions.set_page(self, self.ui.load_pages.dasboard)
 
@@ -214,7 +217,7 @@ class MainWindow(QMainWindow):
             "phone":{
                 'Transaction code': 7,
                 'Model': 3,
-                'Contact': 2,
+                'Contact': 1,
                 'Date': 9,
             }
         }
@@ -252,10 +255,11 @@ class MainWindow(QMainWindow):
                 self.phone_model.setCurrentText(data[3])
                 # self.phone_imei.setText(data[1])
 
-                self.phone_sn.setText(data[4])
+                self.phone_sn.setCurrentText(data[4])
                 self.phone_price.setText(data[5])
                 self.phone_discount.setText(data[6])
-                self.phone_tax.setText(data[8])
+                self.phone_order_id.setText(data[7])
+                # self.phone_tax.setText(data[8])
 
 
             elif flag == 'stock':
@@ -424,6 +428,20 @@ class MainWindow(QMainWindow):
 
             self.stock_table.setRowHeight(cart_row_number, 20)
 
+    def load_high_purchase(self):
+        result = user.highly_purchase()
+        print(result)
+        while (self.dash_table.rowCount() > 0):
+            self.dash_table.removeRow(0)
+
+        for tup in result:
+            cart_row_number = self.dash_table.rowCount()
+            self.dash_table.insertRow(cart_row_number)  # Insert row
+            self.dash_table.setItem(cart_row_number, 0, QTableWidgetItem(str(tup[0])))  # Add name
+            self.dash_table.setItem(cart_row_number, 1, QTableWidgetItem(str(tup[1])))  # Add nick
+
+            self.table_widget.setRowHeight(cart_row_number, 20)
+
     def save_stock(self):
         # supplier table
         # if none given used unknown and interface should be '' for both
@@ -459,8 +477,8 @@ class MainWindow(QMainWindow):
 
             #todo: delete this
             self.stock_sn_list.clear()
-            for sn in ['t-32344523i2e', 't-32344523i2i', 't-32344523i2a', 't-32344523i2f']:
-                self.stock_sn_list.insertItem(0, sn)
+            # for sn in ['t-32344523i2e', 't-32344523i2i', 't-32344523i2a', 't-32344523i2f']:
+            #     self.stock_sn_list.insertItem(0, sn)
 
             sn_list = [self.stock_sn_list.item(x).text() for x in range(self.stock_sn_list.count())]
 
@@ -498,13 +516,13 @@ class MainWindow(QMainWindow):
         print(user.caches_retail)
         try:
 
-            user.buyphone('retail', customer_name = self.customerName.text() or None, customer_number=self.contactName.text() or '+233')
+            user.buyphone('retail', customer_name = self.customerName.text() or 'Customer', customer_number=self.contactName.text() or '+233')
         except (ValueError, InvalidSalesPrice, OutOfStockException,Invalid_Item_Purchase) as ex:
             print(ex)
         # except:print('save unknown error')
         else:
             #successfull save,  patch the cache with trans code, set to form
-            self.phone_order_id.setText(user.get('transcode' , ''))
+            self.phone_order_id.setText(user.caches_retail.get('transcode' , ''))
 
     def decimal_Input(self, val):
         return f"{Decimal(str(val)):.2f}"
@@ -671,6 +689,9 @@ class MainWindow(QMainWindow):
         if btn.objectName() == "home_btn":
             self.ui.left_menu.select_only_one(btn.objectName())
 
+
+            #dashboard
+            self.load_high_purchase()
 
             # Load page
             MainFunctions.set_page(self, self.ui.load_pages.dasboard)
@@ -932,7 +953,8 @@ class SplashScreen(QMainWindow):
         # import circular progress
         self.progress = PyCircularProgress(
             progress_color = self.theme["app_color"]["context_color"],
-            text_color = self.theme["app_color"]["context_color"]
+            text_color = self.theme["app_color"]["context_color"],
+            progress_width=8,
         )
         self.progress.width = 250  # 270
         self.progress.height = 250  # 270
@@ -960,7 +982,7 @@ class SplashScreen(QMainWindow):
         # Qtimer
         self.timer = QTimer()
         self.timer.timeout.connect(self.update)
-        self.timer.start(2) # 25
+        self.timer.start(25) # 25
 
         self.show()
 

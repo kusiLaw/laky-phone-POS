@@ -12,7 +12,8 @@ from .auth import Encryption
 from .my_exceptions import OutOfStockException, InvalidSalesPrice,Invalid_Item_Purchase,LakyException
 from .trans import Transcode
 
-'''
+''' 
+
 insert into acc_price_list(AccModel,costPrice,selPrice,acc_quantity) value(@accmodel,@acc_cp ,@acc_sp,@accquantity)
 on duplicate key update costPrice = @acc_cp, selPrice= @acc_sp , acc_quantity =(acc_quantity  + @accquantity )
 '''
@@ -58,7 +59,9 @@ class PhoneStock:
         sply_lastid = None
 
         try:
+            cur.execute("use lakydb;", tuple())
             try: # if duplicate key, get it id
+
                 stoct_st = "INSERT INTO lakydb.`stock` ( `phone_name`,`phone_model`, `Users_idUsers`) " \
                            "VALUES (%s, %s, %s)"
                 cur.execute(stoct_st, (self.st_name, self.st_ph_model, self.user_id))
@@ -66,7 +69,7 @@ class PhoneStock:
                 print("stock inserted")
             except  errors.Error as err:
                 if err.errno == errorcode.ER_DUP_ENTRY:
-                    stoct_st = "SELECT stockId FROM lakydb.`stock` WHERE phone_model = %s "
+                    stoct_st = " SELECT stockId FROM lakydb.`stock` WHERE phone_model = %s "
                     cur.execute(stoct_st, ( self.st_ph_model, ))
                     st_lastid = cur.fetchone()[0] # come as tuple
 
@@ -80,7 +83,7 @@ class PhoneStock:
                     cur.execute(price_st, (self.qty, self.cp, self.sp, self.tax, self.dat,st_lastid))
                     print("stock updated")
                 else:
-                    raise LakyException("Unknown error")
+                    raise LakyException("Unknown error", err)
 
             else:
                 # not duplicate error, is new insertion
@@ -195,9 +198,9 @@ class PhoneStock:
                 return "record already exist"
             else:
                 print(err)
-        except:
-            print("Error occored")
-            return 'unknown error occured'
+        # except:
+        #     print("Error occored")
+        #     return 'unknown error occured'
         else:
             con.commit()
             print('run ok')
@@ -277,8 +280,8 @@ class PhoneStock:
         try:
             cur.execute(statement, (key, ))
             result = cur.fetchone()
-            h = dict()
-            h = dict()
+            # h = dict()
+            # h = dict()
             if result:
                 result = dict(zip(cur.column_names, result))
 
@@ -770,7 +773,7 @@ class Phone:
             "inner join lakydb.sale_phone on users.idUsers = sale_phone.Users_idUsers " \
             "inner join lakydb.phone_prices on sale_phone.Sale_phone_id =  phone_prices.Sale_phone_Sale_phone_id " \
             "inner join lakydb.phone_transaction on phone_transaction.phone_transaction_id = sale_phone.phone_transaction_phone_transaction_id " \
-            "inner join lakydb.customer on customer.customer_id = Sale_phone.Customer_customer_id"
+            "inner join lakydb.customer on customer.customer_id = Sale_phone.Customer_customer_id    where datediff(  now(), phone_prices.dates ) <1  order by sale_phone.Sale_phone_id desc "
 
         try:
             cur.execute(statement,tuple())
@@ -804,6 +807,27 @@ class Phone:
 
     def printout(self):
         pass
+
+
+    def highly_purchase(self):
+        statement = "SELECT model as 'Model', count(sale_phone.model) as 'Purchases' from lakydb.Sale_phone group by  model limit 10"
+        con = self.con.connect()
+        cur = con.cursor()
+        try:
+            cur.execute(statement, tuple())
+            result = cur.fetchall()
+            # print(result)
+            # if result:
+            #     result = dict(zip(cur.column_names, result))
+            #     # result = [val[0] for val in result]
+        except  errors.Error as err:
+            return []
+        else:
+            return result
+        finally:
+            con.close()
+
+
 
 class Active_User(PhoneStock, Phone):
     new_user_fname = CharField(_min=2, _max=25)
