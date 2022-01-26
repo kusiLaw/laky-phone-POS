@@ -260,8 +260,9 @@ class Ui_MainPages(object):
         self.dasboard = QWidget()
         self.dasboard.setObjectName(u"dasboard")
         font4 = QFont()
-        font4.setPointSize(14)
+        font4.setFamilies([u"Segoe UI"])
         self.dasboard.setFont(font4)
+        self.dasboard.setStyleSheet(u"font-family:\"Segoe UI\"")
         self.verticalLayout_31 = QVBoxLayout(self.dasboard)
         self.verticalLayout_31.setObjectName(u"verticalLayout_31")
         self.frame = QFrame(self.dasboard)
@@ -283,7 +284,7 @@ class Ui_MainPages(object):
         self.verticalLayout_30.setContentsMargins(0, 0, 0, 0)
         self.label = QLabel(self.frame_55)
         self.label.setObjectName(u"label")
-        self.label.setStyleSheet(u"color:#777;\n"
+        self.label.setStyleSheet(u"color:#8a95aa;\n"
 "font-size: 40px;\n"
 "text-transform: uppercase;\n"
 "font-weight: 700;\n"
@@ -315,7 +316,7 @@ class Ui_MainPages(object):
         self.frame_54.setObjectName(u"frame_54")
         self.frame_54.setMaximumSize(QSize(500, 16777215))
         self.frame_54.setStyleSheet(u"font-size: 20px;\n"
-"color:#777;\n"
+"color:#8a95aa;\n"
 "\n"
 "font-weight: 700;")
         self.frame_54.setFrameShape(QFrame.StyledPanel)
@@ -427,49 +428,39 @@ class Ui_MainPages(object):
         self.frame_88.setFrameShadow(QFrame.Raised)
         self.stock_per_chart_frame = QVBoxLayout(self.frame_88)
         self.stock_per_chart_frame.setObjectName(u"stock_per_chart_frame")
-        self.stock_per_chart_frame.setContentsMargins(20, 30, 20, 20)
+        self.stock_per_chart_frame.setContentsMargins(20, 15, 20, 10)
 
         self.verticalLayout_37.addWidget(self.frame_88)
 
         self.frame_89 = QFrame(self.chart_stock_sales)
         self.frame_89.setObjectName(u"frame_89")
         self.frame_89.setStyleSheet(u"font-size: 20px;\n"
-"color:#f5f6f9;\n"
+"color:#8a95aa;\n"
 "\n"
 "font-weight: 700;")
         self.frame_89.setFrameShape(QFrame.StyledPanel)
         self.frame_89.setFrameShadow(QFrame.Raised)
         self.gridLayout_8 = QGridLayout(self.frame_89)
         self.gridLayout_8.setObjectName(u"gridLayout_8")
-        self.label_65 = QLabel(self.frame_89)
-        self.label_65.setObjectName(u"label_65")
-
-        self.gridLayout_8.addWidget(self.label_65, 0, 1, 1, 1)
-
-        self.label_66 = QLabel(self.frame_89)
-        self.label_66.setObjectName(u"label_66")
-
-        self.gridLayout_8.addWidget(self.label_66, 1, 1, 1, 1)
-
-        self.label_67 = QLabel(self.frame_89)
-        self.label_67.setObjectName(u"label_67")
-
-        self.gridLayout_8.addWidget(self.label_67, 2, 1, 1, 1)
-
-        self.label_49 = QLabel(self.frame_89)
-        self.label_49.setObjectName(u"label_49")
-
-        self.gridLayout_8.addWidget(self.label_49, 1, 0, 1, 1)
-
         self.label_43 = QLabel(self.frame_89)
         self.label_43.setObjectName(u"label_43")
+        self.label_43.setMaximumSize(QSize(16777215, 40))
+        self.label_43.setStyleSheet(u"color:#568af2;\n"
+"font-size:24px;")
+        self.label_43.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout_8.addWidget(self.label_43, 0, 0, 1, 1)
+        self.gridLayout_8.addWidget(self.label_43, 0, 0, 1, 2)
 
-        self.label_18 = QLabel(self.frame_89)
-        self.label_18.setObjectName(u"label_18")
+        self.frame_62 = QFrame(self.frame_89)
+        self.frame_62.setObjectName(u"frame_62")
+        self.frame_62.setFrameShape(QFrame.NoFrame)
+        self.frame_62.setFrameShadow(QFrame.Raised)
+        self.stock_analysis_frame = QVBoxLayout(self.frame_62)
+        self.stock_analysis_frame.setSpacing(0)
+        self.stock_analysis_frame.setObjectName(u"stock_analysis_frame")
+        self.stock_analysis_frame.setContentsMargins(0, 0, 0, 0)
 
-        self.gridLayout_8.addWidget(self.label_18, 2, 0, 1, 1)
+        self.gridLayout_8.addWidget(self.frame_62, 1, 0, 1, 2)
 
 
         self.verticalLayout_37.addWidget(self.frame_89)
@@ -493,14 +484,14 @@ class Ui_MainPages(object):
         self.frame_90.setFrameShadow(QFrame.Raised)
         self.daily_sale_avg_frame = QVBoxLayout(self.frame_90)
         self.daily_sale_avg_frame.setObjectName(u"daily_sale_avg_frame")
-        self.daily_sale_avg_frame.setContentsMargins(20, 30, 20, 20)
+        self.daily_sale_avg_frame.setContentsMargins(20, 10, 20, 10)
 
         self.verticalLayout_38.addWidget(self.frame_90)
 
         self.frame_91 = QFrame(self.chart_average)
         self.frame_91.setObjectName(u"frame_91")
         self.frame_91.setStyleSheet(u"font-size: 20px;\n"
-"color:#f5f6f9;\n"
+"color:#8a95aa;\n"
 "\n"
 "font-weight: 700;")
         self.frame_91.setFrameShape(QFrame.NoFrame)
@@ -510,33 +501,37 @@ class Ui_MainPages(object):
         self.gridLayout_13.setContentsMargins(10, 10, 10, 0)
         self.label_76 = QLabel(self.frame_91)
         self.label_76.setObjectName(u"label_76")
+        self.label_76.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.gridLayout_13.addWidget(self.label_76, 1, 0, 1, 1)
 
-        self.label_71 = QLabel(self.frame_91)
-        self.label_71.setObjectName(u"label_71")
-
-        self.gridLayout_13.addWidget(self.label_71, 0, 0, 1, 1)
-
-        self.label_75 = QLabel(self.frame_91)
-        self.label_75.setObjectName(u"label_75")
-
-        self.gridLayout_13.addWidget(self.label_75, 0, 1, 1, 1)
-
         self.label_77 = QLabel(self.frame_91)
         self.label_77.setObjectName(u"label_77")
+        self.label_77.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
 
         self.gridLayout_13.addWidget(self.label_77, 2, 0, 1, 1)
 
         self.label_78 = QLabel(self.frame_91)
         self.label_78.setObjectName(u"label_78")
+        self.label_78.setStyleSheet(u"border::5xp solid red;")
+        self.label_78.setAlignment(Qt.AlignCenter)
 
         self.gridLayout_13.addWidget(self.label_78, 1, 1, 1, 1)
 
         self.label_79 = QLabel(self.frame_91)
         self.label_79.setObjectName(u"label_79")
+        self.label_79.setAlignment(Qt.AlignCenter)
 
         self.gridLayout_13.addWidget(self.label_79, 2, 1, 1, 1)
+
+        self.label_71 = QLabel(self.frame_91)
+        self.label_71.setObjectName(u"label_71")
+        self.label_71.setMaximumSize(QSize(16777215, 40))
+        self.label_71.setStyleSheet(u"color: #568af2;\n"
+"font-size:24px;")
+        self.label_71.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_13.addWidget(self.label_71, 0, 0, 1, 2)
 
 
         self.verticalLayout_38.addWidget(self.frame_91)
@@ -562,22 +557,24 @@ class Ui_MainPages(object):
         self.gridLayout_12.setObjectName(u"gridLayout_12")
         self.gridLayout_12.setHorizontalSpacing(0)
         self.gridLayout_12.setContentsMargins(0, 0, 0, 0)
-        self.label_72 = QLabel(self.frame_83)
-        self.label_72.setObjectName(u"label_72")
+        self.text_collapse2 = QLabel(self.frame_83)
+        self.text_collapse2.setObjectName(u"text_collapse2")
+        self.text_collapse2.setMaximumSize(QSize(16777215, 0))
 
-        self.gridLayout_12.addWidget(self.label_72, 1, 0, 1, 1)
+        self.gridLayout_12.addWidget(self.text_collapse2, 1, 0, 1, 1)
 
-        self.label_74 = QLabel(self.frame_83)
-        self.label_74.setObjectName(u"label_74")
+        self.text_collapse1 = QLabel(self.frame_83)
+        self.text_collapse1.setObjectName(u"text_collapse1")
+        self.text_collapse1.setMaximumSize(QSize(16777215, 0))
 
-        self.gridLayout_12.addWidget(self.label_74, 1, 1, 1, 1)
+        self.gridLayout_12.addWidget(self.text_collapse1, 1, 1, 1, 1)
 
         self.label_73 = QLabel(self.frame_83)
         self.label_73.setObjectName(u"label_73")
         self.label_73.setStyleSheet(u"color:#00ff7f;\n"
-"font-size: 50px;\n"
+"font-size: 55px;\n"
 "text-transform: uppercase;\n"
-"font-weight: 700;\n"
+"font-weight: 800;\n"
 "text-align: center;\n"
 "text-shadow: 0 15px 40px rgba(0,0,0, 0.6)")
         self.label_73.setAlignment(Qt.AlignCenter)
@@ -589,7 +586,7 @@ class Ui_MainPages(object):
 
         self.frame_85 = QFrame(self.chart_extra)
         self.frame_85.setObjectName(u"frame_85")
-        self.frame_85.setStyleSheet(u"color:#777;\n"
+        self.frame_85.setStyleSheet(u"color:#8a95aa;\n"
 "font-size: 20px;\n"
 "background:#1e2229;")
         self.frame_85.setFrameShape(QFrame.StyledPanel)
@@ -610,6 +607,7 @@ class Ui_MainPages(object):
         self.label_68 = QLabel(self.frame_61)
         self.label_68.setObjectName(u"label_68")
         self.label_68.setMinimumSize(QSize(0, 60))
+        self.label_68.setStyleSheet(u"color:#dce1ec")
         self.label_68.setAlignment(Qt.AlignCenter)
 
         self.verticalLayout_40.addWidget(self.label_68)
@@ -668,7 +666,7 @@ class Ui_MainPages(object):
         self.scrollArea.setWidgetResizable(True)
         self.contents = QWidget()
         self.contents.setObjectName(u"contents")
-        self.contents.setGeometry(QRect(0, 0, 1188, 765))
+        self.contents.setGeometry(QRect(0, 0, 934, 608))
         self.verticalLayout_4 = QVBoxLayout(self.contents)
         self.verticalLayout_4.setSpacing(0)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
@@ -1265,7 +1263,9 @@ class Ui_MainPages(object):
         self.pages.addWidget(self.phone_page)
         self.service_page = QWidget()
         self.service_page.setObjectName(u"service_page")
-        self.service_page.setFont(font4)
+        font5 = QFont()
+        font5.setPointSize(14)
+        self.service_page.setFont(font5)
         self.service_page.setStyleSheet(u"font-size: 14pt; background: lightblue; ")
         self.page_2_layout = QVBoxLayout(self.service_page)
         self.page_2_layout.setSpacing(0)
@@ -1277,7 +1277,7 @@ class Ui_MainPages(object):
         self.scrollArea_2.setWidgetResizable(True)
         self.Contents = QWidget()
         self.Contents.setObjectName(u"Contents")
-        self.Contents.setGeometry(QRect(0, 0, 1188, 765))
+        self.Contents.setGeometry(QRect(0, 0, 530, 606))
         self.verticalLayout_2 = QVBoxLayout(self.Contents)
         self.verticalLayout_2.setSpacing(0)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
@@ -1532,7 +1532,7 @@ class Ui_MainPages(object):
         self.pages.addWidget(self.service_page)
         self.stock = QWidget()
         self.stock.setObjectName(u"stock")
-        self.stock.setFont(font4)
+        self.stock.setFont(font5)
         self.stock.setStyleSheet(u"font-size: 14pt; background : #2c313c; \n"
 "")
         self.page_3_layout = QVBoxLayout(self.stock)
@@ -1546,7 +1546,7 @@ class Ui_MainPages(object):
         self.stockContents = QWidget()
         self.stockContents.setObjectName(u"stockContents")
         self.stockContents.setGeometry(QRect(0, 0, 1028, 629))
-        self.stockContents.setFont(font4)
+        self.stockContents.setFont(font5)
         self.stockContents.setStyleSheet(u"")
         self.verticalLayout_9 = QVBoxLayout(self.stockContents)
         self.verticalLayout_9.setSpacing(7)
@@ -1563,7 +1563,7 @@ class Ui_MainPages(object):
         self.frame_29.setObjectName(u"frame_29")
         self.frame_29.setMinimumSize(QSize(0, 50))
         self.frame_29.setMaximumSize(QSize(16777215, 84))
-        self.frame_29.setFont(font4)
+        self.frame_29.setFont(font5)
         self.frame_29.setFrameShape(QFrame.NoFrame)
         self.frame_29.setFrameShadow(QFrame.Raised)
         self.verticalLayout_12 = QVBoxLayout(self.frame_29)
@@ -1572,7 +1572,7 @@ class Ui_MainPages(object):
         self.label_29 = QLabel(self.frame_29)
         self.label_29.setObjectName(u"label_29")
         self.label_29.setMaximumSize(QSize(16777215, 232))
-        self.label_29.setFont(font4)
+        self.label_29.setFont(font5)
         self.label_29.setAlignment(Qt.AlignHCenter|Qt.AlignTop)
         self.label_29.setWordWrap(True)
 
@@ -2375,20 +2375,14 @@ class Ui_MainPages(object):
         self.dash_email.setText(QCoreApplication.translate("MainPages", u"unknown", None))
         self.label_64.setText(QCoreApplication.translate("MainPages", u"Last Seen", None))
         self.dash_last_seen.setText(QCoreApplication.translate("MainPages", u"unknown", None))
-        self.label_65.setText(QCoreApplication.translate("MainPages", u"1205", None))
-        self.label_66.setText(QCoreApplication.translate("MainPages", u"301", None))
-        self.label_67.setText(QCoreApplication.translate("MainPages", u"5", None))
-        self.label_49.setText(QCoreApplication.translate("MainPages", u"Total Items sold", None))
-        self.label_43.setText(QCoreApplication.translate("MainPages", u"Available Stock :", None))
-        self.label_18.setText(QCoreApplication.translate("MainPages", u"Today Sales", None))
+        self.label_43.setText(QCoreApplication.translate("MainPages", u"Stock", None))
         self.label_76.setText(QCoreApplication.translate("MainPages", u"No of Sales", None))
-        self.label_71.setText(QCoreApplication.translate("MainPages", u"Average No of Sales", None))
-        self.label_75.setText(QCoreApplication.translate("MainPages", u"42", None))
         self.label_77.setText(QCoreApplication.translate("MainPages", u"Percentage  Diff:", None))
         self.label_78.setText(QCoreApplication.translate("MainPages", u"35", None))
         self.label_79.setText(QCoreApplication.translate("MainPages", u"35%", None))
-        self.label_72.setText(QCoreApplication.translate("MainPages", u"TextLabel", None))
-        self.label_74.setText(QCoreApplication.translate("MainPages", u"TextLabel", None))
+        self.label_71.setText(QCoreApplication.translate("MainPages", u"Average Sales", None))
+        self.text_collapse2.setText("")
+        self.text_collapse1.setText("")
         self.label_73.setText(QCoreApplication.translate("MainPages", u"\u00a254000", None))
         self.label_68.setText(QCoreApplication.translate("MainPages", u"Highly Purchase items", None))
         self.customer_group.setTitle(QCoreApplication.translate("MainPages", u"Customer | Cart", None))

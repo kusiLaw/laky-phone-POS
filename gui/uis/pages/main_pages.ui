@@ -580,8 +580,11 @@ font-style:italic;
      <widget class="QWidget" name="dasboard">
       <property name="font">
        <font>
-        <pointsize>14</pointsize>
+        <family>Segoe UI</family>
        </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-family:&quot;Segoe UI&quot;</string>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_31">
        <item>
@@ -635,7 +638,7 @@ font-style:italic;
              <item>
               <widget class="QLabel" name="label">
                <property name="styleSheet">
-                <string notr="true">color:#777;
+                <string notr="true">color:#8a95aa;
 font-size: 40px;
 text-transform: uppercase;
 font-weight: 700;
@@ -715,7 +718,7 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">font-size: 20px;
-color:#777;
+color:#8a95aa;
 
 font-weight: 700;</string>
                </property>
@@ -961,13 +964,13 @@ font-weight: 700;</string>
                         <number>20</number>
                        </property>
                        <property name="topMargin">
-                        <number>30</number>
+                        <number>15</number>
                        </property>
                        <property name="rightMargin">
                         <number>20</number>
                        </property>
                        <property name="bottomMargin">
-                        <number>20</number>
+                        <number>10</number>
                        </property>
                       </layout>
                      </widget>
@@ -976,7 +979,7 @@ font-weight: 700;</string>
                      <widget class="QFrame" name="frame_89">
                       <property name="styleSheet">
                        <string notr="true">font-size: 20px;
-color:#f5f6f9;
+color:#8a95aa;
 
 font-weight: 700;</string>
                       </property>
@@ -987,46 +990,51 @@ font-weight: 700;</string>
                        <enum>QFrame::Raised</enum>
                       </property>
                       <layout class="QGridLayout" name="gridLayout_8">
-                       <item row="0" column="1">
-                        <widget class="QLabel" name="label_65">
-                         <property name="text">
-                          <string>1205</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="1" column="1">
-                        <widget class="QLabel" name="label_66">
-                         <property name="text">
-                          <string>301</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="2" column="1">
-                        <widget class="QLabel" name="label_67">
-                         <property name="text">
-                          <string>5</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="1" column="0">
-                        <widget class="QLabel" name="label_49">
-                         <property name="text">
-                          <string>Total Items sold</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="0" column="0">
+                       <item row="0" column="0" colspan="2">
                         <widget class="QLabel" name="label_43">
+                         <property name="maximumSize">
+                          <size>
+                           <width>16777215</width>
+                           <height>40</height>
+                          </size>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">color:#568af2;
+font-size:24px;</string>
+                         </property>
                          <property name="text">
-                          <string>Available Stock :</string>
+                          <string>Stock</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignCenter</set>
                          </property>
                         </widget>
                        </item>
-                       <item row="2" column="0">
-                        <widget class="QLabel" name="label_18">
-                         <property name="text">
-                          <string>Today Sales</string>
+                       <item row="1" column="0" colspan="2">
+                        <widget class="QFrame" name="frame_62">
+                         <property name="frameShape">
+                          <enum>QFrame::NoFrame</enum>
                          </property>
+                         <property name="frameShadow">
+                          <enum>QFrame::Raised</enum>
+                         </property>
+                         <layout class="QVBoxLayout" name="stock_analysis_frame">
+                          <property name="spacing">
+                           <number>0</number>
+                          </property>
+                          <property name="leftMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>0</number>
+                          </property>
+                         </layout>
                         </widget>
                        </item>
                       </layout>
@@ -1078,13 +1086,13 @@ font-weight: 700;</string>
                         <number>20</number>
                        </property>
                        <property name="topMargin">
-                        <number>30</number>
+                        <number>15</number>
                        </property>
                        <property name="rightMargin">
                         <number>20</number>
                        </property>
                        <property name="bottomMargin">
-                        <number>20</number>
+                        <number>10</number>
                        </property>
                       </layout>
                      </widget>
@@ -1093,7 +1101,7 @@ font-weight: 700;</string>
                      <widget class="QFrame" name="frame_91">
                       <property name="styleSheet">
                        <string notr="true">font-size: 20px;
-color:#f5f6f9;
+color:#8a95aa;
 
 font-weight: 700;</string>
                       </property>
@@ -1121,19 +1129,8 @@ font-weight: 700;</string>
                          <property name="text">
                           <string>No of Sales</string>
                          </property>
-                        </widget>
-                       </item>
-                       <item row="0" column="0">
-                        <widget class="QLabel" name="label_71">
-                         <property name="text">
-                          <string>Average No of Sales</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item row="0" column="1">
-                        <widget class="QLabel" name="label_75">
-                         <property name="text">
-                          <string>42</string>
+                         <property name="alignment">
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                          </property>
                         </widget>
                        </item>
@@ -1142,12 +1139,21 @@ font-weight: 700;</string>
                          <property name="text">
                           <string>Percentage  Diff:</string>
                          </property>
+                         <property name="alignment">
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                         </property>
                         </widget>
                        </item>
                        <item row="1" column="1">
                         <widget class="QLabel" name="label_78">
+                         <property name="styleSheet">
+                          <string notr="true">border::5xp solid red;</string>
+                         </property>
                          <property name="text">
                           <string>35</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignCenter</set>
                          </property>
                         </widget>
                        </item>
@@ -1155,6 +1161,29 @@ font-weight: 700;</string>
                         <widget class="QLabel" name="label_79">
                          <property name="text">
                           <string>35%</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="0" column="0" colspan="2">
+                        <widget class="QLabel" name="label_71">
+                         <property name="maximumSize">
+                          <size>
+                           <width>16777215</width>
+                           <height>40</height>
+                          </size>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">color: #568af2;
+font-size:24px;</string>
+                         </property>
+                         <property name="text">
+                          <string>Average Sales</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignCenter</set>
                          </property>
                         </widget>
                        </item>
@@ -1219,16 +1248,28 @@ font-weight: 700;</string>
                         <number>0</number>
                        </property>
                        <item row="1" column="0">
-                        <widget class="QLabel" name="label_72">
+                        <widget class="QLabel" name="text_collapse2">
+                         <property name="maximumSize">
+                          <size>
+                           <width>16777215</width>
+                           <height>0</height>
+                          </size>
+                         </property>
                          <property name="text">
-                          <string>TextLabel</string>
+                          <string/>
                          </property>
                         </widget>
                        </item>
                        <item row="1" column="1">
-                        <widget class="QLabel" name="label_74">
+                        <widget class="QLabel" name="text_collapse1">
+                         <property name="maximumSize">
+                          <size>
+                           <width>16777215</width>
+                           <height>0</height>
+                          </size>
+                         </property>
                          <property name="text">
-                          <string>TextLabel</string>
+                          <string/>
                          </property>
                         </widget>
                        </item>
@@ -1236,9 +1277,9 @@ font-weight: 700;</string>
                         <widget class="QLabel" name="label_73">
                          <property name="styleSheet">
                           <string notr="true">color:#00ff7f;
-font-size: 50px;
+font-size: 55px;
 text-transform: uppercase;
-font-weight: 700;
+font-weight: 800;
 text-align: center;
 text-shadow: 0 15px 40px rgba(0,0,0, 0.6)</string>
                          </property>
@@ -1256,7 +1297,7 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6)</string>
                     <item>
                      <widget class="QFrame" name="frame_85">
                       <property name="styleSheet">
-                       <string notr="true">color:#777;
+                       <string notr="true">color:#8a95aa;
 font-size: 20px;
 background:#1e2229;</string>
                       </property>
@@ -1313,6 +1354,9 @@ background:#1e2229;</string>
                               <width>0</width>
                               <height>60</height>
                              </size>
+                            </property>
+                            <property name="styleSheet">
+                             <string notr="true">color:#dce1ec</string>
                             </property>
                             <property name="text">
                              <string>Highly Purchase items</string>
@@ -1425,8 +1469,8 @@ background:#1e2229;</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1188</width>
-            <height>765</height>
+            <width>934</width>
+            <height>608</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -2975,8 +3019,8 @@ background:#1e2229;</string>
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>1188</width>
-            <height>765</height>
+            <width>530</width>
+            <height>606</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">

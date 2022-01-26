@@ -203,6 +203,7 @@ class PhoneStock:
         #     return 'unknown error occured'
         else:
             con.commit()
+            self.update_stock_cach()
             print('run ok')
         finally:
             con.close()
@@ -229,8 +230,20 @@ class PhoneStock:
             print("closing")
             con.close()
 
-    def update_stock(self):
-        pass
+    def update_stock_cach(self):
+        con = self.con.connect()
+        cur = con.cursor()
+        statement = "insert into  lakydb.stock_caches_table   value (current_date(),  (SELECT sum(stock_prices.quantity) FROM lakydb.stock_prices)) " \
+                " on duplicate key update stock_caches_table.quntity_update = (SELECT sum(stock_prices.quantity) FROM lakydb.stock_prices)"
+        try:
+            cur.execute(statement, tuple())
+
+        except:
+            pass
+        else:
+            con.commit()
+        finally:
+            con.close()
 
     def delete_stock(self):
         pass
@@ -413,6 +426,32 @@ class PhoneStock:
 
         finally:
             con.close()
+
+    def feed_dasboard_stock_table(self):
+        con = self.con.connect()
+        cur = con.cursor()
+        temp_cache = {}
+        st_list = [
+            "SELECT cache_date, quntity_update FROM lakydb.stock_caches_table  where  cache_date = (select max(cache_date) FROM lakydb.stock_caches_table);" ,
+          "SELECT 'Today', sum(quantity) FROM lakydb.stock_prices ;"
+        ]
+
+        try:
+            for stat in st_list:
+                cur.execute(stat, tuple())
+                result = cur.fetchone()
+                if result:
+                    temp_cache[result[0]] = result[1]
+                    # print(temp_cache )
+        except:
+            pass
+        else:
+            return temp_cache
+        finally:
+            con.close()
+
+
+
 
 
 class Phone:

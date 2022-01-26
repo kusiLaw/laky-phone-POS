@@ -1208,20 +1208,25 @@ class SetupMainWindow:
 
         self.ui.load_pages.daily_sale_avg_frame.addWidget(self.daily_sale_avg_progress)
 
+        # self.dash_money_icon = PyPicture(loc= '')
+        # self.ui.right_column.pro_pic_frame.addWidget(self.dash_money_icon)
+        #
+        #
+
 
 
         self.dash_table = PyTableWidget(
             radius=8,
             color=self.themes["app_color"]["text_foreground"],
-            selection_color=self.themes["app_color"]["context_color"],
+            selection_color=self.themes["app_color"]["dark_two"],
             bg_color=self.themes["app_color"]["dark_two"],
             header_horizontal_color=self.themes["app_color"]["dark_two"],
             header_vertical_color=self.themes["app_color"]["dark_two"],
             bottom_line_color=self.themes["app_color"]["dark_two"],
-            grid_line_color=self.themes["app_color"]["bg_one"],
-            scroll_bar_bg_color=self.themes["app_color"]["bg_one"],
-            scroll_bar_btn_color=self.themes["app_color"]["dark_four"],
-            context_color=self.themes["app_color"]["dark_two"]
+            grid_line_color=self.themes["app_color"]["dark_two"],
+            scroll_bar_bg_color=self.themes["app_color"]["dark_two"],
+            scroll_bar_btn_color=self.themes["app_color"]["dark_two"],
+            context_color=self.themes["app_color"]["context_color"]
         )
         self.dash_table.setColumnCount(2)
         self.dash_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
@@ -1238,14 +1243,46 @@ class SetupMainWindow:
         self.cart_column_2.setTextAlignment(Qt.AlignCenter)
         self.cart_column_2.setText("Purchase")
 
-
-
         # Set column
         self.dash_table.setHorizontalHeaderItem(0, self.cart_column_1)
         self.dash_table.setHorizontalHeaderItem(1, self.cart_column_2)
 
 
         self.ui.load_pages.dash_purchase_frame.addWidget(self.dash_table)
+
+        self.dash_stock_analysis = PyTableWidget(
+            radius=8,
+            color=self.themes["app_color"]["text_foreground"],
+            selection_color=self.themes["app_color"]["dark_two"],
+            bg_color=self.themes["app_color"]["dark_two"],
+            header_horizontal_color=self.themes["app_color"]["dark_two"],
+            header_vertical_color=self.themes["app_color"]["dark_two"],
+            bottom_line_color=self.themes["app_color"]["dark_two"],
+            grid_line_color=self.themes["app_color"]["dark_two"],
+            scroll_bar_bg_color=self.themes["app_color"]["dark_two"],
+            scroll_bar_btn_color=self.themes["app_color"]["dark_two"],
+            context_color=self.themes["app_color"]["dark_two"]
+        )
+        self.dash_stock_analysis.setColumnCount(2)
+        self.dash_stock_analysis.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.dash_stock_analysis.setSelectionMode(QAbstractItemView.ExtendedSelection)
+        self.dash_stock_analysis.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.dash_stock_analysis.setEditTriggers(QAbstractItemView.NoEditTriggers)
+
+        # Columns / Header
+        self.cart_column_1 = QTableWidgetItem()
+        self.cart_column_1.setTextAlignment(Qt.AlignCenter)
+        self.cart_column_1.setText("Date")
+
+        self.cart_column_2 = QTableWidgetItem()
+        self.cart_column_2.setTextAlignment(Qt.AlignCenter)
+        self.cart_column_2.setText("Total")
+
+        # Set column
+        self.dash_stock_analysis.setHorizontalHeaderItem(0, self.cart_column_1)
+        self.dash_stock_analysis.setHorizontalHeaderItem(1, self.cart_column_2)
+
+        self.ui.load_pages.stock_analysis_frame.addWidget(self.dash_stock_analysis)
 
     # ///////////////////////////////////////////////////////////////
         # END - EXAMPLE CUSTOM WIDGETS

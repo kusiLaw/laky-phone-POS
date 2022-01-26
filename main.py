@@ -140,6 +140,8 @@ class MainWindow(QMainWindow):
         self.ui.load_pages.dash_email.setText(user.email)
         self.ui.load_pages.dash_last_seen.setText(str(user.last_seen))
 
+        self.dash_board_stock_table()
+
 
     def login(self):
         if user.login(str(self.user_name.text()), str(self.user_passsword.text())):
@@ -441,6 +443,29 @@ class MainWindow(QMainWindow):
             self.dash_table.setItem(cart_row_number, 1, QTableWidgetItem(str(tup[1])))  # Add nick
 
             self.table_widget.setRowHeight(cart_row_number, 20)
+
+    def dash_board_stock_table(self):
+        result = user.feed_dasboard_stock_table()
+
+        while (self.dash_stock_analysis.rowCount() > 0):
+            self.dash_stock_analysis.removeRow(0)
+        if result:
+            for tup in result.items():
+
+                cart_row_number = self.dash_stock_analysis.rowCount()
+                self.dash_stock_analysis.insertRow(cart_row_number)  # Insert row
+                self.dash_stock_analysis.setItem(cart_row_number, 0, QTableWidgetItem(str(tup[0])))  # Add name
+                self.dash_stock_analysis.setItem(cart_row_number, 1, QTableWidgetItem(str(int(tup[1]))))  # Add nick
+
+                self.dash_stock_analysis.setRowHeight(cart_row_number, 20)
+
+            #repaint acrc
+            print("redy", result.values(), '--------', result)
+            # cur_total/ prev_total * 100
+            val=tuple(result.values())
+            val =round(int(val[1]) / int(val[0]) * 100, 1)
+            self.stock_sale_progress.set_value(val)
+
 
     def save_stock(self):
         # supplier table
@@ -982,7 +1007,7 @@ class SplashScreen(QMainWindow):
         # Qtimer
         self.timer = QTimer()
         self.timer.timeout.connect(self.update)
-        self.timer.start(25) # 25
+        self.timer.start(15) # 25
 
         self.show()
 
