@@ -1230,9 +1230,12 @@ class SetupMainWindow:
         )
         self.dash_table.setColumnCount(2)
         self.dash_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.dash_table.setSelectionMode(QAbstractItemView.ExtendedSelection)
+        self.dash_table.setSelectionMode(QAbstractItemView.NoSelection)
+        # self.dash_table.setFocusPolicy(QAbstractItemView.FocusReason)
+
         self.dash_table.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.dash_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+
 
         # Columns / Header
         self.cart_column_1 = QTableWidgetItem()
@@ -1265,7 +1268,7 @@ class SetupMainWindow:
         )
         self.dash_stock_analysis.setColumnCount(2)
         self.dash_stock_analysis.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.dash_stock_analysis.setSelectionMode(QAbstractItemView.ExtendedSelection)
+        self.dash_stock_analysis.setSelectionMode(QAbstractItemView.NoSelection)
         self.dash_stock_analysis.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.dash_stock_analysis.setEditTriggers(QAbstractItemView.NoEditTriggers)
 

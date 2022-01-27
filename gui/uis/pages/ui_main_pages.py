@@ -484,7 +484,7 @@ class Ui_MainPages(object):
         self.frame_90.setFrameShadow(QFrame.Raised)
         self.daily_sale_avg_frame = QVBoxLayout(self.frame_90)
         self.daily_sale_avg_frame.setObjectName(u"daily_sale_avg_frame")
-        self.daily_sale_avg_frame.setContentsMargins(20, 10, 20, 10)
+        self.daily_sale_avg_frame.setContentsMargins(20, 15, 20, 10)
 
         self.verticalLayout_38.addWidget(self.frame_90)
 
@@ -666,7 +666,7 @@ class Ui_MainPages(object):
         self.scrollArea.setWidgetResizable(True)
         self.contents = QWidget()
         self.contents.setObjectName(u"contents")
-        self.contents.setGeometry(QRect(0, 0, 934, 608))
+        self.contents.setGeometry(QRect(0, 0, 1188, 765))
         self.verticalLayout_4 = QVBoxLayout(self.contents)
         self.verticalLayout_4.setSpacing(0)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
@@ -2352,7 +2352,7 @@ class Ui_MainPages(object):
 
         self.retranslateUi(MainPages)
 
-        self.pages.setCurrentIndex(1)
+        self.pages.setCurrentIndex(2)
         self.stock_parent_tab.setCurrentIndex(0)
 
 
@@ -2398,8 +2398,8 @@ class Ui_MainPages(object):
         self.label_17.setText(QCoreApplication.translate("MainPages", u".....................................", None))
         self.cost_group.setTitle(QCoreApplication.translate("MainPages", u"Cost", None))
         self.label_9.setText(QCoreApplication.translate("MainPages", u"Price :", None))
-        self.label_10.setText(QCoreApplication.translate("MainPages", u"discount :", None))
-        self.label_12.setText(QCoreApplication.translate("MainPages", u"paymant :", None))
+        self.label_10.setText(QCoreApplication.translate("MainPages", u"Quantity :", None))
+        self.label_12.setText(QCoreApplication.translate("MainPages", u"Payment :", None))
         self.label_6.setText(QCoreApplication.translate("MainPages", u"Total price:", None))
         self.label_46.setText(QCoreApplication.translate("MainPages", u"Trans code :", None))
         self.label_11.setText(QCoreApplication.translate("MainPages", u"Total items:", None))

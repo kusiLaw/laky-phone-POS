@@ -174,7 +174,6 @@ class MainWindow(QMainWindow):
         else:
             self.ui.load_pages.login_form_info.setText('Wrong username or password')
 
-
     def logout(self):
         # load the login form
         MainFunctions.set_page(self, self.ui.load_pages.home_page)
@@ -206,6 +205,119 @@ class MainWindow(QMainWindow):
             self.logout()
         else:
             QMessageBox.information(None, "Reset Password", "Wrong password")
+
+    def add_to_cart(self):
+        if not self.phone_sn.currentText() == '' and not self.phone_price == '':
+            #Todo: self.cost_price must multiply the qty and compare to sum of price
+            if not Decimal(self.phone_price.text()) < Decimal(self.cost_price) :# to compare before save at model feed
+                # print('not lesser')
+                user.add_to_cart(ph_type=str(self.phone_type.currentText()), ph_model=str(self.phone_model.currentText()),
+                                 sn=str(self.phone_sn.currentText()), price=Decimal(self.phone_price.text()),cp=Decimal(self.cost_price))
+
+
+                sp = Decimal(0)  # to sum the tatol saling perice in the cart(dict)
+                store_cp=Decimal(0)   # to sum the tatol cost perice in the cart(dict) , to show on interface
+
+                #sum the total price in the dict
+                for _, item in user.caches_retail.items():
+                    sp += item['price']
+                    store_cp +=item['cost_price']
+
+                self.phone_total_price.setText(str(sp))
+                self.total_item.setText(str(len(user.caches_retail.keys())))
+
+
+                self.load_phone_cart()
+                self.select_table_row(self.phone_cart)
+            else:
+                QMessageBox.information(self, "Invalid Saling Price",
+                                        f"Saling price can not be lesser than Price of {self.cost_price} \n Thank you")
+
+            return
+        QMessageBox.information(None, "Received Key Release EVent",
+                                f"Nothing to add to cart, make sure sn is not empty \n Thank you")
+
+    def buy_phone(self):
+        print(user.caches_retail)
+        try:
+
+            user.buyphone('retail', customer_name = self.customerName.text() or 'Customer', customer_number=self.contactName.text() or '+233')
+        except (ValueError, InvalidSalesPrice, OutOfStockException,Invalid_Item_Purchase) as ex:
+            print(ex)
+        # except:print('save unknown error')
+        else:
+            #successfull save,  patch the cache with trans code, set to form
+            self.phone_order_id.setText(user.caches_retail.get('transcode' , ''))
+
+    def save_stock(self):
+        # supplier table
+        # if none given used unknown and interface should be '' for both
+        # if number only given used number and name as 'suplier'
+        # if name only given unmber  +233 and interface should be ''
+
+        try:
+            # descriptor take care of it assignment
+            self.name = self.remove_white_spaces(self.stock_type.currentText())
+            self.model = self.remove_white_spaces(self.stock_model.currentText()).upper()
+            self.number =self.remove_white_spaces(self.stock_suplier_contact.text(), space='') or "+233"
+            self.qty = int(self.stock_qantity.text().strip()) or 0
+
+
+            if self.number == "+233" : #num not given
+                self.suplier =  "unknown"
+                print('number not given' , self.name, self.number)
+            else:
+                #num given, so suplier name or name "suplier" is used
+                self.suplier = self.remove_white_spaces(self.stock_suplier.currentText()) or "Suplier"
+                print('number given', self.name, self.number)
+
+
+            try:
+                self.cp = Decimal(self.stock_cp.text().strip())
+                self.sp = Decimal(self.stock_sp.text().strip())
+            except:
+                raise ValueError("invalid value for cp/unit or sp/unit")
+
+
+            self.order_id = self.remove_white_spaces(self.stock_prod_code.currentText(), space='') or "n/a"
+            self.tax = int(self.stock_tax.text().strip()) or 0
+
+            #todo: delete this
+            self.stock_sn_list.clear()
+            # for sn in ['t-32344523i2e', 't-32344523i2i', 't-32344523i2a', 't-32344523i2f']:
+            #     self.stock_sn_list.insertItem(0, sn)
+
+            sn_list = [self.stock_sn_list.item(x).text() for x in range(self.stock_sn_list.count())]
+
+            print("exceptions pass")
+
+        except (ValueError )as ex:
+            QMessageBox.information(self, "Received Key Release EVent",
+                                    str(ex))
+        else:
+
+
+
+            print(self.name, self.model,
+                  self.number,self.suplier,
+                  self.cp,self.sp, self.stock_datetime.text(),
+                  self.qty,self.order_id,self.tax,sn_list,
+                  self.stock_datetime.text().split("-"),
+                  self.stock_datetime.toPydate()
+                  )
+                #sn
+
+
+            user.savestock(user_id=user.id, name=self.name, model=self.model, cp=self.cp,
+                           sp= self.sp ,qty=self.qty,
+                           dat=self.stock_datetime.toPydate(),
+                           tax= self.tax, suplier = self.suplier,suplier_number=self.number,
+                           prod_code= self.order_id,
+                           code_list=sn_list)
+
+
+            self.load_stock_tables()
+            self.select_table_row(self.stock_table, flag='stock')
 
     def find_name(self, line_edit , table, col_to_sch, flag= 'stock'):
         # self.stock_search
@@ -304,38 +416,6 @@ class MainWindow(QMainWindow):
 
         elif obj.text() == "Remove from Cart":
             print('save was pressde')
-
-
-    def add_to_cart(self):
-        if not self.phone_sn.currentText() == '' and not self.phone_price == '':
-
-            if not Decimal(self.phone_price.text()) < Decimal(self.cost_price) :# to compare before save at model feed
-                print('not lesser')
-                user.add_to_cart(ph_type=str(self.phone_type.currentText()), ph_model=str(self.phone_model.currentText()),
-                                 sn=str(self.phone_sn.currentText()), price=Decimal(self.phone_price.text()),cp=Decimal(self.cost_price))
-
-
-                sp = Decimal(0)  # to sum the tatol saling perice in the cart(dict)
-                store_cp=Decimal(0)   # to sum the tatol cost perice in the cart(dict)
-
-                #sum the total price in the dict
-                for _, item in user.caches_retail.items():
-                    sp += item['price']
-                    store_cp +=item['cost_price']
-
-                self.phone_total_price.setText(str(sp))
-                self.total_item.setText(str(len(user.caches_retail.keys())))
-
-
-                self.load_phone_cart()
-                self.select_table_row(self.phone_cart)
-            else:
-                QMessageBox.information(self, "Invalid Saling Price",
-                                        f"Saling price can not be lesser than Price of {self.cost_price} \n Thank you")
-
-            return
-        QMessageBox.information(None, "Received Key Release EVent",
-                                f"Nothing to add to cart, make sure sn is not empty \n Thank you")
 
     def clearforms(self, flag = "stock"):
         if flag == 'stock':
@@ -465,89 +545,6 @@ class MainWindow(QMainWindow):
             val=tuple(result.values())
             val =round(int(val[1]) / int(val[0]) * 100, 1)
             self.stock_sale_progress.set_value(val)
-
-
-    def save_stock(self):
-        # supplier table
-        # if none given used unknown and interface should be '' for both
-        # if number only given used number and name as 'suplier'
-        # if name only given unmber  +233 and interface should be ''
-
-        try:
-            # descriptor take care of it assignment
-            self.name = self.remove_white_spaces(self.stock_type.currentText())
-            self.model = self.remove_white_spaces(self.stock_model.currentText()).upper()
-            self.number =self.remove_white_spaces(self.stock_suplier_contact.text(), space='') or "+233"
-            self.qty = int(self.stock_qantity.text().strip()) or 0
-
-
-            if self.number == "+233" : #num not given
-                self.suplier =  "unknown"
-                print('number not given' , self.name, self.number)
-            else:
-                #num given, so suplier name or name "suplier" is used
-                self.suplier = self.remove_white_spaces(self.stock_suplier.currentText()) or "Suplier"
-                print('number given', self.name, self.number)
-
-
-            try:
-                self.cp = Decimal(self.stock_cp.text().strip())
-                self.sp = Decimal(self.stock_sp.text().strip())
-            except:
-                raise ValueError("invalid value for cp/unit or sp/unit")
-
-
-            self.order_id = self.remove_white_spaces(self.stock_prod_code.currentText(), space='') or "n/a"
-            self.tax = int(self.stock_tax.text().strip()) or 0
-
-            #todo: delete this
-            self.stock_sn_list.clear()
-            # for sn in ['t-32344523i2e', 't-32344523i2i', 't-32344523i2a', 't-32344523i2f']:
-            #     self.stock_sn_list.insertItem(0, sn)
-
-            sn_list = [self.stock_sn_list.item(x).text() for x in range(self.stock_sn_list.count())]
-
-            print("exceptions pass")
-
-        except (ValueError )as ex:
-            QMessageBox.information(self, "Received Key Release EVent",
-                                    str(ex))
-        else:
-
-
-
-            print(self.name, self.model,
-                  self.number,self.suplier,
-                  self.cp,self.sp, self.stock_datetime.text(),
-                  self.qty,self.order_id,self.tax,sn_list,
-                  self.stock_datetime.text().split("-"),
-                  self.stock_datetime.toPydate()
-                  )
-                #sn
-
-
-            user.savestock(user_id=user.id, name=self.name, model=self.model, cp=self.cp,
-                           sp= self.sp ,qty=self.qty,
-                           dat=self.stock_datetime.toPydate(),
-                           tax= self.tax, suplier = self.suplier,suplier_number=self.number,
-                           prod_code= self.order_id,
-                           code_list=sn_list)
-
-
-            self.load_stock_tables()
-            self.select_table_row(self.stock_table, flag='stock')
-
-    def buy_phone(self):
-        print(user.caches_retail)
-        try:
-
-            user.buyphone('retail', customer_name = self.customerName.text() or 'Customer', customer_number=self.contactName.text() or '+233')
-        except (ValueError, InvalidSalesPrice, OutOfStockException,Invalid_Item_Purchase) as ex:
-            print(ex)
-        # except:print('save unknown error')
-        else:
-            #successfull save,  patch the cache with trans code, set to form
-            self.phone_order_id.setText(user.caches_retail.get('transcode' , ''))
 
     def decimal_Input(self, val):
         return f"{Decimal(str(val)):.2f}"

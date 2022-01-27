@@ -475,13 +475,13 @@ class Phone:
         # caches_retail = {}
         self.con = My_db()
 
-    def add_to_cart(self,  ph_type, ph_model,  sn, price,
+    def add_to_cart(self,  ph_type, ph_model,  sn, price, quantity = 1,
                     cust_name="unknown", cust_num="unknown",
                     payment="Cash", tax=0, cp = 0, discount=0):
         # self.user_id = user_id
         self.ph_type = ph_type
         self.ph_model = ph_model
-        # self.ime = ime
+        self.quantity = quantity
         self.sn = sn
         self.price = price
         self.discount = discount
@@ -492,6 +492,7 @@ class Phone:
             "ph_model": self.ph_model,
             "cost_price": cp,
             "sn": self.sn,
+            "quantity": self.quantity,
             "price": self.price,
             # "discount" : self.discount
         }
