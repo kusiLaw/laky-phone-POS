@@ -19,6 +19,7 @@ class Ui_RightColumn(object):
             RightColumn.setObjectName(u"RightColumn")
         RightColumn.resize(261, 764)
         RightColumn.setMaximumSize(QSize(269, 16777215))
+        RightColumn.setStyleSheet(u"font-family:\"Segoe UI\"")
         self.main_pages_layout = QVBoxLayout(RightColumn)
         self.main_pages_layout.setSpacing(0)
         self.main_pages_layout.setObjectName(u"main_pages_layout")
@@ -28,6 +29,7 @@ class Ui_RightColumn(object):
         self.menus.setStyleSheet(u"font: 14pt \"Microsoft Sans Serif\";")
         self.setting_page = QWidget()
         self.setting_page.setObjectName(u"setting_page")
+        self.setting_page.setStyleSheet(u"background: #2c313c")
         self.verticalLayout = QVBoxLayout(self.setting_page)
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
@@ -46,35 +48,103 @@ class Ui_RightColumn(object):
         self.frameContent.setObjectName(u"frameContent")
         self.frameContent.setFrameShape(QFrame.StyledPanel)
         self.frameContent.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_13 = QVBoxLayout(self.frameContent)
-        self.verticalLayout_13.setObjectName(u"verticalLayout_13")
+        self.verticalLayout_6 = QVBoxLayout(self.frameContent)
+        self.verticalLayout_6.setObjectName(u"verticalLayout_6")
+        self.sale_op_mod = QFrame(self.frameContent)
+        self.sale_op_mod.setObjectName(u"sale_op_mod")
+        self.sale_op_mod.setMaximumSize(QSize(16777215, 80))
+        self.sale_op_mod.setFrameShape(QFrame.NoFrame)
+        self.sale_op_mod.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_3 = QVBoxLayout(self.sale_op_mod)
+        self.verticalLayout_3.setSpacing(0)
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.frame_3 = QFrame(self.sale_op_mod)
+        self.frame_3.setObjectName(u"frame_3")
+        self.frame_3.setFrameShape(QFrame.NoFrame)
+        self.frame_3.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_7 = QVBoxLayout(self.frame_3)
+        self.verticalLayout_7.setSpacing(0)
+        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
+        self.verticalLayout_7.setContentsMargins(0, 0, 0, 0)
+        self.label = QLabel(self.frame_3)
+        self.label.setObjectName(u"label")
+        self.label.setAlignment(Qt.AlignCenter)
+        self.label.setWordWrap(True)
+
+        self.verticalLayout_7.addWidget(self.label)
+
+
+        self.verticalLayout_3.addWidget(self.frame_3)
+
+        self.frame_13 = QFrame(self.sale_op_mod)
+        self.frame_13.setObjectName(u"frame_13")
+        self.frame_13.setFrameShape(QFrame.NoFrame)
+        self.frame_13.setFrameShadow(QFrame.Raised)
+        self.sale_op_mod_frame = QVBoxLayout(self.frame_13)
+        self.sale_op_mod_frame.setSpacing(0)
+        self.sale_op_mod_frame.setObjectName(u"sale_op_mod_frame")
+        self.sale_op_mod_frame.setContentsMargins(0, 0, 0, 0)
+
+        self.verticalLayout_3.addWidget(self.frame_13)
+
+
+        self.verticalLayout_6.addWidget(self.sale_op_mod)
+
+        self.frame_2 = QFrame(self.frameContent)
+        self.frame_2.setObjectName(u"frame_2")
+        self.frame_2.setMinimumSize(QSize(0, 20))
+        self.frame_2.setMaximumSize(QSize(16777212, 40))
+        self.frame_2.setFrameShape(QFrame.NoFrame)
+        self.frame_2.setFrameShadow(QFrame.Raised)
+        self.horizontalLayout_4 = QHBoxLayout(self.frame_2)
+        self.horizontalLayout_4.setSpacing(0)
+        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
+        self.horizontalLayout_4.setContentsMargins(0, 0, 0, 0)
+        self.frame_14 = QFrame(self.frame_2)
+        self.frame_14.setObjectName(u"frame_14")
+        self.frame_14.setFrameShape(QFrame.StyledPanel)
+        self.frame_14.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_10 = QVBoxLayout(self.frame_14)
+        self.verticalLayout_10.setObjectName(u"verticalLayout_10")
+        self.label_2 = QLabel(self.frame_14)
+        self.label_2.setObjectName(u"label_2")
+        self.label_2.setScaledContents(True)
+        self.label_2.setAlignment(Qt.AlignCenter)
+        self.label_2.setWordWrap(True)
+
+        self.verticalLayout_10.addWidget(self.label_2)
+
+
+        self.horizontalLayout_4.addWidget(self.frame_14)
+
+        self.frame_15 = QFrame(self.frame_2)
+        self.frame_15.setObjectName(u"frame_15")
+        self.frame_15.setFrameShape(QFrame.NoFrame)
+        self.frame_15.setFrameShadow(QFrame.Raised)
+        self.qr_auto_save_frame = QVBoxLayout(self.frame_15)
+        self.qr_auto_save_frame.setSpacing(0)
+        self.qr_auto_save_frame.setObjectName(u"qr_auto_save_frame")
+        self.qr_auto_save_frame.setContentsMargins(0, 0, 0, 0)
+
+        self.horizontalLayout_4.addWidget(self.frame_15)
+
+
+        self.verticalLayout_6.addWidget(self.frame_2)
+
         self.pic_frame_2 = QFrame(self.frameContent)
         self.pic_frame_2.setObjectName(u"pic_frame_2")
         self.pic_frame_2.setMinimumSize(QSize(0, 100))
-        self.pic_frame_2.setMaximumSize(QSize(249, 180))
-        self.pic_frame_2.setStyleSheet(u"background: green")
+        self.pic_frame_2.setMaximumSize(QSize(249, 16777215))
+        self.pic_frame_2.setStyleSheet(u"")
         self.pic_frame_2.setFrameShape(QFrame.NoFrame)
         self.pic_frame_2.setFrameShadow(QFrame.Raised)
         self.verticalLayout_9 = QVBoxLayout(self.pic_frame_2)
         self.verticalLayout_9.setSpacing(0)
         self.verticalLayout_9.setObjectName(u"verticalLayout_9")
         self.verticalLayout_9.setContentsMargins(0, 15, 0, 0)
-        self.pic_frame_inner_2 = QFrame(self.pic_frame_2)
-        self.pic_frame_inner_2.setObjectName(u"pic_frame_inner_2")
-        self.pic_frame_inner_2.setMaximumSize(QSize(238, 180))
-        self.pic_frame_inner_2.setLayoutDirection(Qt.LeftToRight)
-        self.pic_frame_inner_2.setAutoFillBackground(False)
-        self.pic_frame_inner_2.setFrameShape(QFrame.NoFrame)
-        self.pic_frame_inner_2.setFrameShadow(QFrame.Raised)
-        self.pro_pic_frame_2 = QVBoxLayout(self.pic_frame_inner_2)
-        self.pro_pic_frame_2.setSpacing(0)
-        self.pro_pic_frame_2.setObjectName(u"pro_pic_frame_2")
-        self.pro_pic_frame_2.setContentsMargins(0, 0, 0, 0)
 
-        self.verticalLayout_9.addWidget(self.pic_frame_inner_2)
-
-
-        self.verticalLayout_13.addWidget(self.pic_frame_2)
+        self.verticalLayout_6.addWidget(self.pic_frame_2)
 
 
         self.horizontalLayout.addWidget(self.frameContent)
@@ -264,7 +334,7 @@ class Ui_RightColumn(object):
 
         self.retranslateUi(RightColumn)
 
-        self.menus.setCurrentIndex(1)
+        self.menus.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(RightColumn)
@@ -272,6 +342,8 @@ class Ui_RightColumn(object):
 
     def retranslateUi(self, RightColumn):
         RightColumn.setWindowTitle(QCoreApplication.translate("RightColumn", u"Form", None))
+        self.label.setText(QCoreApplication.translate("RightColumn", u"Sales Operation Mode", None))
+        self.label_2.setText(QCoreApplication.translate("RightColumn", u"BAR Auto Save", None))
         self.groupBox.setTitle(QCoreApplication.translate("RightColumn", u"Reset password", None))
         self.label_7.setText(QCoreApplication.translate("RightColumn", u"Password:", None))
         self.label_8.setText(QCoreApplication.translate("RightColumn", u"New password:", None))

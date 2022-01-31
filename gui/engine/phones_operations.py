@@ -475,66 +475,71 @@ class Phone:
         # caches_retail = {}
         self.con = My_db()
 
-    def add_to_cart(self,  ph_type, ph_model,  sn, price, quantity = 1,
-                    cust_name="unknown", cust_num="unknown",
-                    payment="Cash", tax=0, cp = 0, discount=0):
+    def add_to_cart(self,  ph_type, ph_model,  sn, price, quantity = 1,  cp = 0, use_retails = False ):
         # self.user_id = user_id
         self.ph_type = ph_type
         self.ph_model = ph_model
-        self.quantity = quantity
+        self.quantity = int(quantity)
         self.sn = sn
         self.price = price
-        self.discount = discount
 
-        self.caches_retail[self.sn] = {
-            # "user_id": self.user_id,
-            "ph_type": self.ph_type,
-            "ph_model": self.ph_model,
-            "cost_price": cp,
-            "sn": self.sn,
-            "quantity": self.quantity,
-            "price": self.price,
-            # "discount" : self.discount
-        }
-        # print(vars(self))
-        # self.caches[self.ime]=(vars(self))
+        print("inner operation retials = ",use_retails )
 
-    def add_to_cart_whole(self, ph_type, ph_model, sn, quantity, price):
-        # self.user_id = user_idu.add_to_cart('samsung', 'P300', '123564789','sn-123',210.05)
-        self.ph_type = ph_type
-        self.ph_model = ph_model
-        self.sn = sn
-        self.price = price
-        self.quantity = quantity
+        if  use_retails :
+            # same phone is seen as individual items
+            self.caches_retail[self.sn] = {
 
-        self.caches_whole[self.ph_model] = {
-            # "user_id": self.user_id,
-            "ph_type": self.ph_type,
-            "ph_model": self.ph_model,
-            "ime": self.ime,
-            "sn": self.sn,
-            "quantity": self.quantity,
-            "price": self.price,
-            "total": self.quantity * price
+                "ph_type": self.ph_type,
+                "ph_model": self.ph_model,
+                "cost_price": cp,
+                "sn": self.sn,
+                "quantity": self.quantity,  #is always 1 but security let stills multiply
+                "price": Decimal( round(float(self.price) * self.quantity,2) )
 
-        }
+            }
 
-    def buyphone(self, cache_to_use, customer_name = None, customer_number= '+233' ):
-
-        if not (cache_to_use == "retail" or  cache_to_use == "wholesale"):
-            print('specified caches not implemented' )
             return
-        if cache_to_use == 'retail' and not len(self.caches_retail):
-            print("Nothing in retail cart to buy")
-            return
-        if cache_to_use == 'wholesale' and not len(self.caches_whole) :
-            print("Nothing in wholesale cart to buy")
-            return
+
+        # whole sales sn rules violated same phone is seen as one
+
+        if not self.ph_model in self.caches_retail : #n key not in
+            #does not contain cache, key not in
+            #print("cache  called", self.caches_retail, self.ph_model in self.caches_retail )
+            self.caches_retail[self.ph_model] = {
+
+                "ph_type": self.ph_type,
+                "ph_model": self.ph_model,
+                "cost_price": cp, #privately hold to compare with price when bougth
+                "sn": self.sn,
+                "quantity": self.quantity ,
+                "sp_per_unit" :self.price,
+                "price": Decimal( round(float(self.price) * self.quantity,2) )
+
+            }
+        else:
+            #update
+            print("cache update called", self.caches_retail, self.ph_model in self.caches_retail)
+            self.caches_retail[self.ph_model]["ph_type"] = self.ph_type
+            self.caches_retail[self.ph_model]["ph_model"] = self.ph_model
+            self.caches_retail[self.ph_model]["cost_price"] = cp
+            self.caches_retail[self.ph_model]["sn"] = self.sn # overwrite sn
+            self.caches_retail[self.ph_model]["sp_per_unit"] = self.price
+            self.caches_retail[self.ph_model]["quantity"] = self.caches_retail[self.ph_model]["quantity"] + self.quantity
+            self.caches_retail[self.ph_model]["price"]= Decimal(
+                round(float(self.caches_retail[self.ph_model]["sp_per_unit"] ) * self.caches_retail[self.ph_model]["quantity"],2))
+
+
+
+    def buyphone(self, use_retails = True, customer_name = None, customer_number= '+233' ):
+
+        if  not len(self.caches_retail):
+            raise Invalid_Item_Purchase("Nothing in retail cart to buy")
+
 
         self.customer_number =customer_number
         self.customer_name = customer_name
         tran = Transcode()
-        transcode = tran.transact_code()
+
 
         con = self.con.connect()
         cur = con.cursor()
@@ -545,29 +550,26 @@ class Phone:
 
 
             # generate  transaction code first
-            # Todo: generate transcode before code execute
+            #  generate transcode before code execute
+            transcode = tran.transact_code()
 
             cust = "INSERT INTO lakydb.phone_transaction (trans_code,discount )" \
                    "VALUES(%s,%s)"
-            try:
 
+            # Todo read discount from settings
+            self.discount = 0
+            try:
                 # "on duplicate key update customer_name = %(name)s "
                 cur.execute(cust, (transcode, self.discount))
                 trans_lastid = cur.lastrowid
             except  errors.Error as err:
                 if err.errno == errorcode.ER_DUP_ENTRY:
-                    print("sales duplicate key catch")
+                    # regenerate code  in dp
+                    transcode = tran.transact_code()
                     cur.execute(cust, (transcode, self.discount))
                     trans_lastid = cur.lastrowid
                 else:
-                    print(err.msg)
-                    # cust = "SELECT customer_id FROM lakydb.customer where customer_contact = %s "
-                    # cur.execute(cust, (self.customer_number,))
-                    # cust_lastid = cur.fetchone()[0]
-                    #
-                    # cust = "UPDATE lakydb.customer SET customer_name = %s where customer_contact = %s "
-                    # cur.execute(cust, (self.customer_name, self.customer_number)
-
+                    raise LakyException("Transaction Failed")
 
 
             for _, val in self.caches_retail.items():
@@ -582,17 +584,22 @@ class Phone:
                 if result:
                      # if record id not empty, bundled with it column names
                     result = dict(zip(cur.column_names, result))
-                    print(result) #result["quantity"]
+                    # print(result) #result["quantity"]
 
-                    quantity_bought =  1 if cache_to_use == "retail" else val.get('quantity', 1)
+                    # quantity_bought =  1 if cache_to_use == "retail" else val.get('quantity', 1)
 
-                    if not result.get('quantity') - quantity_bought < 0 :
+                    if not int(result.get('quantity')) - int(val['quantity']) < 0 :
                         # stock available process to buy
                         #  check stock price
                         #  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-                        if Decimal(val['price']) >= result.get('cost_price'):
 
-                            result['quantity'] =  result.get('quantity') - quantity_bought # substract 1 from total stock
+                        # Decimal(val['price'])  has ben catered in cart , not to recal
+                        print(Decimal(val['price']) )
+
+                        if Decimal(val['price']) >=  Decimal(round(float( result.get('cost_price')) * int(val['quantity']),2)) :
+
+                            result['quantity'] =  int(result.get('quantity')) - int(val['quantity']) # substract  from total stock
+
                             # update  stock
                             update_quantity = "UPDATE lakydb.stock_prices SET quantity = %s where Stock_stockId = %s"
                             cur.execute(update_quantity, (result['quantity'], result["stockId"],))
@@ -616,7 +623,7 @@ class Phone:
                                     cur.execute(cust, (self.customer_name, self.customer_number))
                             # print(cust_lastid)
                                 else:
-                                    print(err.msg)
+                                    raise LakyException("Unknown error occured, Please check database connection")
 
                             # insert phone sales
                             try:
@@ -635,9 +642,11 @@ class Phone:
                                     sales_lastid = cur.lastrowid
                             except  errors.Error as err:
                                 if err.errno == errorcode.ER_DUP_ENTRY:
-                                    raise Invalid_Item_Purchase(f"Phone with this serial {val['sn']} is already bought")
+                                    raise Invalid_Item_Purchase(f"{val['ph_type']}, {val['ph_model']} with this serial {val['sn']} is already bought")
                                 else:
                                     print(err.msg)
+                                    raise LakyException("Unknown error occured, Please check database connection")
+
 
                             # insert phone price
                             try:
@@ -645,11 +654,12 @@ class Phone:
                                        "VALUES(%s,%s,%s,%s,%s)"
                                 # "on duplicate key update customer_name = %(name)s "
                                 cur.execute(cust,
-                                            (val['price'], result['tax'], datetime.now(), sales_lastid,  quantity_bought))
+                                            (val['price'], result['tax'], datetime.now(), sales_lastid,  val['quantity']))
                                 # sales_lastid = cur.lastrowid
                             except  errors.Error as err:
                                 if err.errno == errorcode.ER_DUP_ENTRY:
                                     print("sales duplicate key catch")
+                                    raise LakyException("Unknown error occured, Please check database connection")
                                 else:
                                     print(err.msg)
 
@@ -657,12 +667,9 @@ class Phone:
                             raise InvalidSalesPrice(f"Saling price can not be lesser than the cost price {result.get('sale_price')}")
 
                     else:
-                        raise OutOfStockException(f"{val['ph_type']}-{val['ph_model']} is out of stock")
+                        raise OutOfStockException(f"{val['ph_type']}-{val['ph_model']} is out of stock \n stock available : {result.get('quantity')} ")
                 else:
                     raise ValueError(f"{val['ph_type']}-{val['ph_model']} not found in stock")
-                # print(self.caches_retail[self.sn]["ph_model"])
-                # for x in cur:
-                #     print(x)
 
         except  errors.Error as err:
             if err.errno == errorcode.ER_DUP_ENTRY:
@@ -672,8 +679,9 @@ class Phone:
 
         except IndexError as e:
             print(e)
-        except (OutOfStockException, InvalidSalesPrice, Invalid_Item_Purchase, ValueError) as ex:
-            print(ex)
+        # except:# (OutOfStockException, InvalidSalesPrice, Invalid_Item_Purchase, ValueError) as ex:
+        #     raise LakyException("Unknown error occured, Please check database connection")
+
 
         else:
             con.commit()
@@ -805,10 +813,10 @@ class Phone:
     def load_sale_phone_table(self):
         con = self.con.connect()
         cur = con.cursor()
-        statement = "SELECT customer.customer_name as 'Customer', customer.customer_contact as 'Customer Contact', " \
+        statement = "SELECT trans_code as 'Transaction Code',  " \
             "sale_phone.phone_type as 'Phone Type', sale_phone.model as 'Phone Model', sale_phone.phone_code as 'Serial Number', " \
-            "phone_prices.sp as 'Price',phone_prices.tax as 'Tax',trans_code as 'Transaction Code',discount as 'Discount', dates as 'Date', " \
-            "users.Lname as 'User' " \
+            "phone_prices.quantity as 'quantity',phone_prices.sp as 'Price',phone_prices.tax as 'Tax', discount as 'Discount', dates as 'Date', " \
+            "customer.customer_name as 'Customer', customer.customer_contact as 'Customer Contact', users.Lname as 'User' " \
             "FROM lakydb.users " \
             "inner join lakydb.sale_phone on users.idUsers = sale_phone.Users_idUsers " \
             "inner join lakydb.phone_prices on sale_phone.Sale_phone_id =  phone_prices.Sale_phone_Sale_phone_id " \
@@ -824,7 +832,7 @@ class Phone:
             return  result
 
         finally:
-            print("closing")
+
             con.close()
 
 
@@ -866,6 +874,30 @@ class Phone:
             return result
         finally:
             con.close()
+
+    def feed_dash_avg(self):
+        con = self.con.connect()
+        cur = con.cursor()
+
+        stat = "SELECT  max( year( date(dates))) as 'yr', sum(quantity) / count( distinct  date(dates))  as 'avg', " \
+           " (SELECT sum( quantity ) from  lakydb.phone_prices where  date(phone_prices.dates) =   date(now())) as 'today', " \
+           " (SELECT sum(sp) from lakydb.phone_prices where date(phone_prices.dates) = date(now())) as 'today sales' ," \
+                "sum(sp) / count(distinct date(dates))  as 'avg money' " \
+        " FROM lakydb.phone_prices where	year( date(phone_prices.dates)) >=   year( date(now())) ;"
+
+        try:
+
+            cur.execute(stat, tuple())
+            result = cur.fetchone()
+            if result:
+             result = dict(zip(cur.column_names, result))
+        except:
+            pass
+        else:
+            return result
+        finally:
+            con.close()
+
 
 
 

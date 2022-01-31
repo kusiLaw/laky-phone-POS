@@ -339,6 +339,32 @@ class SetupMainWindow:
         self.ui.right_column.confirm_password_frame.addWidget(self.comfirm_pass)
 
 
+
+        #settings
+        self.sale_opperation_mode = PyComBox(
+
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            radius=8,
+            bg_color_hover=self.themes["app_color"]["context_color"],
+            items=[ "Retial", "Retail (Strict)", "Wholesale"],
+            editable=False
+
+        )
+
+        self.ui.right_column.sale_op_mod_frame.addWidget(self.sale_opperation_mode)
+
+        self.qr_auto_save_toggle = PyToggle(
+            # width=70,
+            bg_color=self.themes["app_color"]["dark_one"],
+            circle_color=self.themes["app_color"]["icon_color"],
+            active_color=self.themes["app_color"]["context_color"],
+            animation_curve=QEasingCurve.OutCirc
+
+        )
+        self.ui.right_column.qr_auto_save_frame.addWidget(self.qr_auto_save_toggle)
+
+
 #///////////////////////////////////////////////////////////////////////////////////////////////////
         # MAIN PAGE SECTION
 #///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -533,16 +559,16 @@ class SetupMainWindow:
         self.ui.load_pages.phone_price_edit.addWidget(self.phone_price)
 
 
-        self.phone_discount = PyLineEdit(
+        self.quantity = PyLineEdit(
             context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
             bg_color=self.themes["app_color"]["bg_three"],
-            maxlen = 2,
-            read_only=True,
+            # maxlen = 2 ,
+            # read_only=True,
             validator = QIntValidator()
         )
 
-        self.ui.load_pages.phone_discount_edit.addWidget(self.phone_discount)
+        self.ui.load_pages.phone_discount_edit.addWidget(self.quantity)
 
 
         self.phone_total_price = PyLineEdit(
@@ -730,7 +756,7 @@ class SetupMainWindow:
             scroll_bar_btn_color = self.themes["app_color"]["dark_four"],
             context_color = self.themes["app_color"]["context_color"]
         )
-        self.table_widget.setColumnCount(11)
+        self.table_widget.setColumnCount(12)
         self.table_widget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
 
@@ -742,23 +768,23 @@ class SetupMainWindow:
         # Columns / Header
         self.column_1 = QTableWidgetItem()
         self.column_1.setTextAlignment(Qt.AlignCenter)
-        self.column_1.setText("Customer")
+        self.column_1.setText("Trans Code")
 
         self.column_2 = QTableWidgetItem()
         self.column_2.setTextAlignment(Qt.AlignCenter)
-        self.column_2.setText("Contact")
+        self.column_2.setText("Type")
 
         self.column_3 = QTableWidgetItem()
         self.column_3.setTextAlignment(Qt.AlignCenter)
-        self.column_3.setText("Type")
+        self.column_3.setText("Model")
 
         self.column_4 = QTableWidgetItem()
         self.column_4.setTextAlignment(Qt.AlignCenter)
-        self.column_4.setText("Model")
+        self.column_4.setText("SN")
 
         self.column_5 = QTableWidgetItem()
         self.column_5.setTextAlignment(Qt.AlignCenter)
-        self.column_5.setText("SN")
+        self.column_5.setText("Qty")
 
         self.column_6 = QTableWidgetItem()
         self.column_6.setTextAlignment(Qt.AlignCenter)
@@ -770,20 +796,23 @@ class SetupMainWindow:
 
         self.column_8 = QTableWidgetItem()
         self.column_8.setTextAlignment(Qt.AlignCenter)
-        self.column_8.setText("Trans Code")
+        self.column_8.setText("Discount")
 
         self.column_9 = QTableWidgetItem()
         self.column_9.setTextAlignment(Qt.AlignCenter)
-        self.column_9.setText("Discount")
+        self.column_9.setText("Date")
 
         self.column_10 = QTableWidgetItem()
         self.column_10.setTextAlignment(Qt.AlignCenter)
-        self.column_10.setText("Date")
+        self.column_10.setText("Customer")
 
         self.column_11 = QTableWidgetItem()
         self.column_11.setTextAlignment(Qt.AlignCenter)
-        self.column_11.setText("User")
+        self.column_11.setText("Contact")
 
+        self.column_12 = QTableWidgetItem()
+        self.column_12.setTextAlignment(Qt.AlignCenter)
+        self.column_12.setText("User")
 
 
         # Set column
@@ -798,6 +827,7 @@ class SetupMainWindow:
         self.table_widget.setHorizontalHeaderItem(8, self.column_9)
         self.table_widget.setHorizontalHeaderItem(9, self.column_10)
         self.table_widget.setHorizontalHeaderItem(10, self.column_11)
+        self.table_widget.setHorizontalHeaderItem(11, self.column_12)
 
         self.ui.load_pages.phone_table.addWidget(self.table_widget)
 
@@ -817,7 +847,7 @@ class SetupMainWindow:
             scroll_bar_btn_color = self.themes["app_color"]["dark_four"],
             context_color = self.themes["app_color"]["context_color"]
         )
-        self.phone_cart.setColumnCount(4)
+        self.phone_cart.setColumnCount(5)
         self.phone_cart.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.phone_cart.setSelectionMode(QAbstractItemView.ExtendedSelection)
         self.phone_cart.setSelectionBehavior(QAbstractItemView.SelectRows)
@@ -837,9 +867,9 @@ class SetupMainWindow:
         self.cart_column_3.setTextAlignment(Qt.AlignCenter)
         self.cart_column_3.setText("S/N")
 
-        # self.cart_column_4 = QTableWidgetItem()
-        # self.cart_column_4.setTextAlignment(Qt.AlignCenter)
-        # self.cart_column_4.setText("Imei")
+        self.cart_column_4 = QTableWidgetItem()
+        self.cart_column_4.setTextAlignment(Qt.AlignCenter)
+        self.cart_column_4.setText("Qty")
 
         self.cart_column_5 = QTableWidgetItem()
         self.cart_column_5.setTextAlignment(Qt.AlignCenter)
@@ -849,8 +879,8 @@ class SetupMainWindow:
         self.phone_cart.setHorizontalHeaderItem(0, self.cart_column_1)
         self.phone_cart.setHorizontalHeaderItem(1, self.cart_column_2)
         self.phone_cart.setHorizontalHeaderItem(2, self.cart_column_3)
-        # self.phone_cart.setHorizontalHeaderItem(3, self.cart_column_4)
-        self.phone_cart.setHorizontalHeaderItem(3, self.cart_column_5)
+        self.phone_cart.setHorizontalHeaderItem(3, self.cart_column_4)
+        self.phone_cart.setHorizontalHeaderItem(4, self.cart_column_5)
 
         self.ui.load_pages.phone_cart_layout.addWidget(self.phone_cart)
 
@@ -1253,6 +1283,42 @@ class SetupMainWindow:
 
         self.ui.load_pages.dash_purchase_frame.addWidget(self.dash_table)
 
+        self.dash_avg_analysis = PyTableWidget(
+            radius=8,
+            color=self.themes["app_color"]["text_foreground"],
+            selection_color=self.themes["app_color"]["dark_two"],
+            bg_color=self.themes["app_color"]["dark_two"],
+            header_horizontal_color=self.themes["app_color"]["dark_two"],
+            header_vertical_color=self.themes["app_color"]["dark_two"],
+            bottom_line_color=self.themes["app_color"]["dark_two"],
+            grid_line_color=self.themes["app_color"]["dark_two"],
+            scroll_bar_bg_color=self.themes["app_color"]["dark_two"],
+            scroll_bar_btn_color=self.themes["app_color"]["dark_two"],
+            context_color=self.themes["app_color"]["dark_two"]
+        )
+        self.dash_avg_analysis.setColumnCount(2)
+        self.dash_avg_analysis.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.dash_avg_analysis.setSelectionMode(QAbstractItemView.NoSelection)
+        self.dash_avg_analysis.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.dash_avg_analysis.setEditTriggers(QAbstractItemView.NoEditTriggers)
+
+        # Columns / Header
+        self.cart_column_1 = QTableWidgetItem()
+        self.cart_column_1.setTextAlignment(Qt.AlignCenter)
+        self.cart_column_1.setText("Date")
+
+        self.cart_column_2 = QTableWidgetItem()
+        self.cart_column_2.setTextAlignment(Qt.AlignCenter)
+        self.cart_column_2.setText("Average")
+
+        # Set column
+        self.dash_avg_analysis.setHorizontalHeaderItem(0, self.cart_column_1)
+        self.dash_avg_analysis.setHorizontalHeaderItem(1, self.cart_column_2)
+
+        self.ui.load_pages.dash_avg_frame.addWidget(self.dash_avg_analysis)
+
+
+
         self.dash_stock_analysis = PyTableWidget(
             radius=8,
             color=self.themes["app_color"]["text_foreground"],
@@ -1286,6 +1352,11 @@ class SetupMainWindow:
         self.dash_stock_analysis.setHorizontalHeaderItem(1, self.cart_column_2)
 
         self.ui.load_pages.stock_analysis_frame.addWidget(self.dash_stock_analysis)
+
+
+
+
+
 
     # ///////////////////////////////////////////////////////////////
         # END - EXAMPLE CUSTOM WIDGETS

@@ -499,31 +499,6 @@ class Ui_MainPages(object):
         self.gridLayout_13 = QGridLayout(self.frame_91)
         self.gridLayout_13.setObjectName(u"gridLayout_13")
         self.gridLayout_13.setContentsMargins(10, 10, 10, 0)
-        self.label_76 = QLabel(self.frame_91)
-        self.label_76.setObjectName(u"label_76")
-        self.label_76.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-
-        self.gridLayout_13.addWidget(self.label_76, 1, 0, 1, 1)
-
-        self.label_77 = QLabel(self.frame_91)
-        self.label_77.setObjectName(u"label_77")
-        self.label_77.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-
-        self.gridLayout_13.addWidget(self.label_77, 2, 0, 1, 1)
-
-        self.label_78 = QLabel(self.frame_91)
-        self.label_78.setObjectName(u"label_78")
-        self.label_78.setStyleSheet(u"border::5xp solid red;")
-        self.label_78.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout_13.addWidget(self.label_78, 1, 1, 1, 1)
-
-        self.label_79 = QLabel(self.frame_91)
-        self.label_79.setObjectName(u"label_79")
-        self.label_79.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout_13.addWidget(self.label_79, 2, 1, 1, 1)
-
         self.label_71 = QLabel(self.frame_91)
         self.label_71.setObjectName(u"label_71")
         self.label_71.setMaximumSize(QSize(16777215, 40))
@@ -532,6 +507,17 @@ class Ui_MainPages(object):
         self.label_71.setAlignment(Qt.AlignCenter)
 
         self.gridLayout_13.addWidget(self.label_71, 0, 0, 1, 2)
+
+        self.frame_87 = QFrame(self.frame_91)
+        self.frame_87.setObjectName(u"frame_87")
+        self.frame_87.setFrameShape(QFrame.NoFrame)
+        self.frame_87.setFrameShadow(QFrame.Raised)
+        self.dash_avg_frame = QVBoxLayout(self.frame_87)
+        self.dash_avg_frame.setSpacing(0)
+        self.dash_avg_frame.setObjectName(u"dash_avg_frame")
+        self.dash_avg_frame.setContentsMargins(0, 0, 0, 0)
+
+        self.gridLayout_13.addWidget(self.frame_87, 1, 0, 1, 2)
 
 
         self.verticalLayout_38.addWidget(self.frame_91)
@@ -569,17 +555,17 @@ class Ui_MainPages(object):
 
         self.gridLayout_12.addWidget(self.text_collapse1, 1, 1, 1, 1)
 
-        self.label_73 = QLabel(self.frame_83)
-        self.label_73.setObjectName(u"label_73")
-        self.label_73.setStyleSheet(u"color:#00ff7f;\n"
+        self.todays_sales = QLabel(self.frame_83)
+        self.todays_sales.setObjectName(u"todays_sales")
+        self.todays_sales.setStyleSheet(u"color:#00ff7f;\n"
 "font-size: 55px;\n"
 "text-transform: uppercase;\n"
 "font-weight: 800;\n"
 "text-align: center;\n"
 "text-shadow: 0 15px 40px rgba(0,0,0, 0.6)")
-        self.label_73.setAlignment(Qt.AlignCenter)
+        self.todays_sales.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout_12.addWidget(self.label_73, 0, 0, 1, 2)
+        self.gridLayout_12.addWidget(self.todays_sales, 0, 0, 1, 2)
 
 
         self.verticalLayout_36.addWidget(self.frame_83)
@@ -2352,7 +2338,7 @@ class Ui_MainPages(object):
 
         self.retranslateUi(MainPages)
 
-        self.pages.setCurrentIndex(2)
+        self.pages.setCurrentIndex(1)
         self.stock_parent_tab.setCurrentIndex(0)
 
 
@@ -2375,15 +2361,11 @@ class Ui_MainPages(object):
         self.dash_email.setText(QCoreApplication.translate("MainPages", u"unknown", None))
         self.label_64.setText(QCoreApplication.translate("MainPages", u"Last Seen", None))
         self.dash_last_seen.setText(QCoreApplication.translate("MainPages", u"unknown", None))
-        self.label_43.setText(QCoreApplication.translate("MainPages", u"Stock", None))
-        self.label_76.setText(QCoreApplication.translate("MainPages", u"No of Sales", None))
-        self.label_77.setText(QCoreApplication.translate("MainPages", u"Percentage  Diff:", None))
-        self.label_78.setText(QCoreApplication.translate("MainPages", u"35", None))
-        self.label_79.setText(QCoreApplication.translate("MainPages", u"35%", None))
+        self.label_43.setText(QCoreApplication.translate("MainPages", u"Stock Update", None))
         self.label_71.setText(QCoreApplication.translate("MainPages", u"Average Sales", None))
         self.text_collapse2.setText("")
         self.text_collapse1.setText("")
-        self.label_73.setText(QCoreApplication.translate("MainPages", u"\u00a254000", None))
+        self.todays_sales.setText(QCoreApplication.translate("MainPages", u"\u00a20.00", None))
         self.label_68.setText(QCoreApplication.translate("MainPages", u"Highly Purchase items", None))
         self.customer_group.setTitle(QCoreApplication.translate("MainPages", u"Customer | Cart", None))
         self.label_25.setText(QCoreApplication.translate("MainPages", u"Oeder ID:", None))

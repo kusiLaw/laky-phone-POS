@@ -4,14 +4,14 @@
 from gui.uis.windows.main_window.functions_main_window import *
 from gui.uis.splashscreen.splash_screen import *
 from gui.uis.login.login import *
-from gui.engine.my_exceptions import InvalidSalesPrice, OutOfStockException,Invalid_Item_Purchase
+from gui.engine.my_exceptions import InvalidSalesPrice, OutOfStockException,Invalid_Item_Purchase,LakyException
 
 
 import sys
 import os
 from time import perf_counter
 from datetime import datetime
-from decimal import Decimal
+from decimal import Decimal, InvalidOperation
 # IMPORT QT CORE
 # ///////////////////////////////////////////////////////////////
 from qt_core import *
@@ -62,6 +62,13 @@ class MainWindow(QMainWindow):
     tax = IntegerField(_min=0, )
     suplier_cached = {}
 
+    sales_oporation_mapper = {
+        "Retial" : False,
+        "Retail (Strict)" : True  ,
+        "Wholesale" : False
+    }
+
+
     def __init__(self):
         super().__init__()
 
@@ -83,6 +90,8 @@ class MainWindow(QMainWindow):
 
         # print(datetime.now().strftime('%Y/%m/%d %H:%M'))
 
+        self.use_retail_oporation_flag = self.sales_oporation_mapper.get(self.sale_opperation_mode.currentText(), False)
+
         self.showcomponents()
         self.login_btn.clicked.connect(lambda: self.login())
         self.sign_out.clicked.connect(lambda: self.logout())
@@ -90,17 +99,26 @@ class MainWindow(QMainWindow):
         self.user_name.textChanged.connect(lambda: self.ui.load_pages.login_form_info.setText('') )
         self.user_passsword.textChanged.connect(lambda: self.ui.load_pages.login_form_info.setText(''))
 
+        #settings signals
+
+        self.sale_opperation_mode.currentTextChanged.connect(lambda : self.write_settings() )
+
+
+
         # phone signals
-        self.add_to_cart_btn.clicked.connect(lambda: self.add_to_cart())
-        self.remove_from_cart_btn.clicked.connect(lambda: self.dispatch(self.remove_from_cart_btn))
-        self.phone_clear_cart_btn.clicked.connect(lambda: self.dispatch(self.phone_clear_cart_btn))
+        self.add_to_cart_btn.clicked.connect(lambda: self.add_to_cart(use_retail = self.use_retail_oporation_flag )) #use_retail mustread from settins
+
+        self.remove_from_cart_btn.clicked.connect(lambda: self.remove_from_cart(self.phone_cart, use_retail = self.use_retail_oporation_flag))
+        self.phone_cart.itemDoubleClicked.connect(lambda: self.remove_from_cart(self.phone_cart,use_retail = self.use_retail_oporation_flag))
+
+        self.phone_clear_cart_btn.clicked.connect(lambda: self.clear_cart())
         self.phone_buyme_btn.clicked.connect(lambda : self.buy_phone())
         self.phone_print_btn.clicked.connect(lambda: self.dispatch(self.phone_print_btn))
         self.phone_clear_btn.clicked.connect(lambda : self.clearforms(flag='phone'))
         self.table_widget.currentItemChanged.connect(lambda :self.table_row_Change(self.table_widget, flag='phone'))
         # self.phone_cart.itemClicked.connect(lambda :self.remove_from_cart(self.phone_cart))
-        self.phone_cart.itemDoubleClicked.connect(lambda :self.remove_from_cart(self.phone_cart))
-        self.remove_from_cart_btn.clicked.connect(lambda :self.remove_from_cart(self.phone_cart))
+
+
 
         self.phone_type.currentIndexChanged.connect(lambda: self.type_feed_model(self.phone_model,str(self.phone_type.currentText().strip())))
         self.phone_model.currentIndexChanged.connect(lambda:self.model_feed(str(self.phone_model.currentText().strip()), "phone"))
@@ -130,19 +148,18 @@ class MainWindow(QMainWindow):
         # ///////////////////////////////////////////////////////////////
         self.show()
 
-        user.login('laky','11111')
-        MainFunctions.set_page(self, self.ui.load_pages.dasboard)
-        self.showcomponents(True)
-        self.load_high_purchase()
-        self.ui.load_pages.dash_user_name.setText(" ".join([user.fname,user.lname]))
+        # user.login('laky','11111')
+        # MainFunctions.set_page(self, self.ui.load_pages.dasboard)
+        # self.showcomponents(True)
+        # self.load_high_purchase()
+        # self.ui.load_pages.dash_user_name.setText(" ".join([user.fname,user.lname]))
+        #
+        # self.ui.load_pages.dash_role.setText(user.role)
+        # self.ui.load_pages.dash_email.setText(user.email)
+        # self.ui.load_pages.dash_last_seen.setText(str(user.last_seen))
 
-        self.ui.load_pages.dash_role.setText(user.role)
-        self.ui.load_pages.dash_email.setText(user.email)
-        self.ui.load_pages.dash_last_seen.setText(str(user.last_seen))
-
-        self.dash_board_stock_table()
-
-
+        self.user_name.setText('laky')
+        self.user_passsword.setText('11111')
     def login(self):
         if user.login(str(self.user_name.text()), str(self.user_passsword.text())):
             self.showcomponents(True)
@@ -156,6 +173,9 @@ class MainWindow(QMainWindow):
             self.ui.load_pages.dash_email.setText(user.email)
             self.ui.load_pages.dash_last_seen.setText(str(user.last_seen))
             self.load_high_purchase()
+
+            self.dash_board_stock_table()
+            self.dash_board_avg()
 
             MainFunctions.set_page(self, self.ui.load_pages.dasboard)
 
@@ -206,48 +226,21 @@ class MainWindow(QMainWindow):
         else:
             QMessageBox.information(None, "Reset Password", "Wrong password")
 
-    def add_to_cart(self):
-        if not self.phone_sn.currentText() == '' and not self.phone_price == '':
-            #Todo: self.cost_price must multiply the qty and compare to sum of price
-            if not Decimal(self.phone_price.text()) < Decimal(self.cost_price) :# to compare before save at model feed
-                # print('not lesser')
-                user.add_to_cart(ph_type=str(self.phone_type.currentText()), ph_model=str(self.phone_model.currentText()),
-                                 sn=str(self.phone_sn.currentText()), price=Decimal(self.phone_price.text()),cp=Decimal(self.cost_price))
-
-
-                sp = Decimal(0)  # to sum the tatol saling perice in the cart(dict)
-                store_cp=Decimal(0)   # to sum the tatol cost perice in the cart(dict) , to show on interface
-
-                #sum the total price in the dict
-                for _, item in user.caches_retail.items():
-                    sp += item['price']
-                    store_cp +=item['cost_price']
-
-                self.phone_total_price.setText(str(sp))
-                self.total_item.setText(str(len(user.caches_retail.keys())))
-
-
-                self.load_phone_cart()
-                self.select_table_row(self.phone_cart)
-            else:
-                QMessageBox.information(self, "Invalid Saling Price",
-                                        f"Saling price can not be lesser than Price of {self.cost_price} \n Thank you")
-
-            return
-        QMessageBox.information(None, "Received Key Release EVent",
-                                f"Nothing to add to cart, make sure sn is not empty \n Thank you")
-
     def buy_phone(self):
         print(user.caches_retail)
         try:
 
             user.buyphone('retail', customer_name = self.customerName.text() or 'Customer', customer_number=self.contactName.text() or '+233')
-        except (ValueError, InvalidSalesPrice, OutOfStockException,Invalid_Item_Purchase) as ex:
-            print(ex)
+        except (ValueError, InvalidSalesPrice, OutOfStockException,Invalid_Item_Purchase, LakyException) as ex:
+
+            QMessageBox.information(self, "Item", f"{ex}")
         # except:print('save unknown error')
         else:
             #successfull save,  patch the cache with trans code, set to form
+            self.load_sale_tables()
             self.phone_order_id.setText(user.caches_retail.get('transcode' , ''))
+            self.clear_cart()
+            self.select_table_row(self.table_widget)
 
     def save_stock(self):
         # supplier table
@@ -320,7 +313,13 @@ class MainWindow(QMainWindow):
             self.select_table_row(self.stock_table, flag='stock')
 
     def find_name(self, line_edit , table, col_to_sch, flag= 'stock'):
-        # self.stock_search
+        '''
+        :param line_edit: QLineEdit obj
+        :param table:
+        :param col_to_sch:
+        :param flag:
+        :return: none
+        '''
         col = {
 
            "stock": {
@@ -362,17 +361,17 @@ class MainWindow(QMainWindow):
         print(data)
         if data:
             if flag == 'phone':
-                self.customerName.setText(data[0])
-                self.contactName.setText(data[1])
+                self.customerName.setText(data[9])
+                self.contactName.setText(data[10])
 
-                self.phone_type.setCurrentText(data[2])
-                self.phone_model.setCurrentText(data[3])
+                self.phone_type.setCurrentText(data[1])
+                self.phone_model.setCurrentText(data[2])
                 # self.phone_imei.setText(data[1])
 
-                self.phone_sn.setCurrentText(data[4])
+                self.phone_sn.setCurrentText(data[3])
                 self.phone_price.setText(data[5])
-                self.phone_discount.setText(data[6])
-                self.phone_order_id.setText(data[7])
+                self.quantity.setText(data[4])
+                self.phone_order_id.setText(data[0])
                 # self.phone_tax.setText(data[8])
 
 
@@ -387,35 +386,94 @@ class MainWindow(QMainWindow):
                 #load rest of the field
                 self.order_id_feed(self.stock_model.currentText())
 
-    def remove_from_cart(self,table_widget):
+    def add_to_cart(self, use_retail: bool ):
+        if  use_retail and (not self.phone_sn.currentText() or self.phone_sn.currentText().strip()== "")   :
+            QMessageBox.information(self, "Add To Cart",
+                                    f'If "Retails (Strict)" is selected, SN number must not be empty. '
+                                    f'Please change "Sales Operation Mode" in settings to Retail or Wholesale')
+            return
+        if not self.phone_price.text().strip():# or isinstance(self.phone_price.text().strip(),Decimal):
+
+            QMessageBox.information(self, "Price",
+                                    f"Price should not be empty")
+            return
+        if not self.quantity.text().strip():
+            QMessageBox.information(self, "Quantity",
+                                    f"Quantity should not be empty")
+            return
+
+        #Todo: self.cost_price must multiply the qty and compare to sum of price
+        try:
+            if not Decimal(round(float(self.phone_price.text().strip())  * int(self.quantity.text().strip()),2)) < Decimal(round(float(self.cost_price) * int(self.quantity.text().strip()),2)) :# to compare before save, at model feed
+                print('not lesser', self.cost_price)
+                user.add_to_cart(ph_type=str(self.phone_type.currentText()), ph_model=str(self.phone_model.currentText()),
+                                 sn=str(self.phone_sn.currentText().strip()), price=Decimal(self.phone_price.text()),cp=Decimal(self.cost_price),
+                                 quantity = self.quantity.text() , use_retails= use_retail)
+
+
+                self.store_sp = Decimal(0)  # to sum the tatol saling perice in the cart(dict)
+                self.store_cp = Decimal(0)  # to sum the tatol cost perice in the cart(dict) , to show on interface
+                self.store_qty = 0
+                # sum the total price in the dict
+
+                for _, item in user.caches_retail.items(): # to prevent recall for setting each btn
+                    self.store_sp += item['price']
+                    self.store_cp += item['cost_price']
+                    self.store_qty += item['quantity']
+                print(self.store_cp)
+            else :
+                QMessageBox.information(self, "Invalid Saling Price",
+                                        f"Saling price can not be lesser than Price of {round(float(self.cost_price) * int(self.quantity.text().strip()),2)} \n Thank you")
+                return
+
+        except InvalidOperation :
+            QMessageBox.information(self, "Price",
+                                f"Invalid price input ")
+
+        else:
+
+            self.phone_total_price.setText(str(self.store_sp))
+            self.total_item.setText(str(self.store_qty) ) # str(int(sum([val['quantity'] for  _,val in user.caches_retail.items()])))
+
+            self.load_phone_cart()
+            self.select_table_row(self.phone_cart)
+
+    def remove_from_cart(self,table_widget, use_retail = True):
         index = table_widget.currentIndex()
-        item = table_widget.item(index.row(), 2) # 2 for s/n according to the table
+        if use_retail:
+            item = table_widget.item(index.row(), 2) # 2 for s/n according to the table
+        else:
+            item = table_widget.item(index.row(), 1)
+        print('dfsdfsdfdsfsf')
         #del from cache
         try:
-         del user.caches_retail[item.text()]
+            del user.caches_retail[item.text()]
         except:
-            pass
+            print('dfsdfsdfdsfsf')
+
+        self.store_sp = Decimal(0)  # to sum the tatol saling perice in the cart(dict)
+        self.store_cp = Decimal(0)  # to sum the tatol cost perice in the cart(dict) , to show on interface
+        self.store_qty = 0
+        # sum the total price in the dict
+
+        for _, item in user.caches_retail.items():  # to prevent recall for setting each btn
+            self.store_sp += item['price']
+            self.store_cp += item['cost_price']
+            self.store_qty += item['quantity']
+
 
         self.load_phone_cart()
 
 
-    def dispatch(self, obj):
+        self.total_item.setText(str(self.store_qty ))
+        self.phone_total_price.setText(str(self.store_sp))
+        self.select_table_row(self.phone_cart)
 
-
-
-
-
-        if obj.text() == "Save":
-            # stock
-            self.save_stock()
-            # print(user.caches_retail)
-
-        elif obj.text() == "Clear Cart":
-            user.caches_retail = {}
-            self.load_phone_cart()
-
-        elif obj.text() == "Remove from Cart":
-            print('save was pressde')
+    def clear_cart(self):
+        user.caches_retail = {}
+        self.load_phone_cart()
+        self.phone_total_price.setText("0")
+        self.total_item.setText("0")
 
     def clearforms(self, flag = "stock"):
         if flag == 'stock':
@@ -457,8 +515,8 @@ class MainWindow(QMainWindow):
             self.phone_cart.setItem(cart_row_number, 0, QTableWidgetItem(str(val["ph_type"]))) # Add name
             self.phone_cart.setItem(cart_row_number, 1, QTableWidgetItem(str(val["ph_model"]))) # Add nick
             self.phone_cart.setItem(cart_row_number, 2, QTableWidgetItem(str(val["sn"]))) # Add pass
-            # self.phone_cart.setItem(cart_row_number, 3, QTableWidgetItem(str(val["ime"]))) # Add pass
-            self.phone_cart.setItem(cart_row_number, 3, QTableWidgetItem(str(val["price"]))) # Add pass
+            self.phone_cart.setItem(cart_row_number, 3, QTableWidgetItem(str(val["quantity"]))) # Add pass
+            self.phone_cart.setItem(cart_row_number, 4, QTableWidgetItem(str(val["price"]))) # Add pass
 
             self.phone_cart.setRowHeight(cart_row_number, 20)
 
@@ -467,7 +525,7 @@ class MainWindow(QMainWindow):
         result = user.load_sale_phone_table()
         while (self.table_widget.rowCount() > 0):
             self.table_widget.removeRow(0)
-
+        print(result)
         for tup in result:
             cart_row_number = self.table_widget.rowCount()
             self.table_widget.insertRow(cart_row_number)  # Insert row
@@ -482,7 +540,7 @@ class MainWindow(QMainWindow):
             self.table_widget.setItem(cart_row_number, 8, QTableWidgetItem(str(tup[8])))  # Add pass
             self.table_widget.setItem(cart_row_number, 9, QTableWidgetItem(str(tup[9])))  # Add pass
             self.table_widget.setItem(cart_row_number, 10, QTableWidgetItem(str(tup[10])))  # Add pass
-
+            self.table_widget.setItem(cart_row_number, 11, QTableWidgetItem(str(tup[11])))  # Add pass
 
             self.table_widget.setRowHeight(cart_row_number, 20)
 
@@ -537,14 +595,139 @@ class MainWindow(QMainWindow):
                 self.dash_stock_analysis.setItem(cart_row_number, 0, QTableWidgetItem(str(tup[0])))  # Add name
                 self.dash_stock_analysis.setItem(cart_row_number, 1, QTableWidgetItem(str(int(tup[1]))))  # Add nick
 
+
                 self.dash_stock_analysis.setRowHeight(cart_row_number, 20)
 
             #repaint acrc
             print("redy", result.values(), '--------', result)
             # cur_total/ prev_total * 100
-            val=tuple(result.values())
-            val =round(int(val[1]) / int(val[0]) * 100, 1)
-            self.stock_sale_progress.set_value(val)
+            try:
+                val=tuple(result.values())
+                result =round(int(val[1]) / int(val[0]) * 100, 1)
+
+            except:
+                self.stock_sale_progress.progress_color = self.themes["app_color"]["red"]
+                self.stock_sale_progress.text_color = self.themes["app_color"]["red"]
+                self.stock_sale_progress.set_value(0)
+
+            # result =100.5855
+            if result >= 100:
+                result = 100
+                self.stock_sale_progress.progress_color = self.themes["app_color"]["green"]
+                self.stock_sale_progress.text_color = self.themes["app_color"]["green"]
+                self.stock_sale_progress.set_value(result)
+
+            elif result < 25:
+
+                self.stock_sale_progress.progress_color = self.themes["app_color"]["red"]
+                self.stock_sale_progress.text_color = self.themes["app_color"]["red"]
+                self.stock_sale_progress.set_value(result)
+            else:
+                self.stock_sale_progress.progress_color = self.themes["app_color"]["context_color"]
+                self.stock_sale_progress.text_color = self.themes["app_color"]["context_color"]
+                self.stock_sale_progress.set_value(result)
+
+        else:
+            self.stock_sale_progress.progress_color = self.themes["app_color"]["red"]
+            self.stock_sale_progress.text_color = self.themes["app_color"]["red"]
+            self.stock_sale_progress.set_value(0)
+
+
+    def dash_board_avg(self):
+        result = user.feed_dash_avg()
+
+        while (self.dash_avg_analysis.rowCount() > 0):
+            self.dash_avg_analysis.removeRow(0)
+        print(result)
+
+        if result:
+            cart_row_number = self.dash_avg_analysis.rowCount()
+            self.dash_avg_analysis.insertRow(cart_row_number)  # Insert row
+            self.dash_avg_analysis.setItem(cart_row_number, 0, QTableWidgetItem(str( result.get('yr', datetime.today().year)))) # Add name
+            self.dash_avg_analysis.setItem(cart_row_number, 1, QTableWidgetItem(str(int(result.get('avg', 0)))))  # Add nick
+
+            cart_row_number = self.dash_avg_analysis.rowCount()
+            self.dash_avg_analysis.insertRow(cart_row_number)
+            self.dash_avg_analysis.setItem(cart_row_number, 0, QTableWidgetItem(str("Today")))  # Add name
+            self.dash_avg_analysis.setItem(cart_row_number, 1, QTableWidgetItem(str(int(result.get("today", 0)))))  # Add nick
+
+            self.dash_avg_analysis.setRowHeight(cart_row_number, 20)
+
+            self.ui.load_pages.todays_sales.setText(str(f"¢ {Decimal(result.get('today sales', 0 )) }"))
+            quater_sale_color_temp= round(float(result.get('avg money', 1 )) /4)
+
+
+            if quater_sale_color_temp > Decimal(result.get('today sales', 0 )) :
+                # print(quater_sale_color_temp)  #below quater
+                self.ui.load_pages.todays_sales.setStyleSheet(f'color: { self.themes["app_color"]["red"] };'
+                                                          f'font-size: 55px;'
+                                                          f'font-weight: 800;'
+                                                          f'text-align: center;'
+                                                          f'text-transform: uppercase;')
+
+            elif   quater_sale_color_temp < Decimal(result.get('today sales', 0 )) and Decimal(result.get('today sales', 0 )) < result.get('avg money', 1 ) :
+                # below quater
+                self.ui.load_pages.todays_sales.setStyleSheet(f'color: {self.themes["app_color"]["context_color"]};'
+                                                              f'font-size: 55px;'
+                                                              f'font-weight: 800;'
+                                                              f'text-align: center;'
+                                                              f'text-transform: uppercase;')
+
+            elif  Decimal(result.get('today sales', 0 )) > result.get('avg money', 1 ) :
+                #above avg
+                self.ui.load_pages.todays_sales.setStyleSheet(f'color: {self.themes["app_color"]["green"]};'
+                                                              f'font-size: 55px;'
+                                                              f'font-weight: 800;'
+                                                              f'text-align: center;'
+                                                              f'text-transform: uppercase;')
+
+            else:
+                self.ui.load_pages.todays_sales.setStyleSheet(f'color: {self.themes["app_color"]["red"]};'
+                                                              f'font-size: 55px;'
+                                                              f'font-weight: 800;'
+                                                              f'text-align: center;'
+                                                              f'text-transform: uppercase;')
+
+            #repaint acrc
+
+            # cur_avg/ avg * 100
+            try:
+                result = round( result['today'] / result['avg']* 100, 1)
+
+            except:
+                self.daily_sale_avg_progress.progress_color = self.themes["app_color"]["red"]
+                self.daily_sale_avg_progress.text_color = self.themes["app_color"]["red"]
+                self.daily_sale_avg_progress.set_value(0)
+
+                self.ui.load_pages.todays_sales.setStyleSheet(f'color: {self.themes["app_color"]["red"]};'
+                                                              f'font-size: 55px;'
+                                                              f'font-weight: 800;'
+                                                              f'text-align: center;'
+                                                              f'text-transform: uppercase;')
+                return
+            # result = 1312
+
+            if result >= 100:
+                result = 100
+                self.daily_sale_avg_progress.progress_color = self.themes["app_color"]["green"]
+                self.daily_sale_avg_progress.text_color = self.themes["app_color"]["green"]
+                self.daily_sale_avg_progress.set_value(result)
+
+            elif result <  25:
+
+                self.daily_sale_avg_progress.progress_color = self.themes["app_color"]["red"]
+                self.daily_sale_avg_progress.text_color = self.themes["app_color"]["red"]
+                self.daily_sale_avg_progress.set_value(result)
+            else:
+                self.daily_sale_avg_progress.progress_color = self.themes["app_color"]["context_color"]
+                self.daily_sale_avg_progress.text_color = self.themes["app_color"]["context_color"]
+                self.daily_sale_avg_progress.set_value(result)
+        else:
+            self.daily_sale_avg_progress.progress_color = self.themes["app_color"]["red"]
+            self.daily_sale_avg_progress.text_color = self.themes["app_color"]["red"]
+            self.daily_sale_avg_progress.set_value(0)
+
+            self.ui.load_pages.todays_sales.setText('¢ 0.0')
 
     def decimal_Input(self, val):
         return f"{Decimal(str(val)):.2f}"
@@ -597,12 +780,10 @@ class MainWindow(QMainWindow):
                 tax = 1
             self.phone_price.setText(str( dic.get('sp', "")) )
             self.cost_price = dic.get('cp', 0) # to compare before save, a change in combobox update with current data
-
-            # self.phone_discount.setText(str(dic.get('0')))
+            self.quantity.setText(str('1'))
 
             # self.order_id_feed(model_text, tab_call= flag)
             self.model_feed_phone_sn(model_text)
-
 
     def order_id_feed(self, model_text , tab_call = None):
         result = user.feed_order_id(str(model_text)) #list self.stock_model.currentText()
@@ -664,7 +845,6 @@ class MainWindow(QMainWindow):
         self.phone_sn.clear()
         # print(' sn empty using',  model_text)
 
-
     def select_table_row(self, table_obj, flag = None):
         # auto select record if not empty
         if table_obj.rowCount():
@@ -674,7 +854,6 @@ class MainWindow(QMainWindow):
             #if table has only one row, currentItemChanged never call to feed form so
             if table_obj.currentIndex() == 0: #only one record in take
                 self.table_row_Change(table_obj, flag) #call this fn to feed more
-
 
     def showcomponents(self, state =False):
 
@@ -694,6 +873,9 @@ class MainWindow(QMainWindow):
         if isinstance(text, str):
             return space.join(text.strip().split()).title()
 
+    def write_settings(self):
+        self.use_retail_oporation_flag = self.sales_oporation_mapper.get(self.sale_opperation_mode.currentText(), False)
+        print(self.use_retail_oporation_flag)
 
 
     # Run function when btn is clicked
@@ -714,7 +896,8 @@ class MainWindow(QMainWindow):
 
             #dashboard
             self.load_high_purchase()
-
+            self.dash_board_stock_table()
+            self.dash_board_avg()
             # Load page
             MainFunctions.set_page(self, self.ui.load_pages.dasboard)
 
