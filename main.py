@@ -632,7 +632,6 @@ class MainWindow(QMainWindow):
             self.stock_sale_progress.text_color = self.themes["app_color"]["red"]
             self.stock_sale_progress.set_value(0)
 
-
     def dash_board_avg(self):
         result = user.feed_dash_avg()
 

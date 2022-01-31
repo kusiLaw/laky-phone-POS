@@ -858,7 +858,9 @@ class Phone:
 
 
     def highly_purchase(self):
-        statement = "SELECT model as 'Model', count(sale_phone.model) as 'Purchases' from lakydb.Sale_phone group by  model limit 10"
+        statement = "SELECT Sale_phone.model as 'Model', sum(phone_prices.quantity) as 'Purchases' from " \
+               " lakydb.Sale_phone  inner join lakydb.phone_prices on Sale_phone.Sale_phone_id = phone_prices.Sale_phone_Sale_phone_id "\
+               " group by  Sale_phone.model order by sum(phone_prices.quantity) desc limit 10  "
         con = self.con.connect()
         cur = con.cursor()
         try:
