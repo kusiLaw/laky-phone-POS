@@ -717,64 +717,67 @@ class Phone:
                 # con.commit()
                 # con.close()
 
-            else:
-                # deletion by id
-                try:
-                    int(key)
-                except ValueError:
-                    print('key error')
-                    return
-                statement_id = "SELECT  quantity, trans_code, model  FROM lakydb.sale_phone inner join  lakydb.phone_transaction  on " \
-                               " phone_transaction.phone_transaction_id = sale_phone.phone_transaction_phone_transaction_id " \
-                               "inner join lakydb.phone_prices on sale_phone.Sale_phone_id = phone_prices.Sale_phone_Sale_phone_id " \
-                               "where sale_phone.Sale_phone_id =%s"
-                cur.execute(statement_id, (key,))
-                result = cur.fetchone()  # only one data, it quantity and trans_code
-
-                if result: # has item?, or if found
-                    get_code_by_id = dict(zip(cur.column_names, result))
-                    print('code', get_code_by_id)
-
-                    # check if this data is the only item left in the trans_code tree,
-                    # we first got hold the "code" and "quantity" and we use the code to check if is the only child left
-                    cur.execute(statement_code, (get_code_by_id['trans_code'],))
-                    get_qty_by_code = cur.fetchall() # may return more than one records
-                    print('id',get_qty_by_code)
-
-                    if get_qty_by_code and len(get_qty_by_code) < 2:
-                        # delete by trans_code, has just tested to be the only child
-                        print("am the only child letf am calling my parent to delete me")
-
-                        self.inner_code_delete(get_code_by_id['trans_code'], cur, cur2, statement_code, stock_update, get_stock_id, _conn=con)
-                        # con.commit()
-                        # con.close()
-                    else:
-                       print(f"am delete my self mum has many {len(result)} children ")
-                        # has more than one node, delete only this record
-                       cur2.execute(get_stock_id,(get_code_by_id['model'],))
-                       stock_id = cur2.fetchone()
-                       # print(stock_id)
-
-                       if stock_id:  # found
-                           # upadte stock and delete record
-                           cur2.execute(stock_update, (get_code_by_id['quantity'],stock_id[0]))
-
-                           delete_phone = "DELETE FROM lakydb.sale_phone WHERE Sale_phone_id = %s"
-                           cur2.execute(delete_phone, (key,))
-
-                           con.commit()
-
-                       else:
-                           print("Record not found in stock")
-
-                else:
-                    print('Record not found')
+            # Todo: must support this later
+            # else:
+            #     # deletion by id
+            #     try:
+            #         int(key)
+            #     except ValueError:
+            #         print('key error')
+            #         return
+            #     statement_id = "SELECT  quantity, trans_code, model  FROM lakydb.sale_phone inner join  lakydb.phone_transaction  on " \
+            #                    " phone_transaction.phone_transaction_id = sale_phone.phone_transaction_phone_transaction_id " \
+            #                    "inner join lakydb.phone_prices on sale_phone.Sale_phone_id = phone_prices.Sale_phone_Sale_phone_id " \
+            #                    "where sale_phone.Sale_phone_id =%s"
+            #     cur.execute(statement_id, (key,))
+            #     result = cur.fetchone()  # only one data, it quantity and trans_code
+            #
+            #     if result: # has item?, or if found
+            #         get_code_by_id = dict(zip(cur.column_names, result))
+            #         print('code', get_code_by_id)
+            #
+            #         # check if this data is the only item left in the trans_code tree,
+            #         # we first got hold the "code" and "quantity" and we use the code to check if is the only child left
+            #         cur.execute(statement_code, (get_code_by_id['trans_code'],))
+            #         get_qty_by_code = cur.fetchall() # may return more than one records
+            #         print('id',get_qty_by_code)
+            #
+            #         if get_qty_by_code and len(get_qty_by_code) < 2:
+            #             # delete by trans_code, has just tested to be the only child
+            #             print("am the only child letf am calling my parent to delete me")
+            #
+            #             self.inner_code_delete(get_code_by_id['trans_code'], cur, cur2, statement_code, stock_update, get_stock_id, _conn=con)
+            #             # con.commit()
+            #             # con.close()
+            #         else:
+            #            print(f"am delete my self mum has many {len(result)} children ")
+            #             # has more than one node, delete only this record
+            #            cur2.execute(get_stock_id,(get_code_by_id['model'],))
+            #            stock_id = cur2.fetchone()
+            #            # print(stock_id)
+            #
+            #            if stock_id:  # found
+            #                # upadte stock and delete record
+            #                cur2.execute(stock_update, (get_code_by_id['quantity'],stock_id[0]))
+            #
+            #                delete_phone = "DELETE FROM lakydb.sale_phone WHERE Sale_phone_id = %s"
+            #                cur2.execute(delete_phone, (key,))
+            #
+            #                con.commit()
+            #
+            #            else:
+            #                print("Record not found in stock")
+            #
+            #     else:
+            #         print('Record not found')
 
         except  errors.Error as err:
             if err.errno == errorcode.ER_DUP_ENTRY:
                 print("record already exist")
             else:
-                print(err.msg)
+                raise LakyException("unknown error please check database connection")
+        except LakyException as e:
+            raise LakyException(e.extra_message)
         finally:
             con.close()
 
@@ -803,12 +806,17 @@ class Phone:
 
                     # delete the record
                     cur2.execute(delete_code, (key,))
-                    _conn.commit()
-                    _conn.close()
+
                 else:
-                    print("recode not found")
+                    LakyException(f"Recode not found in stock {data2.get('model','')}")
+            _conn.commit()
+            _conn.close()
+
         else:
-            print("Record not found")
+            raise LakyException(f'Invalid transaction code: {key}')
+            # print("Record not found")
+
+
 
     def load_sale_phone_table(self):
         con = self.con.connect()

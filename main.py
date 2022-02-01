@@ -113,8 +113,10 @@ class MainWindow(QMainWindow):
 
         self.phone_clear_cart_btn.clicked.connect(lambda: self.clear_cart())
         self.phone_buyme_btn.clicked.connect(lambda : self.buy_phone())
+        self.phone_delete_btn.clicked.connect(lambda : self.delete_buy())
         self.phone_print_btn.clicked.connect(lambda: self.dispatch(self.phone_print_btn))
         self.phone_clear_btn.clicked.connect(lambda : self.clearforms(flag='phone'))
+
         self.table_widget.currentItemChanged.connect(lambda :self.table_row_Change(self.table_widget, flag='phone'))
         # self.phone_cart.itemClicked.connect(lambda :self.remove_from_cart(self.phone_cart))
 
@@ -241,6 +243,16 @@ class MainWindow(QMainWindow):
             self.phone_order_id.setText(user.caches_retail.get('transcode' , ''))
             self.clear_cart()
             self.select_table_row(self.table_widget)
+
+    def delete_buy(self):
+        if self.phone_order_id.text():
+            try:
+                user.undo_buy(self.phone_order_id.text())
+            except LakyException as e:
+                QMessageBox.information(self, "Delete", f"{e}")
+        else:
+            QMessageBox.information(self, "Delete", f"Transaction ID is empty")
+
 
     def save_stock(self):
         # supplier table
