@@ -116,7 +116,7 @@ class MainWindow(QMainWindow):
         self.phone_delete_btn.clicked.connect(lambda : self.delete_buy())
         self.phone_print_btn.clicked.connect(lambda: self.dispatch(self.phone_print_btn))
         self.phone_clear_btn.clicked.connect(lambda : self.clearforms(flag='phone'))
-
+        self.phone_all_in_one_btn.clicked.connect(lambda : self.all_in_one_buy())
         self.table_widget.currentItemChanged.connect(lambda :self.table_row_Change(self.table_widget, flag='phone'))
         # self.phone_cart.itemClicked.connect(lambda :self.remove_from_cart(self.phone_cart))
 
@@ -250,9 +250,15 @@ class MainWindow(QMainWindow):
                 user.undo_buy(self.phone_order_id.text())
             except LakyException as e:
                 QMessageBox.information(self, "Delete", f"{e}")
+
+            self.load_sale_tables()
+
         else:
             QMessageBox.information(self, "Delete", f"Transaction ID is empty")
 
+    def all_in_one_buy(self):
+        self.add_to_cart(use_retail=self.use_retail_oporation_flag)
+        self.buy_phone()
 
     def save_stock(self):
         # supplier table
@@ -505,13 +511,13 @@ class MainWindow(QMainWindow):
 
             return
         if flag == 'phone':
-
+            # print('clearing....')
             self.customerName.setText("")
             self.contactName.setText("")
             self.phone_sn.setCurrentText("")
             self.phone_price.setText("")
-            self.phone_type.setCurrentText("")
-            self.phone_model.setCurrentText("")
+            # self.phone_type.setCurrentText("")
+            self.phone_model.setCurrentText("5555")
 
             # self.phone_price.setText(str(dic.get('sp', "")))
             # self.phone_tax.setText(str(dic.get('tax', "")))
