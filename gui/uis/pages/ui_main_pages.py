@@ -1065,10 +1065,10 @@ class Ui_MainPages(object):
         self.frame_13.setStyleSheet(u"")
         self.frame_13.setFrameShape(QFrame.NoFrame)
         self.frame_13.setFrameShadow(QFrame.Raised)
-        self.verticalLayout_10 = QVBoxLayout(self.frame_13)
-        self.verticalLayout_10.setSpacing(0)
-        self.verticalLayout_10.setObjectName(u"verticalLayout_10")
-        self.verticalLayout_10.setContentsMargins(0, 0, 0, 0)
+        self.trrrr = QVBoxLayout(self.frame_13)
+        self.trrrr.setSpacing(0)
+        self.trrrr.setObjectName(u"trrrr")
+        self.trrrr.setContentsMargins(0, 0, 0, 0)
 
         self.gridLayout.addWidget(self.frame_13, 2, 2, 1, 1)
 
@@ -1078,10 +1078,10 @@ class Ui_MainPages(object):
         self.phone_clear.setStyleSheet(u"")
         self.phone_clear.setFrameShape(QFrame.StyledPanel)
         self.phone_clear.setFrameShadow(QFrame.Raised)
-        self.phone_clear_layout = QVBoxLayout(self.phone_clear)
-        self.phone_clear_layout.setSpacing(0)
-        self.phone_clear_layout.setObjectName(u"phone_clear_layout")
-        self.phone_clear_layout.setContentsMargins(0, 0, 0, 0)
+        self.phone_print_layout = QVBoxLayout(self.phone_clear)
+        self.phone_print_layout.setSpacing(0)
+        self.phone_print_layout.setObjectName(u"phone_print_layout")
+        self.phone_print_layout.setContentsMargins(0, 0, 0, 0)
 
         self.gridLayout.addWidget(self.phone_clear, 1, 1, 1, 1)
 
@@ -1104,10 +1104,10 @@ class Ui_MainPages(object):
         self.phone_print.setStyleSheet(u"")
         self.phone_print.setFrameShape(QFrame.NoFrame)
         self.phone_print.setFrameShadow(QFrame.Raised)
-        self.phone_print_layout = QVBoxLayout(self.phone_print)
-        self.phone_print_layout.setSpacing(0)
-        self.phone_print_layout.setObjectName(u"phone_print_layout")
-        self.phone_print_layout.setContentsMargins(0, 0, 0, 0)
+        self.phone_clear_layout = QVBoxLayout(self.phone_print)
+        self.phone_clear_layout.setSpacing(0)
+        self.phone_clear_layout.setObjectName(u"phone_clear_layout")
+        self.phone_clear_layout.setContentsMargins(0, 0, 0, 0)
 
         self.gridLayout.addWidget(self.phone_print, 0, 2, 1, 1)
 
@@ -1143,10 +1143,10 @@ class Ui_MainPages(object):
         self.phone_delete.setStyleSheet(u"")
         self.phone_delete.setFrameShape(QFrame.StyledPanel)
         self.phone_delete.setFrameShadow(QFrame.Raised)
-        self.phone_delete_layout = QVBoxLayout(self.phone_delete)
-        self.phone_delete_layout.setSpacing(0)
-        self.phone_delete_layout.setObjectName(u"phone_delete_layout")
-        self.phone_delete_layout.setContentsMargins(0, 0, 0, 0)
+        self.phone_all_in_one_layout = QVBoxLayout(self.phone_delete)
+        self.phone_all_in_one_layout.setSpacing(0)
+        self.phone_all_in_one_layout.setObjectName(u"phone_all_in_one_layout")
+        self.phone_all_in_one_layout.setContentsMargins(0, 0, 0, 0)
 
         self.gridLayout.addWidget(self.phone_delete, 2, 1, 1, 1)
 
@@ -1156,10 +1156,10 @@ class Ui_MainPages(object):
         self.phone_all_in_one.setStyleSheet(u"")
         self.phone_all_in_one.setFrameShape(QFrame.NoFrame)
         self.phone_all_in_one.setFrameShadow(QFrame.Raised)
-        self.phone_all_in_one_layout = QVBoxLayout(self.phone_all_in_one)
-        self.phone_all_in_one_layout.setSpacing(0)
-        self.phone_all_in_one_layout.setObjectName(u"phone_all_in_one_layout")
-        self.phone_all_in_one_layout.setContentsMargins(0, 0, 0, 0)
+        self.phone_delete_layout = QVBoxLayout(self.phone_all_in_one)
+        self.phone_delete_layout.setSpacing(0)
+        self.phone_delete_layout.setObjectName(u"phone_delete_layout")
+        self.phone_delete_layout.setContentsMargins(0, 0, 0, 0)
 
         self.gridLayout.addWidget(self.phone_all_in_one, 1, 2, 1, 1)
 
@@ -2338,7 +2338,7 @@ class Ui_MainPages(object):
 
         self.retranslateUi(MainPages)
 
-        self.pages.setCurrentIndex(1)
+        self.pages.setCurrentIndex(2)
         self.stock_parent_tab.setCurrentIndex(0)
 
 

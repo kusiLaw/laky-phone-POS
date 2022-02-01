@@ -32,7 +32,7 @@
    <item>
     <widget class="QStackedWidget" name="pages">
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="home_page">
       <property name="font">
@@ -2498,7 +2498,7 @@ background:#1e2229;</string>
                       <property name="frameShadow">
                        <enum>QFrame::Raised</enum>
                       </property>
-                      <layout class="QVBoxLayout" name="verticalLayout_10">
+                      <layout class="QVBoxLayout" name="trrrr">
                        <property name="spacing">
                         <number>0</number>
                        </property>
@@ -2534,7 +2534,7 @@ background:#1e2229;</string>
                       <property name="frameShadow">
                        <enum>QFrame::Raised</enum>
                       </property>
-                      <layout class="QVBoxLayout" name="phone_clear_layout">
+                      <layout class="QVBoxLayout" name="phone_print_layout">
                        <property name="spacing">
                         <number>0</number>
                        </property>
@@ -2606,7 +2606,7 @@ background:#1e2229;</string>
                       <property name="frameShadow">
                        <enum>QFrame::Raised</enum>
                       </property>
-                      <layout class="QVBoxLayout" name="phone_print_layout">
+                      <layout class="QVBoxLayout" name="phone_clear_layout">
                        <property name="spacing">
                         <number>0</number>
                        </property>
@@ -2714,7 +2714,7 @@ background:#1e2229;</string>
                       <property name="frameShadow">
                        <enum>QFrame::Raised</enum>
                       </property>
-                      <layout class="QVBoxLayout" name="phone_delete_layout">
+                      <layout class="QVBoxLayout" name="phone_all_in_one_layout">
                        <property name="spacing">
                         <number>0</number>
                        </property>
@@ -2750,7 +2750,7 @@ background:#1e2229;</string>
                       <property name="frameShadow">
                        <enum>QFrame::Raised</enum>
                       </property>
-                      <layout class="QVBoxLayout" name="phone_all_in_one_layout">
+                      <layout class="QVBoxLayout" name="phone_delete_layout">
                        <property name="spacing">
                         <number>0</number>
                        </property>
