@@ -642,21 +642,21 @@ class MainWindow(QMainWindow):
         if result:
             cart_row_number = self.dash_avg_analysis.rowCount()
             self.dash_avg_analysis.insertRow(cart_row_number)  # Insert row
-            self.dash_avg_analysis.setItem(cart_row_number, 0, QTableWidgetItem(str( result.get('yr', datetime.today().year)))) # Add name
-            self.dash_avg_analysis.setItem(cart_row_number, 1, QTableWidgetItem(str(int(result.get('avg', 0)))))  # Add nick
+            self.dash_avg_analysis.setItem(cart_row_number, 0, QTableWidgetItem(str( result.get('yr', str(datetime.today().year))))) # Add name
+            self.dash_avg_analysis.setItem(cart_row_number, 1, QTableWidgetItem(str(int(result.get('avg', "0")))))  # Add nick
 
             cart_row_number = self.dash_avg_analysis.rowCount()
             self.dash_avg_analysis.insertRow(cart_row_number)
             self.dash_avg_analysis.setItem(cart_row_number, 0, QTableWidgetItem(str("Today")))  # Add name
-            self.dash_avg_analysis.setItem(cart_row_number, 1, QTableWidgetItem(str(int(result.get("today", 0)))))  # Add nick
+            self.dash_avg_analysis.setItem(cart_row_number, 1, QTableWidgetItem(str(int(result.get("today", "0")or 0))))  # Add nick
 
             self.dash_avg_analysis.setRowHeight(cart_row_number, 20)
 
-            self.ui.load_pages.todays_sales.setText(str(f"¢ {Decimal(result.get('today sales', 0 )) }"))
+            self.ui.load_pages.todays_sales.setText(str(f'¢ {Decimal(result.get("today sales",  0) or 0.0) }'))
             quater_sale_color_temp= round(float(result.get('avg money', 1 )) /4)
 
 
-            if quater_sale_color_temp > Decimal(result.get('today sales', 0 )) :
+            if quater_sale_color_temp > Decimal(result.get('today sales', 0 ) or 0) :
                 # print(quater_sale_color_temp)  #below quater
                 self.ui.load_pages.todays_sales.setStyleSheet(f'color: { self.themes["app_color"]["red"] };'
                                                           f'font-size: 55px;'
