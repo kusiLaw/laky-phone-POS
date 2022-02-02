@@ -69,6 +69,7 @@ class MainWindow(QMainWindow):
     }
 
 
+
     def __init__(self):
         super().__init__()
 
@@ -89,6 +90,10 @@ class MainWindow(QMainWindow):
         SetupMainWindow.setup_gui(self)
 
         # print(datetime.now().strftime('%Y/%m/%d %H:%M'))
+
+        # self.messageBox  = MessageBox()
+
+
 
         self.use_retail_oporation_flag = self.sales_oporation_mapper.get(self.sale_opperation_mode.currentText(), False)
 
@@ -150,15 +155,7 @@ class MainWindow(QMainWindow):
         # ///////////////////////////////////////////////////////////////
         self.show()
 
-        # user.login('laky','11111')
-        # MainFunctions.set_page(self, self.ui.load_pages.dasboard)
-        # self.showcomponents(True)
-        # self.load_high_purchase()
-        # self.ui.load_pages.dash_user_name.setText(" ".join([user.fname,user.lname]))
-        #
-        # self.ui.load_pages.dash_role.setText(user.role)
-        # self.ui.load_pages.dash_email.setText(user.email)
-        # self.ui.load_pages.dash_last_seen.setText(str(user.last_seen))
+
 
         self.user_name.setText('laky')
         self.user_passsword.setText('11111')
@@ -210,32 +207,32 @@ class MainWindow(QMainWindow):
     def reset_passwrd(self):
 
         if not self.comfirm_pass.text() == self.new_pass.text():
-            QMessageBox.information(None, "password not same","password not same")
+            MessageBox( "password not same", title ="password")
             #
             return
         if not self.old_pass.text() or not len(self.comfirm_pass.text()) > 4 or not len(self.new_pass.text()) >= 4:
-            QMessageBox.information(None, "weak password", "password lenght must be more than 4 digit")
+            MessageBox("password lenght must be more than 4 digit", title = "weak password")
             return
         if user.reset_password( old_password= self.old_pass.text(),
                                 new_password= self.new_pass.text(),
                                 user_name= user.username ,
                                 user_id= user.id):
-            QMessageBox.information(None, "Rese Password", "Password reset ok")
+            MessageBox(  "Password reset ok", title ="Reset Password")
             self.old_pass.setText('')
             self.new_pass.setText('')
             self.comfirm_pass.setText('')
             self.logout()
         else:
-            QMessageBox.information(None, "Reset Password", "Wrong password")
+            MessageBox("Wrong password", title ="Reset Password")
 
     def buy_phone(self):
         print(user.caches_retail)
         try:
-
-            user.buyphone('retail', customer_name = self.customerName.text() or 'Customer', customer_number=self.contactName.text() or '+233')
+            # 'retail',
+            user.buyphone( customer_name = self.customerName.text() or 'Customer', customer_number=self.contactName.text() or '+233')
         except (ValueError, InvalidSalesPrice, OutOfStockException,Invalid_Item_Purchase, LakyException) as ex:
 
-            QMessageBox.information(self, "Item", f"{ex}")
+            MessageBox( f"{ex}", title ="Item")
         # except:print('save unknown error')
         else:
             #successfull save,  patch the cache with trans code, set to form
@@ -249,12 +246,15 @@ class MainWindow(QMainWindow):
             try:
                 user.undo_buy(self.phone_order_id.text())
             except LakyException as e:
-                QMessageBox.information(self, "Delete", f"{e}")
+                MessageBox( f"{e}", title =  "Delete")
 
             self.load_sale_tables()
 
         else:
-            QMessageBox.information(self, "Delete", f"Transaction ID is empty")
+            # QMessageBox.information(self, "Delete", f"Transaction ID is empty")
+            MessageBox(f"this Transaction ID is empty", title =  "Delete")
+
+            # self.messageBox.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
 
     def all_in_one_buy(self):
         self.add_to_cart(use_retail=self.use_retail_oporation_flag)
@@ -276,11 +276,11 @@ class MainWindow(QMainWindow):
 
             if self.number == "+233" : #num not given
                 self.suplier =  "unknown"
-                print('number not given' , self.name, self.number)
+                # print('number not given' , self.name, self.number)
             else:
                 #num given, so suplier name or name "suplier" is used
                 self.suplier = self.remove_white_spaces(self.stock_suplier.currentText()) or "Suplier"
-                print('number given', self.name, self.number)
+                # print('number given', self.name, self.number)
 
 
             try:
@@ -300,31 +300,30 @@ class MainWindow(QMainWindow):
 
             sn_list = [self.stock_sn_list.item(x).text() for x in range(self.stock_sn_list.count())]
 
-            print("exceptions pass")
+            # print("exceptions pass")
 
         except (ValueError )as ex:
-            QMessageBox.information(self, "Received Key Release EVent",
-                                    str(ex))
+            MessageBox(str(ex), title = "Value Error")
+
         else:
 
-
-
-            print(self.name, self.model,
-                  self.number,self.suplier,
-                  self.cp,self.sp, self.stock_datetime.text(),
-                  self.qty,self.order_id,self.tax,sn_list,
-                  self.stock_datetime.text().split("-"),
-                  self.stock_datetime.toPydate()
-                  )
-                #sn
-
-
-            user.savestock(user_id=user.id, name=self.name, model=self.model, cp=self.cp,
-                           sp= self.sp ,qty=self.qty,
-                           dat=self.stock_datetime.toPydate(),
-                           tax= self.tax, suplier = self.suplier,suplier_number=self.number,
-                           prod_code= self.order_id,
-                           code_list=sn_list)
+            # print(self.name, self.model,
+            #       self.number,self.suplier,
+            #       self.cp,self.sp, self.stock_datetime.text(),
+            #       self.qty,self.order_id,self.tax,sn_list,
+            #       self.stock_datetime.text().split("-"),
+            #       self.stock_datetime.toPydate()
+            #       )
+            #     #sn
+            try:
+                user.savestock(user_id=user.id, name=self.name, model=self.model, cp=self.cp,
+                               sp= self.sp ,qty=self.qty,
+                               dat=self.stock_datetime.toPydate(),
+                               tax= self.tax, suplier = self.suplier,suplier_number=self.number,
+                               prod_code= self.order_id,
+                               code_list=sn_list)
+            except LakyException as e:
+                MessageBox(str(e), title="Unknown Error")
 
 
             self.load_stock_tables()
@@ -346,8 +345,8 @@ class MainWindow(QMainWindow):
            },
 
             "phone":{
-                'Transaction code': 7,
-                'Model': 3,
+                'Transaction code': 0,
+                'Model': 2,
                 'Contact': 1,
                 'Date': 9,
             }
@@ -385,8 +384,11 @@ class MainWindow(QMainWindow):
                 self.phone_type.setCurrentText(data[1])
                 self.phone_model.setCurrentText(data[2])
                 # self.phone_imei.setText(data[1])
-
-                self.phone_sn.setCurrentText(data[3])
+                if data[3] == 'None':
+                    # print(data[3], 'not')
+                    self.phone_sn.setCurrentText( "")
+                else:
+                    self.phone_sn.setCurrentText(data[3])
                 self.phone_price.setText(data[5])
                 self.quantity.setText(data[4])
                 self.phone_order_id.setText(data[0])
@@ -406,18 +408,15 @@ class MainWindow(QMainWindow):
 
     def add_to_cart(self, use_retail: bool ):
         if  use_retail and (not self.phone_sn.currentText() or self.phone_sn.currentText().strip()== "")   :
-            QMessageBox.information(self, "Add To Cart",
-                                    f'If "Retails (Strict)" is selected, SN number must not be empty. '
-                                    f'Please change "Sales Operation Mode" in settings to Retail or Wholesale')
+            MessageBox( f'If "Retails (Strict)" is selected, SN number must not be empty. '
+                         f'Please change "Sales Operation Mode" in settings to Retail or Wholesale', title=" Add To Cart",)
             return
         if not self.phone_price.text().strip():# or isinstance(self.phone_price.text().strip(),Decimal):
 
-            QMessageBox.information(self, "Price",
-                                    f"Price should not be empty")
+            MessageBox(f"Price should not be empty", title="Price")
             return
         if not self.quantity.text().strip():
-            QMessageBox.information(self, "Quantity",
-                                    f"Quantity should not be empty")
+            MessageBox( f"Quantity should not be empty",title = "Quantity",)
             return
 
         #Todo: self.cost_price must multiply the qty and compare to sum of price
@@ -440,13 +439,12 @@ class MainWindow(QMainWindow):
                     self.store_qty += item['quantity']
                 print(self.store_cp)
             else :
-                QMessageBox.information(self, "Invalid Saling Price",
-                                        f"Saling price can not be lesser than Price of {round(float(self.cost_price) * int(self.quantity.text().strip()),2)} \n Thank you")
+                MessageBox(f"Saling price can not be lesser than Price of {round(float(self.cost_price) * int(self.quantity.text().strip()),2)} \n Thank you", title= "Invalid Saling Price",)
                 return
 
         except InvalidOperation :
-            QMessageBox.information(self, "Price",
-                                f"Invalid price input ")
+            MessageBox(f"Invalid price input " ,title= "Price")
+
 
         else:
 
@@ -462,12 +460,14 @@ class MainWindow(QMainWindow):
             item = table_widget.item(index.row(), 2) # 2 for s/n according to the table
         else:
             item = table_widget.item(index.row(), 1)
-        print('dfsdfsdfdsfsf')
+        # print('dfsdfsdfdsfsf')
         #del from cache
         try:
             del user.caches_retail[item.text()]
         except:
-            print('dfsdfsdfdsfsf')
+            # print('dfsdfsdfdsfsf')
+            return
+
 
         self.store_sp = Decimal(0)  # to sum the tatol saling perice in the cart(dict)
         self.store_cp = Decimal(0)  # to sum the tatol cost perice in the cart(dict) , to show on interface

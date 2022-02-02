@@ -82,3 +82,5 @@ from .py_pic import PyPicture
 from .py_list import Pylist
 
 from .py_datetime import Py_datetime
+
+from .py_messagebox import MessageBox

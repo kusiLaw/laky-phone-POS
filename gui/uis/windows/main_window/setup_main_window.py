@@ -442,7 +442,7 @@ class SetupMainWindow:
             context_color=self.themes["app_color"]["context_color"],
             color=self.themes["app_color"]["text_active"],
             bg_color=self.themes["app_color"]["bg_three"],
-            read_only = True,
+            read_only = False,
         )
 
         self.ui.load_pages.phone_order_id_frame.addWidget(self.phone_order_id)

@@ -66,7 +66,7 @@ class PhoneStock:
                            "VALUES (%s, %s, %s)"
                 cur.execute(stoct_st, (self.st_name, self.st_ph_model, self.user_id))
                 st_lastid = cur.lastrowid
-                print("stock inserted")
+                # print("stock inserted")
             except  errors.Error as err:
                 if err.errno == errorcode.ER_DUP_ENTRY:
                     stoct_st = " SELECT stockId FROM lakydb.`stock` WHERE phone_model = %s "
@@ -115,8 +115,8 @@ class PhoneStock:
                     suplier_st = "UPDATE lakydb.`suplier` SET contact =%s,supliername =%s WHERE idsuplier = %s"
                     cur.execute(suplier_st, ( self.suplier_number,self.suplier,su_lastid))
                     print("suplier updated")
-                # else:
-                #     raise LakyException("Unknown error")
+                else:
+                    raise LakyException("Unknown error please check database connection")
 
 
             # executing on orders table
@@ -198,9 +198,11 @@ class PhoneStock:
                 return "record already exist"
             else:
                 print(err)
-        # except:
-        #     print("Error occored")
-        #     return 'unknown error occured'
+        except LakyException as e:
+            raise LakyException(e.extra_message)
+
+        except :
+            raise LakyException("Unknown errror occured")
         else:
             con.commit()
             self.update_stock_cach()
@@ -530,10 +532,10 @@ class Phone:
 
 
 
-    def buyphone(self, use_retails = True, customer_name = None, customer_number= '+233' ):
+    def buyphone(self,  customer_name = None, customer_number= '+233' ):
 
         if  not len(self.caches_retail):
-            raise Invalid_Item_Purchase("Nothing in retail cart to buy")
+            raise Invalid_Item_Purchase("Nothing in  cart to buy")
 
 
         self.customer_number =customer_number
@@ -680,7 +682,7 @@ class Phone:
         except IndexError as e:
             print(e)
         # except:# (OutOfStockException, InvalidSalesPrice, Invalid_Item_Purchase, ValueError) as ex:
-        #     raise LakyException("Unknown error occured, Please check database connection")
+        #     raise LakyException("Unknown error occured, Please check database connection")  #upper level is handling that
 
 
         else:
@@ -717,6 +719,8 @@ class Phone:
                 # con.commit()
                 # con.close()
 
+            else:
+                raise LakyException(f"invalid order id: {key}")
             # Todo: must support this later
             # else:
             #     # deletion by id
@@ -855,7 +859,7 @@ class Phone:
         self.caches_retail= {}
 
     def __len__(self):
-        return len(self.caches)
+        return len(self.caches_retail)
 
 
     def search(self, search_key, item):
@@ -986,14 +990,14 @@ class Active_User(PhoneStock, Phone):
                 self.can_view_privacy = bool(result['can_view_privacy'])
                 self.can_view_chart = bool(result['can_view_chart'])
                 self.managing_control = bool(result['managing_role'])
-                print(f"hi {self.lname} your assign info is \n", vars(self))
+                # print(f"hi {self.lname} your assign info is \n", vars(self))
 
                 self.has_login = True
 
                 con.close()
                 return True
             # print("invalid username or password ")
-        print("invalid username or password ")
+        # print("invalid username or password ")
         con.close()
 
     def create_user(self,fname, lname, username, password, email, role,
@@ -1182,11 +1186,12 @@ class Active_User(PhoneStock, Phone):
                               # user_id,name, model, cp, sp, qty, date, tax, suplier,suplier_number, prod_code,
                               #         code_list,)
 
-    def buyphone(self, cache = "retail", customer_name ="customer", customer_number="n/a"):
+    # cache = "retail",
+    def buyphone(self,  customer_name ="customer", customer_number="n/a"):
         if not self.has_login:
             print("Not authorised, please login first")
             return
-        Phone.buyphone(self, cache , customer_name, customer_number)
+        Phone.buyphone(self , customer_name, customer_number)
 
 
 __all__ = ['Active_User']
