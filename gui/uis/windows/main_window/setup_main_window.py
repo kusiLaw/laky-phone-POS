@@ -1354,8 +1354,120 @@ class SetupMainWindow:
         self.ui.load_pages.stock_analysis_frame.addWidget(self.dash_stock_analysis)
 
 
+#/////////////////////////Database settings/////////////////////////////////
+        self.engine_db = PyComBox(
+
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["bg_three"],
+            radius=0,
+            bg_color_hover=self.themes["app_color"]["context_color"],
+            items=['MySql'],
+            editable=False
+    )
+
+        self.ui.load_pages.engine_frame.addWidget(self.engine_db)
+
+        self.host_name = PyComBox(
+
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["bg_three"],
+            radius=0,
+            bg_color_hover=self.themes["app_color"]["context_color"],
+            items=['localhost'],
+
+        )
+
+        self.ui.load_pages.hostname_frame.addWidget(self.host_name)
+
+        self.dbuser_name = PyComBox(
+
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["bg_three"],
+            radius=0,
+            bg_color_hover=self.themes["app_color"]["context_color"],
+            items=['root'],
+        )
+
+        self.ui.load_pages.username_db_frame.addWidget(self.dbuser_name)
+
+        self.dbport = PyComBox(
+
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["bg_three"],
+            radius=0,
+            bg_color_hover=self.themes["app_color"]["context_color"],
+            items=['3306'],
+        )
+
+        self.ui.load_pages.port_frame.addWidget(self.dbport)
 
 
+
+
+        self.db_user_passsword = PyLineEdit(
+
+            context_color=self.themes["app_color"]["context_color"],
+            color=self.themes["app_color"]["text_active"],
+            bg_color=self.themes["app_color"]["bg_three"],
+            maxlen=22,
+            # validator=QIntValidator()
+            echomode = True
+        )
+        # self.user_passsword.height = 40
+        # self.user_passsword.setMinimumHeight(40)
+        self.ui.load_pages.password_db_frame.addWidget(self.db_user_passsword)
+
+        self.test_connection = PyPushButton2(
+                 text="Test Connection",
+                radius=8,
+                color=self.themes["app_color"]["text_foreground"],
+                bg_color=self.themes["app_color"]["dark_one"],
+                bg_color_hover=self.themes["app_color"]["dark_three"],
+                bg_color_pressed=self.themes["app_color"]["dark_four"],
+                hover_border_color=self.themes["app_color"]["context_color"]
+
+            )
+        self.test_connection.setMinimumHeight(30)
+        self.ui.load_pages.test_con_frame.addWidget(self.test_connection)
+
+        self.db_save_btn = PyPushButton2(
+            text="Save",
+            radius=8,
+            color=self.themes["app_color"]["text_foreground"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color_hover=self.themes["app_color"]["dark_three"],
+            bg_color_pressed=self.themes["app_color"]["dark_four"],
+            hover_border_color=self.themes["app_color"]["green"]
+
+        )
+        self.db_save_btn.setMinimumHeight(40)
+        self.ui.load_pages.db_save_frame.addWidget(self.db_save_btn)
+
+        self.db_restore_btn = PyPushButton2(
+            text="Restore",
+            radius=8,
+            color=self.themes["app_color"]["text_foreground"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color_hover=self.themes["app_color"]["dark_three"],
+            bg_color_pressed=self.themes["app_color"]["dark_four"],
+            hover_border_color=self.themes["app_color"]["context_color"]
+
+        )
+        self.db_restore_btn.setMinimumHeight(40)
+        self.ui.load_pages.db_restore_frame.addWidget(self.db_restore_btn)
+
+        self.db_exit_btn = PyPushButton2(
+            text="Exit",
+            radius=8,
+            color=self.themes["app_color"]["text_foreground"],
+            bg_color=self.themes["app_color"]["dark_one"],
+            bg_color_hover=self.themes["app_color"]["dark_three"],
+            bg_color_pressed=self.themes["app_color"]["dark_four"],
+            hover_border_color=self.themes["app_color"]["red"]
+
+        )
+        self.db_exit_btn.setMinimumHeight(40)
+        self.ui.load_pages.db_exit_frame.addWidget(self.db_exit_btn)
 
 
     # ///////////////////////////////////////////////////////////////

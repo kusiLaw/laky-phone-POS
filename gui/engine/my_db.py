@@ -11,6 +11,7 @@ import sqlite3
 # from json_util import custom_deserializer, custom_serializer
 from .json_base import custom_deserializer, custom_serializer
 
+# this help to read the file once.
 class DB_Meta(type):
     def __new__(cls, name,base, class_dict):
         obj = super().__new__(cls, name, base, class_dict)
@@ -85,13 +86,17 @@ class My_db(metaclass=DB_Meta):
                     # a.close()
             except:
                 print("error occured")
-            return self.con
+                return False
+
+            else:
+                return self.con
 
 
             # # TODO: password should be well handled
 
         else:
-            raise NotImplemented("Database specified currently not supported")
+            return False
+            # raise NotImplemented("Database specified currently not supported")
 
 
     @classmethod
@@ -106,6 +111,7 @@ class My_db(metaclass=DB_Meta):
             return
         elif default_engin == "mysql":
             cls.initial_args["Default"] = default_engin
+
             cls.initial_args["mysql"]["dbname"] = dbname
             cls.initial_args["mysql"]["hostname"] = host
             cls.initial_args["mysql"]['user'] = user

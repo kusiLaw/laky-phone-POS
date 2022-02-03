@@ -31,6 +31,7 @@ from mysql.connector import errorcode, errors
 from gui.widgets import *
 from gui.engine.phones_operations import Active_User
 from gui.engine.discriptor import *
+from gui.engine.my_db import My_db
 
 # ADJUST QT FONT DPI FOR HIGHT SCALE AN 4K MONITOR
 # ///////////////////////////////////////////////////////////////
@@ -176,7 +177,8 @@ class MainWindow(QMainWindow):
             self.dash_board_stock_table()
             self.dash_board_avg()
 
-            MainFunctions.set_page(self, self.ui.load_pages.dasboard)
+            # MainFunctions.set_page(self, self.ui.load_pages.dasboard)
+            MainFunctions.set_page(self, self.ui.load_pages.database)
 
             # try:
             #     for x in ("T", "F", "G", "F"):
@@ -1171,7 +1173,7 @@ class SplashScreen(QMainWindow):
         self.setAttribute(Qt.WA_TranslucentBackground)
 
 
-        print(self.theme["app_color"]["dark_three"])
+        # print(self.theme["app_color"]["dark_three"])
         # import circular progress
         self.progress = PyCircularProgress(
             progress_color = self.theme["app_color"]["context_color"],
@@ -1218,8 +1220,28 @@ class SplashScreen(QMainWindow):
 
         if counter >= 101:
             self.timer.stop()
-            self.main = MainWindow()
-            self.main.show()
+
+            #check db connection before lunching
+            try:
+                dic = My_db()
+                if dic.connect():
+                    print('here ')
+                    # self.main = MainWindow()
+                    # self.main.show()
+                    window =MainWindow()
+                    window.show()
+                    # MainFunctions.set_page(window, window.ui.load_pages.dasboard)
+                else:
+                    print('here is runo')
+                    # self.main = MainWindow()
+                    # self.main.show()
+                    window = MainWindow()
+                    window.show()
+                    MainFunctions.set_page(window, window.ui.load_pages.database)
+            except:
+                pass
+
+
             self.close()
 
     # def keyPressEvent(self, event):
