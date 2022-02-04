@@ -1341,8 +1341,17 @@ class Ui_MainPages(object):
         self.frame_110.setObjectName(u"frame_110")
         self.frame_110.setMinimumSize(QSize(313, 0))
         self.frame_110.setMaximumSize(QSize(313, 16777215))
-        self.frame_110.setFrameShape(QFrame.StyledPanel)
+        self.frame_110.setFrameShape(QFrame.NoFrame)
         self.frame_110.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_44 = QVBoxLayout(self.frame_110)
+        self.verticalLayout_44.setObjectName(u"verticalLayout_44")
+        self.error_indicator = QLabel(self.frame_110)
+        self.error_indicator.setObjectName(u"error_indicator")
+        self.error_indicator.setScaledContents(True)
+        self.error_indicator.setWordWrap(True)
+
+        self.verticalLayout_44.addWidget(self.error_indicator)
+
 
         self.horizontalLayout_18.addWidget(self.frame_110)
 
@@ -1353,14 +1362,14 @@ class Ui_MainPages(object):
         self.formLayout = QFormLayout(self.frame_98)
         self.formLayout.setObjectName(u"formLayout")
         self.formLayout.setContentsMargins(0, 0, 0, 0)
-        self.label_65 = QLabel(self.frame_98)
-        self.label_65.setObjectName(u"label_65")
-        self.label_65.setMinimumSize(QSize(150, 0))
-        self.label_65.setScaledContents(True)
-        self.label_65.setAlignment(Qt.AlignCenter)
-        self.label_65.setWordWrap(True)
+        self.cont_test_info = QLabel(self.frame_98)
+        self.cont_test_info.setObjectName(u"cont_test_info")
+        self.cont_test_info.setMinimumSize(QSize(150, 0))
+        self.cont_test_info.setScaledContents(True)
+        self.cont_test_info.setAlignment(Qt.AlignCenter)
+        self.cont_test_info.setWordWrap(True)
 
-        self.formLayout.setWidget(0, QFormLayout.LabelRole, self.label_65)
+        self.formLayout.setWidget(0, QFormLayout.LabelRole, self.cont_test_info)
 
         self.frame_112 = QFrame(self.frame_98)
         self.frame_112.setObjectName(u"frame_112")
@@ -1373,15 +1382,15 @@ class Ui_MainPages(object):
 
         self.formLayout.setWidget(1, QFormLayout.SpanningRole, self.frame_112)
 
-        self.frame_111 = QFrame(self.frame_98)
-        self.frame_111.setObjectName(u"frame_111")
-        self.frame_111.setMinimumSize(QSize(0, 30))
-        self.frame_111.setMaximumSize(QSize(200, 30))
-        self.frame_111.setStyleSheet(u"")
-        self.frame_111.setFrameShape(QFrame.StyledPanel)
-        self.frame_111.setFrameShadow(QFrame.Raised)
+        self.indicator_frame = QFrame(self.frame_98)
+        self.indicator_frame.setObjectName(u"indicator_frame")
+        self.indicator_frame.setMinimumSize(QSize(0, 30))
+        self.indicator_frame.setMaximumSize(QSize(200, 30))
+        self.indicator_frame.setStyleSheet(u"")
+        self.indicator_frame.setFrameShape(QFrame.StyledPanel)
+        self.indicator_frame.setFrameShadow(QFrame.Raised)
 
-        self.formLayout.setWidget(0, QFormLayout.FieldRole, self.frame_111)
+        self.formLayout.setWidget(0, QFormLayout.FieldRole, self.indicator_frame)
 
 
         self.horizontalLayout_18.addWidget(self.frame_98)
@@ -2712,7 +2721,8 @@ class Ui_MainPages(object):
         self.label_70.setText(QCoreApplication.translate("MainPages", u"Database Settings", None))
         self.label_18.setText(QCoreApplication.translate("MainPages", u"Engine :", None))
         self.label_49.setText(QCoreApplication.translate("MainPages", u"Hostname :", None))
-        self.label_65.setText("")
+        self.error_indicator.setText("")
+        self.cont_test_info.setText("")
         self.label_67.setText(QCoreApplication.translate("MainPages", u"Port :", None))
         self.label_69.setText(QCoreApplication.translate("MainPages", u"Password:", None))
         self.label_66.setText(QCoreApplication.translate("MainPages", u"Username :", None))

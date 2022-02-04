@@ -22,7 +22,8 @@ class DB_Meta(type):
             print("everything cool, file exit and is valid, done reading")
         except FileNotFoundError :
             # file not in folder
-            print("file not found please activate")
+            # exit()
+            raise FileNotFoundError("file not found please activate")
         except json.JSONDecodeError:
             print("Invalid file")
 
@@ -44,13 +45,22 @@ class DB_Meta(type):
         return obj
 
 
-class My_db(metaclass=DB_Meta):
+# class My_db(metaclass=DB_Meta):
+
+class My_db():
+    def __init__(self):
+        try:
+
+            self.initial_args = dict(custom_deserializer())  # dict obj
+            # print('as new instan reding file')
+        except FileNotFoundError:
+            raise FileNotFoundError('file not found')
 
     def connect(self):
-        if self.initial_args["Default"] == "sqlite":
-            self.con = sqlite3.connect(self.initial_args["mysql"]["dbname"] + ".sqlite")
-            print("sqlite success")
-            return self.con.cursor()
+        # if self.initial_args["Default"] == "sqlite":
+        #     self.con = sqlite3.connect(self.initial_args["mysql"]["dbname"] + ".sqlite")
+        #     print("sqlite success")
+        #     return self.con.cursor()
 
         if self.initial_args["Default"] == "mysql":
 
@@ -61,14 +71,18 @@ class My_db(metaclass=DB_Meta):
                     password=self.initial_args["mysql"]['password'],
                     database=self.initial_args["mysql"]["dbname"]
                 )
-                print('db aready on server')
+                # connection was sucessful and return connetion to caller
+                # print('db aready on server')
 
             except mysql.connector.Error as err:
-
+                # print(err)
                 if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-                    return "Something is wrong with your user name or password"
+                    raise mysql.connector.errors.ProgrammingError(err.msg)
+                if err.errno == 2003:
+                    raise mysql.connector.errors.ProgrammingError("Can't connect to MySQL server" )
+
                 elif err.errno == errorcode.ER_BAD_DB_ERROR:
-                    print("Database does not exist")
+                    # print("Database does not exist")
                     self.con = mysql.connector.connect(
                         host=self.initial_args["mysql"]["hostname"],
                         user=self.initial_args["mysql"]['user'],
@@ -85,8 +99,8 @@ class My_db(metaclass=DB_Meta):
                     # print(a)
                     # a.close()
             except:
-                print("error occured")
-                return False
+                raise mysql.connector.errors.ProgrammingError('unknown database error occured')
+
 
             else:
                 return self.con
@@ -95,39 +109,40 @@ class My_db(metaclass=DB_Meta):
             # # TODO: password should be well handled
 
         else:
-            return False
+            raise ValueError("Sorry databese engine not supported")
             # raise NotImplemented("Database specified currently not supported")
 
 
-    @classmethod
-    def save_changes(cls, host,user,password,dbname= "lakydb", default_engin ="sqlite"):
+    # @classmethod
+    def save_changes(cls, host,user,password,port= 3306,dbname= "lakydb", default_engin ="mysql"):
 
         # change the class parameter and save change to use be used the next type
-        if  default_engin == "sqlite":
-            cls.initial_args["Default"] = default_engin
-            cls.initial_args["sqlite"]["dbname"] = dbname
-
-            custom_serializer(cls.initial_args)
-            return
-        elif default_engin == "mysql":
+        # if  default_engin == "sqlite":
+        #     cls.initial_args["Default"] = default_engin
+        #     cls.initial_args["sqlite"]["dbname"] = dbname
+        #
+        #     custom_serializer(cls.initial_args)
+        #     return
+        if default_engin == "mysql":
             cls.initial_args["Default"] = default_engin
 
             cls.initial_args["mysql"]["dbname"] = dbname
             cls.initial_args["mysql"]["hostname"] = host
             cls.initial_args["mysql"]['user'] = user
+            cls.initial_args["mysql"]['port'] = port
             # Todo : get proper way to handle password
             cls.initial_args["mysql"]['password'] =password
 
             custom_serializer(cls.initial_args)
             return
         else:
-            raise NotImplemented("Database specified currently not supported")
+            raise ValueError("Database specified currently not supported")
 
     @classmethod
     def restore_to_default(cls):
         # TODO: authenticate if the software is activated
         custom_serializer({
-            "Default": "sqlite",
+            "Default": "mysql",
             "sqlite": {
                 "dbname": "lakydb"
                 },
@@ -135,7 +150,9 @@ class My_db(metaclass=DB_Meta):
                 "hostname": "localhost",
                 "user": "root",
                 "dbname": "lakydb",
-                "password": "Laky@689393"
+                "password": "Laky@689393",
+                "port": 3306,
+                "cert":"activation key here"
               }
         })
         # pass

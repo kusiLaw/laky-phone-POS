@@ -3179,11 +3179,26 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
                       </size>
                      </property>
                      <property name="frameShape">
-                      <enum>QFrame::StyledPanel</enum>
+                      <enum>QFrame::NoFrame</enum>
                      </property>
                      <property name="frameShadow">
                       <enum>QFrame::Raised</enum>
                      </property>
+                     <layout class="QVBoxLayout" name="verticalLayout_44">
+                      <item>
+                       <widget class="QLabel" name="error_indicator">
+                        <property name="text">
+                         <string/>
+                        </property>
+                        <property name="scaledContents">
+                         <bool>true</bool>
+                        </property>
+                        <property name="wordWrap">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
                     </widget>
                    </item>
                    <item>
@@ -3208,7 +3223,7 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
                        <number>0</number>
                       </property>
                       <item row="0" column="0">
-                       <widget class="QLabel" name="label_65">
+                       <widget class="QLabel" name="cont_test_info">
                         <property name="minimumSize">
                          <size>
                           <width>150</width>
@@ -3260,7 +3275,7 @@ text-shadow: 0 15px 40px rgba(0,0,0, 0.6);</string>
                        </widget>
                       </item>
                       <item row="0" column="1">
-                       <widget class="QFrame" name="frame_111">
+                       <widget class="QFrame" name="indicator_frame">
                         <property name="minimumSize">
                          <size>
                           <width>0</width>

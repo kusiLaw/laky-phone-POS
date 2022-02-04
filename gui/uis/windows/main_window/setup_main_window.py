@@ -106,20 +106,17 @@ class SetupMainWindow:
             "btn_tooltip": "application info",
             "show_top": False,
             "is_active": False
-        }
-
-
-
-    ]
+        },
 
     # {
-    #     "btn_icon": "Accessories2.svg",
-    #     "btn_id": "accessories_btn",
-    #     "btn_text": "Phone Accessories",
-    #     "btn_tooltip": "Phone Accessories",
+    #     "btn_icon": "basic_settings.svg",
+    #     "btn_id": "adv_settings_btn",
+    #     "btn_text": "Settings",
+    #     "btn_tooltip": "Settings",
     #     "show_top": True,
     #     "is_active": False
-    # },
+    # }
+    ]
     #
     # {
     #     "btn_icon": "repairs.svg",
@@ -1373,7 +1370,7 @@ class SetupMainWindow:
             bg_color=self.themes["app_color"]["bg_three"],
             radius=0,
             bg_color_hover=self.themes["app_color"]["context_color"],
-            items=['localhost'],
+            items=['localhost',"127.0.0.1"],
 
         )
 

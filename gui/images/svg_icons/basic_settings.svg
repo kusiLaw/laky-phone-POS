@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+
+<svg
+   version="1.1"
+   id="Layer_1"
+   x="0px"
+   y="0px"
+   width="64px"
+   height="64px"
+   viewBox="0 0 64 64"
+   enable-background="new 0 0 64 64"
+   xml:space="preserve"
+   sodipodi:docname="basic_settings.svg"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs15" /><sodipodi:namedview
+   id="namedview13"
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1.0"
+   inkscape:pageshadow="2"
+   inkscape:pageopacity="0.0"
+   inkscape:pagecheckerboard="0"
+   showgrid="false"
+   inkscape:zoom="12.6875"
+   inkscape:cx="31.960591"
+   inkscape:cy="38.344828"
+   inkscape:window-width="1920"
+   inkscape:window-height="1001"
+   inkscape:window-x="-9"
+   inkscape:window-y="-9"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="Layer_1" />
+<line
+   fill="none"
+   stroke="#000000"
+   stroke-width="0.941908"
+   stroke-miterlimit="10"
+   x1="17.605776"
+   y1="31.219872"
+   x2="20.02389"
+   y2="33.512966"
+   id="line2" />
+<rect
+   x="8.5540562"
+   y="-50.813328"
+   transform="matrix(-0.72561557,0.68810031,-0.72561557,-0.68810031,0,0)"
+   fill="none"
+   stroke="#000000"
+   stroke-width="0.942566"
+   stroke-miterlimit="10"
+   width="3.9988289"
+   height="12.663352"
+   id="rect4" />
+<polygon
+   fill="none"
+   stroke="#000000"
+   stroke-width="2"
+   stroke-miterlimit="10"
+   points="12,16 18,10 8,4 6,6 "
+   id="polygon6"
+   transform="matrix(0.48362278,0,0,0.45861887,0.195355,15.626831)" />
+<line
+   fill="none"
+   stroke="#000000"
+   stroke-width="0.941908"
+   stroke-miterlimit="10"
+   x1="13.736794"
+   y1="27.550924"
+   x2="7.449697"
+   y2="21.588875"
+   id="line8" />
+<path
+   fill="none"
+   stroke="#000000"
+   stroke-width="0.941908"
+   stroke-miterlimit="10"
+   d="m 28.245478,21.359567 -3.868984,1.719821 -1.93449,-1.891803 1.69268,-3.697386 v 0 c -4.836229,-4.57e-4 -6.045286,2.264201 -6.045286,4.557296 v 1.834476 L 1.8880349,39.475013 1.0416949,42.226726 2.0693933,43.143963 5.0011146,42.456035 21.474758,27.092303 h 1.93449 c 2.418114,0 4.83623,-1.146546 4.83623,-5.732736 z"
+   id="path10" />
+</svg>

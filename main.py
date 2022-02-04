@@ -24,6 +24,7 @@ from gui.core.json_themes import Themes
 # ///////////////////////////////////////////////////////////////
 # MAIN WINDOW
 from gui.uis.windows.main_window import *
+import  mysql.connector
 from mysql.connector import errorcode, errors
 
 # IMPORT PY ONE DARK WIDGETS
@@ -46,7 +47,26 @@ user = Active_User()
 # user.create_user("lawrence", 'secretry', 'laky', 'laky', 'lawrence@txt.com', "sec",
 #               True, True, True, True, True, )
 
+def test_coonection():
+    # test connection create db if not exist if
+    # instanciate my_db to read the file again
 
+    #return ([cur or raise Exception] and  My_db instances)
+    try:
+        con_test = My_db()
+        cur = con_test.connect()
+        # print(type(cur))
+        if isinstance(cur, mysql.connector.connection.MySQLConnection):
+            return cur, con_test
+
+    except FileNotFoundError as ex:
+        return FileNotFoundError(ex),
+    except mysql.connector.errors.ProgrammingError as ex:
+        return  mysql.connector.errors.ProgrammingError(ex),con_test
+    except ValueError as e:
+        return ValueError(e), con_test
+    except mysql.connector.errors.DatabaseError:
+        return mysql.connector.errors.DatabaseError('wrong database name'),con_test
 
 # MAIN WINDOW
 # ///////////////////////////////////////////////////////////////
@@ -99,6 +119,13 @@ class MainWindow(QMainWindow):
         self.use_retail_oporation_flag = self.sales_oporation_mapper.get(self.sale_opperation_mode.currentText(), False)
 
         self.showcomponents()
+
+        #database settings
+        self.db_exit_btn.clicked.connect(lambda :exit())
+        self.db_restore_btn.clicked.connect(lambda :self.restore_db_init())
+        self.db_save_btn.clicked.connect(lambda :self.save_db_init())
+        self.test_connection.clicked.connect(lambda :self.db_test_connection())
+
         self.login_btn.clicked.connect(lambda: self.login())
         self.sign_out.clicked.connect(lambda: self.logout())
         self.reset_pass.clicked.connect(lambda : self.reset_passwrd())
@@ -897,6 +924,69 @@ class MainWindow(QMainWindow):
         print(self.use_retail_oporation_flag)
 
 
+    def restore_db_init(self):
+        try:
+            My_db.restore_to_default()
+        except:
+            MessageBox(f"Please device read or write permission", title="Restore")
+
+        else:
+            MessageBox(f"Succefully Restored \nYou may only need to change the password(server password) if error occurs ", title="Restore")
+            self.host_name.setCurrentText('127.0.0.1')
+            self.dbuser_name.setCurrentText('root')
+            self.dbport.setCurrentText('3306')
+            self.engine_db.setCurrentText('MySql')
+
+
+    def db_test_connection(self):
+        self.ui.load_pages.cont_test_info.setText('')
+
+        self.ui.load_pages.indicator_frame.setStyleSheet(f'background:transparent')
+        self.ui.load_pages.error_indicator.setText('Please wait this may take 1-2 minutes')
+
+        result = test_coonection()
+        if not isinstance(result[0], Exception):
+            self.ui.load_pages.cont_test_info.setText('Successful')
+            self.ui.load_pages.error_indicator.setText('Please restart the program to apply changes')
+            self.ui.load_pages.indicator_frame.setStyleSheet(f'background:{self.themes["app_color"]["green"]}')
+        else:
+            self.ui.load_pages.cont_test_info.setText('Failed')
+            self.ui.load_pages.indicator_frame.setStyleSheet(f'background:{self.themes["app_color"]["red"]}')
+            try:
+                # print(type(result[0]))
+
+                raise result[0]
+
+            except (FileNotFoundError,ValueError) as e:
+                self.ui.load_pages.error_indicator.setText(str(e))
+
+            except(mysql.connector.errors.ProgrammingError, mysql.connector.errors.DatabaseError) as e:
+                        # print(type(e), e.msg)
+                self.ui.load_pages.error_indicator.setText(str(e.msg))
+            except:
+                self.ui.load_pages.error_indicator.setText("unknown error")
+
+    def save_db_init(self):
+        if not self.remove_white_spaces(self.db_user_passsword.text()):
+            MessageBox(f"password can cont be empty", title="Restore")
+            return
+        try:
+            user.con.save_changes( host = self.host_name.currentText(),
+                                user = self.dbuser_name.currentText(),
+                                password = self.db_user_passsword.text() ,
+                                port= self.dbport.currentText(),
+                                default_engin = self.engine_db.currentText().lower()
+                              )
+            MessageBox(f"Save successfully ", title="Save")
+
+
+
+        except ValueError as e:
+            self.ui.load_pages.error_indicator.setText(str(e))
+        except:
+            self.ui.load_pages.error_indicator.setText('unknown error')
+
+
     # Run function when btn is clicked
     # Check funtion by object name / btn_id
     # ///////////////////////////////////////////////////////////////
@@ -1140,7 +1230,6 @@ class MainWindow(QMainWindow):
             print(MainFunctions.get_current_stack_page(self))
 
 
-
 class LoginWindow(QMainWindow):
     # Load theme
     settings = Themes()
@@ -1217,29 +1306,23 @@ class SplashScreen(QMainWindow):
         self.progress.set_value(counter)
 
         counter += 1
-
+        # print("updating")
         if counter >= 101:
             self.timer.stop()
 
             #check db connection before lunching
-            try:
-                dic = My_db()
-                if dic.connect():
-                    print('here ')
-                    # self.main = MainWindow()
-                    # self.main.show()
-                    window =MainWindow()
-                    window.show()
-                    # MainFunctions.set_page(window, window.ui.load_pages.dasboard)
-                else:
-                    print('here is runo')
-                    # self.main = MainWindow()
-                    # self.main.show()
-                    window = MainWindow()
-                    window.show()
-                    MainFunctions.set_page(window, window.ui.load_pages.database)
-            except:
-                pass
+
+            result = test_coonection()
+            if isinstance(result[0], Exception):
+                window =MainWindow()
+                window.show()
+                MainFunctions.set_page(window, window.ui.load_pages.database)
+                MessageBox("Error connecting database, Please check setings or you may restore and test connection")
+            else:
+                #no error
+                #check activation
+                window = MainWindow()
+                window.show()
 
 
             self.close()
