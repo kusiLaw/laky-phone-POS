@@ -54,7 +54,7 @@ class My_db():
             self.initial_args = dict(custom_deserializer())  # dict obj
             # print('as new instan reding file')
         except FileNotFoundError:
-            raise FileNotFoundError('file not found')
+            raise FileNotFoundError('File not found. You need to retore')
 
     def connect(self):
         # if self.initial_args["Default"] == "sqlite":

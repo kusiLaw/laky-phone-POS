@@ -1,13 +1,14 @@
 {
-  "Default": "sqlite",
+  "Default": "mysql",
   "sqlite": {
     "dbname": "lakydb"
   },
   "mysql": {
-    "hostname": "localhost",
+    "hostname": "localho",
     "user": "root",
     "dbname": "lakydb",
-    "password": "Laky@689393",
+    "password": "1354856",
+    "port": "3306",
     "cert": "activation key here"
   }
 }

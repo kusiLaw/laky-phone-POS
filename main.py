@@ -10,7 +10,9 @@ from gui.engine.my_exceptions import InvalidSalesPrice, OutOfStockException,Inva
 import sys
 import os
 from time import perf_counter
-from datetime import datetime
+import numpy as np
+import pandas as pd
+
 from decimal import Decimal, InvalidOperation
 # IMPORT QT CORE
 # ///////////////////////////////////////////////////////////////
@@ -34,6 +36,9 @@ from gui.engine.phones_operations import Active_User
 from gui.engine.discriptor import *
 from gui.engine.my_db import My_db
 
+from PySide6.QtPrintSupport import QPrinter, QPrintDialog, QPrintPreviewDialog
+from PySide6.QtGui import QTextDocument,QPageSize, QPageLayout
+from PySide6.QtCore import QSize,QMarginsF, QSizeF
 # ADJUST QT FONT DPI FOR HIGHT SCALE AN 4K MONITOR
 # ///////////////////////////////////////////////////////////////
 os.environ["QT_FONT_DPI"] = "96"
@@ -42,7 +47,7 @@ os.environ["QT_FONT_DPI"] = "96"
 # set splashscreen Counter
 counter = 0
 
-user = Active_User()
+user = None # Active_User()  #connection must be tested before user try to initiate (in cirular class)
 
 # user.create_user("lawrence", 'secretry', 'laky', 'laky', 'lawrence@txt.com', "sec",
 #               True, True, True, True, True, )
@@ -53,20 +58,33 @@ def test_coonection():
 
     #return ([cur or raise Exception] and  My_db instances)
     try:
+
         con_test = My_db()
+
         cur = con_test.connect()
         # print(type(cur))
-        if isinstance(cur, mysql.connector.connection.MySQLConnection):
-            return cur, con_test
+        # if isinstance(cur, mysql.connector.connection.MySQLConnection):
+        #     return cur, con_test
 
     except FileNotFoundError as ex:
+
+        print("23432353*****************************************************")
         return FileNotFoundError(ex),
     except mysql.connector.errors.ProgrammingError as ex:
-        return  mysql.connector.errors.ProgrammingError(ex),con_test
+        return  mysql.connector.errors.ProgrammingError('Database access denied. Please check ppassword, username or server')
     except ValueError as e:
-        return ValueError(e), con_test
+        return ValueError(e)
     except mysql.connector.errors.DatabaseError:
-        return mysql.connector.errors.DatabaseError('wrong database name'),con_test
+        return mysql.connector.errors.DatabaseError('wrong database name')
+    except:
+        return  mysql.connector.errors.ProgrammingError('Server unknown error.\n Please make sure server is working')
+    else:
+        cur.close()
+        return True
+
+
+
+
 
 # MAIN WINDOW
 # ///////////////////////////////////////////////////////////////
@@ -147,7 +165,7 @@ class MainWindow(QMainWindow):
         self.phone_clear_cart_btn.clicked.connect(lambda: self.clear_cart())
         self.phone_buyme_btn.clicked.connect(lambda : self.buy_phone())
         self.phone_delete_btn.clicked.connect(lambda : self.delete_buy())
-        self.phone_print_btn.clicked.connect(lambda: self.dispatch(self.phone_print_btn))
+        self.phone_print_btn.clicked.connect(lambda : self.print_reciept( self.phone_order_id.text()))
         self.phone_clear_btn.clicked.connect(lambda : self.clearforms(flag='phone'))
         self.phone_all_in_one_btn.clicked.connect(lambda : self.all_in_one_buy())
         self.table_widget.currentItemChanged.connect(lambda :self.table_row_Change(self.table_widget, flag='phone'))
@@ -791,6 +809,80 @@ class MainWindow(QMainWindow):
     def show_required_field(self):
         pass
 
+    def print_reciept(self, transcode):
+        # print('calling', transcode)
+        results = user.printer_feed(transcode)
+        # print(results)
+        if results:
+            resu = [ result[2:6] for result in results ]
+            data = pd.DataFrame(np.array(resu),
+                                index = range(1, len(resu) +1)  ,columns= ['Type', 'Model','Qty','Price'] )
+
+            cust = f'Name : {results[0][0] or None}  \n' \
+                f'Contact :{results[0][1]or None}  \n' \
+                f'Date: {results[0][7]or None}  \n '
+
+
+            total = round(sum([float(result[5]) for result in results]),2)
+
+            ground_total =  total
+
+            # discount
+            dis = int(results[0][8]) #same dis value in all record so one is selected
+            if dis == 0:
+                dis_val = 0
+            else:
+                dis_val = (dis / 100) * total
+                # dis_val = round(total - dis_val, 2) #subtract discount
+            ground_total -= dis_val
+            dis_applied =total - dis_val
+
+            #Apply tax --------
+            tax = int(results[0][6])
+
+            if tax == 0:
+                #dont do cal
+                tax_val = 0
+            else:
+                tax_val = round( tax / 100 * total, 2)
+                # ground_total = total + tax
+
+            ground_total += tax_val
+
+
+
+
+            # print(tax , total)
+
+            summry = f'total: {total} \n' \
+                     f'dis {dis}%: {dis_applied} \n' \
+                     f'tax {tax}%: {tax_val} \n \n' \
+                     f'Sum Total :{ground_total}'
+
+            pr = f'{cust} \n {data} \n \n {summry}'
+
+            printt = QPrinter()
+            pr = QTextDocument(pr, self)
+            pr.setDocumentMargin(0.0)
+            pr.setPageSize(QPageSize.A7)
+            # size = QSize(10, 6),
+            # pr.setPageSize(size)
+            printt.setFullPage(False)
+
+            printt.setPageMargins(QMarginsF(0,0,0,1),QPageLayout.Millimeter)
+            printt.setPageSize(QPageSize.A7)
+
+            dialog = QPrintPreviewDialog(printt, self)
+            dialog.paintRequested.connect(lambda :pr.print_(printt))
+            dialog.show()
+            # if dialog.exec_() ==QPrintDialog.Accepted:
+            #
+            #
+            #     pr =QTextDocument(pr,self)
+            #     pr.setDocumentMargin(0)
+            #     pr.print_(printt)
+
+
     def feed_combo(self, Qobj, feed : list= None ):
         items = feed
         # items.append('')
@@ -928,7 +1020,7 @@ class MainWindow(QMainWindow):
         try:
             My_db.restore_to_default()
         except:
-            MessageBox(f"Please device read or write permission", title="Restore")
+            MessageBox(f"Please device check read or write permission", title="Restore")
 
         else:
             MessageBox(f"Succefully Restored \nYou may only need to change the password(server password) if error occurs ", title="Restore")
@@ -941,11 +1033,11 @@ class MainWindow(QMainWindow):
     def db_test_connection(self):
         self.ui.load_pages.cont_test_info.setText('')
 
-        self.ui.load_pages.indicator_frame.setStyleSheet(f'background:transparent')
+        # self.ui.load_pages.indicator_frame.setStyleSheet(f'background:transparent')
         self.ui.load_pages.error_indicator.setText('Please wait this may take 1-2 minutes')
 
         result = test_coonection()
-        if not isinstance(result[0], Exception):
+        if result is True:  #not isinstance(result, Exception):
             self.ui.load_pages.cont_test_info.setText('Successful')
             self.ui.load_pages.error_indicator.setText('Please restart the program to apply changes')
             self.ui.load_pages.indicator_frame.setStyleSheet(f'background:{self.themes["app_color"]["green"]}')
@@ -955,7 +1047,7 @@ class MainWindow(QMainWindow):
             try:
                 # print(type(result[0]))
 
-                raise result[0]
+                raise result
 
             except (FileNotFoundError,ValueError) as e:
                 self.ui.load_pages.error_indicator.setText(str(e))
@@ -965,6 +1057,8 @@ class MainWindow(QMainWindow):
                 self.ui.load_pages.error_indicator.setText(str(e.msg))
             except:
                 self.ui.load_pages.error_indicator.setText("unknown error")
+
+
 
     def save_db_init(self):
         if not self.remove_white_spaces(self.db_user_passsword.text()):
@@ -1313,7 +1407,7 @@ class SplashScreen(QMainWindow):
             #check db connection before lunching
 
             result = test_coonection()
-            if isinstance(result[0], Exception):
+            if isinstance(result, Exception):
                 window =MainWindow()
                 window.show()
                 MainFunctions.set_page(window, window.ui.load_pages.database)
@@ -1321,6 +1415,9 @@ class SplashScreen(QMainWindow):
             else:
                 #no error
                 #check activation
+                global user  # good to start user class
+                user = Active_User()
+
                 window = MainWindow()
                 window.show()
 
@@ -1338,6 +1435,7 @@ class SplashScreen(QMainWindow):
 # Set the initial class and also additional parameters of the "QApplication" class
 # ///////////////////////////////////////////////////////////////
 if __name__ == "__main__":
+
     # APPLICATION
     # ///////////////////////////////////////////////////////////////
     app = QApplication(sys.argv)

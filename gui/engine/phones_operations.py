@@ -225,6 +225,7 @@ class PhoneStock:
             result = cur.fetchall()
         except  errors.Error as err:
             print(err.msg)
+            return []
         else:
             return result
 
@@ -452,6 +453,37 @@ class PhoneStock:
         finally:
             con.close()
 
+    def printer_feed(self, transcode):
+        con = self.con.connect()
+        cur = con.cursor()
+        st = "SELECT customer.customer_name, customer.customer_contact, sale_phone.phone_type, sale_phone.model , phone_prices.quantity, phone_prices.sp, phone_prices.tax, phone_prices.dates, phone_transaction.discount " \
+            "FROM lakydb.sale_phone right join  lakydb.phone_transaction " \
+            "on  sale_phone.phone_transaction_phone_transaction_id = phone_transaction.phone_transaction_id  " \
+            "right join  lakydb.customer " \
+            "on sale_phone.Customer_customer_id = customer.customer_id " \
+            "inner join phone_prices  " \
+            "on sale_phone.Sale_phone_id = phone_prices.Sale_phone_Sale_phone_id " \
+            "where phone_transaction.trans_code = %s;"
+
+        try:
+            cur.execute(st, (transcode,))
+            result = cur.fetchall()
+            # if result:
+            #     print(result)
+        except  errors.Error as err:
+            if err.errno == errorcode.ER_DUP_ENTRY:
+                print("record already exist")
+                return "record already exist"
+            else:
+                print(err)
+        except:
+
+            return []
+        else:
+            return result
+
+        finally:
+            con.close()
 
 
 
