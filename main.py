@@ -6,6 +6,7 @@ from gui.uis.splashscreen.splash_screen import *
 from gui.uis.login.login import *
 from gui.engine.my_exceptions import InvalidSalesPrice, OutOfStockException,Invalid_Item_Purchase,LakyException
 
+import pdfkit
 
 import sys
 import os
@@ -39,6 +40,7 @@ from gui.engine.my_db import My_db
 from PySide6.QtPrintSupport import QPrinter, QPrintDialog, QPrintPreviewDialog
 from PySide6.QtGui import QTextDocument,QPageSize, QPageLayout
 from PySide6.QtCore import QSize,QMarginsF, QSizeF
+
 # ADJUST QT FONT DPI FOR HIGHT SCALE AN 4K MONITOR
 # ///////////////////////////////////////////////////////////////
 os.environ["QT_FONT_DPI"] = "96"
@@ -818,9 +820,9 @@ class MainWindow(QMainWindow):
             data = pd.DataFrame(np.array(resu),
                                 index = range(1, len(resu) +1)  ,columns= ['Type', 'Model','Qty','Price'] )
 
-            cust = f'Name : {results[0][0] or None}  \n' \
-                f'Contact :{results[0][1]or None}  \n' \
-                f'Date: {results[0][7]or None}  \n '
+            cust = f'<p> Name : {results[0][0] or None} <br> \n' \
+                f'Contact :{results[0][1]or None}  <br>\n' \
+                f'Date: {results[0][7]or None} </p> <br> \n '
 
 
             total = round(sum([float(result[5]) for result in results]),2)
@@ -849,38 +851,122 @@ class MainWindow(QMainWindow):
 
             ground_total += tax_val
 
-
-
-
             # print(tax , total)
 
-            summry = f'total: {total} \n' \
-                     f'dis {dis}%: {dis_applied} \n' \
-                     f'tax {tax}%: {tax_val} \n \n' \
-                     f'Sum Total :{ground_total}'
+            summry = f'<p>total: {total} <br> \n' \
+                     f'dis {dis}%: {dis_applied} <br> \n' \
+                     f'tax {tax}%: {tax_val} <br>\n' \
+                     f'Sum Total :{ground_total}</p>\n'
 
             pr = f'{cust} \n {data} \n \n {summry}'
 
-            printt = QPrinter()
-            pr = QTextDocument(pr, self)
-            pr.setDocumentMargin(0.0)
-            pr.setPageSize(QPageSize.A7)
+# ///////////////////////////////////////////////////
+            htm = """
+            <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Document</title>
+                </head>
+                <body  style="margin-left: 0;" >
+                   <section style="color:red;" 
+                    //company name and logo
+                   <h1 class = head > Atta Mobile Phone </h1>
+                    
+                    {customer}
+                    <div style = 'border-collapse: collapse;'>
+                    {data}
+                    </div>
+                    <div style="margin-left:120px;" class = 'summary '>
+                    {summry}
+                    </div>
+                    </section>
+                </body>
+                </html>
+            
+            """
+            data_str = str(data.to_html(classes='mystyle'))
+
+            htm = htm.format( data= data_str, summry = summry, customer = cust)
+#///////////////////////////////////////////////////
+            # print(htm)
+            # from weasyprint import  HTML
+            # HTML(string=htm,encoding="utf8").write_pdf('hjhj')
+            #
+            pr = QTextDocument()
+            pr.setDefaultStyleSheet("""
+            h1{
+            font-size: 24px;
+    font-weight: 700;
+    text-transform: uppercase;
+            }
+            table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}""")
+            pr.setHtml(htm)
+            # print(pr.toHtml())
+
+
+            # pr.setDocumentLayout()
+            # pr.setPageSize(QSizeF(80,195 ))
+            # pr.setDocumentMargin(0)
+
+            # pr.setPageSize(QSize(1, 1))
             # size = QSize(10, 6),
             # pr.setPageSize(size)
-            printt.setFullPage(False)
 
-            printt.setPageMargins(QMarginsF(0,0,0,1),QPageLayout.Millimeter)
-            printt.setPageSize(QPageSize.A7)
+            # printt = QPrinter(mode=QPrinter.PrinterResolution)
+            printt = QPrinter()
+            printt.setResolution(96)
+            printt.setPageSize(QPageSize.Letter)
+            printt.setPageMargins(QMarginsF(0, 0, 0, 10), QPageLayout.Millimeter)
+
+            # pr.setPageSize(QSizeF(8.5*96, 11*96))
+            pr.setPageSize(QSizeF(7*96, 11*96))
+
+            pr.setDocumentMargin(0)
+
+
+            # printt.setFullPage(True)
+
+            # page = printt.pageLayout()
+            # page.setMode(QPageLayout.FullPageMode)
+            # page.setMinimumMargins(QMarginsF(0, 0, 0, 0))
+            # page.setMargins(QMarginsF(0, 0, 0, 10))
+            # page.setLeftMargin(0)
+            #
+
+            #
+            #
+            # printt.setPageLayout(page)
+
+            # printt.setPageSize(QPageSize.Letter)
+            # printt.setPageMargins(QMarginsF(0,0,0,0))
+
+
+            #printt.setLeftMargin(0)
+            # printt.setPageMargins(QMarginsF(-10,0,0,1),QPageLayout.Millimeter)
+
+            # printt.setPageSize()
 
             dialog = QPrintPreviewDialog(printt, self)
             dialog.paintRequested.connect(lambda :pr.print_(printt))
             dialog.show()
-            # if dialog.exec_() ==QPrintDialog.Accepted:
-            #
-            #
-            #     pr =QTextDocument(pr,self)
-            #     pr.setDocumentMargin(0)
-            #     pr.print_(printt)
+            if dialog.exec_() ==QPrintDialog.Accepted:
+
+
+                pr =QTextDocument(pr,self)
+                pr.setDocumentMargin(0)
+                pr.print_(printt)
 
 
     def feed_combo(self, Qobj, feed : list= None ):
