@@ -6,10 +6,12 @@ from gui.uis.splashscreen.splash_screen import *
 from gui.uis.login.login import *
 from gui.engine.my_exceptions import InvalidSalesPrice, OutOfStockException,Invalid_Item_Purchase,LakyException
 
-import pdfkit
+
 
 import sys
 import os
+import win32api
+import sys
 from time import perf_counter
 import numpy as np
 import pandas as pd
@@ -36,10 +38,13 @@ from gui.widgets import *
 from gui.engine.phones_operations import Active_User
 from gui.engine.discriptor import *
 from gui.engine.my_db import My_db
+from weasyprint import HTML
 
 from PySide6.QtPrintSupport import QPrinter, QPrintDialog, QPrintPreviewDialog
 from PySide6.QtGui import QTextDocument,QPageSize, QPageLayout
-from PySide6.QtCore import QSize,QMarginsF, QSizeF
+from PySide6.QtCore import QSize,QMarginsF, QSizeF,QFile
+from PySide6.QtWidgets import QTextBrowser
+
 
 # ADJUST QT FONT DPI FOR HIGHT SCALE AN 4K MONITOR
 # ///////////////////////////////////////////////////////////////
@@ -167,7 +172,7 @@ class MainWindow(QMainWindow):
         self.phone_clear_cart_btn.clicked.connect(lambda: self.clear_cart())
         self.phone_buyme_btn.clicked.connect(lambda : self.buy_phone())
         self.phone_delete_btn.clicked.connect(lambda : self.delete_buy())
-        self.phone_print_btn.clicked.connect(lambda : self.print_reciept( self.phone_order_id.text()))
+        self.phone_print_btn.clicked.connect(lambda : self.file_printer_windows( ))#self.phone_order_id.text()
         self.phone_clear_btn.clicked.connect(lambda : self.clearforms(flag='phone'))
         self.phone_all_in_one_btn.clicked.connect(lambda : self.all_in_one_buy())
         self.table_widget.currentItemChanged.connect(lambda :self.table_row_Change(self.table_widget, flag='phone'))
@@ -224,8 +229,8 @@ class MainWindow(QMainWindow):
             self.dash_board_stock_table()
             self.dash_board_avg()
 
-            # MainFunctions.set_page(self, self.ui.load_pages.dasboard)
-            MainFunctions.set_page(self, self.ui.load_pages.database)
+            MainFunctions.set_page(self, self.ui.load_pages.dasboard)
+            # MainFunctions.set_page(self, self.ui.load_pages.database)
 
             # try:
             #     for x in ("T", "F", "G", "F"):
@@ -811,7 +816,12 @@ class MainWindow(QMainWindow):
     def show_required_field(self):
         pass
 
-    def print_reciept(self, transcode):
+    def easyPrint(self):
+        a = HTML(string=self.pos_reciept_format(self.phone_order_id.text()),base_url = '')
+
+        a.write_pdf('ss.pdf')
+
+    def pos_reciept_format(self, transcode):
         # print('calling', transcode)
         results = user.printer_feed(transcode)
         # print(results)
@@ -820,10 +830,10 @@ class MainWindow(QMainWindow):
             data = pd.DataFrame(np.array(resu),
                                 index = range(1, len(resu) +1)  ,columns= ['Type', 'Model','Qty','Price'] )
 
-            cust = f'<p> Name : {results[0][0] or None} <br> \n' \
-                f'Contact :{results[0][1]or None}  <br>\n' \
-                f'Date: {results[0][7]or None} </p> <br> \n '
-
+            cust = f'<p> <span> Name : </span> {results[0][0] or None} <br>'\
+                f'<span> Contact :</span> {results[0][1]or None}  <br>'\
+                f'<span> Date: </span> {results[0][7]or None}  <br>'\
+                f'<span>Transaction Code : </span> {results[0][9]or None} </p>'
 
             total = round(sum([float(result[5]) for result in results]),2)
 
@@ -853,121 +863,286 @@ class MainWindow(QMainWindow):
 
             # print(tax , total)
 
-            summry = f'<p>total: {total} <br> \n' \
-                     f'dis {dis}%: {dis_applied} <br> \n' \
-                     f'tax {tax}%: {tax_val} <br>\n' \
-                     f'Sum Total :{ground_total}</p>\n'
+            summry = f'<div class="total">'\
+                f'<p>Total:</p> <p>{ground_total} </p></div>'\
+                     f'<table><tr><td>Sub-Total :</td><td> {total}</td> </tr>'\
+                     f'<tr><td> dis {dis}%:</td><td>{dis_applied} </td> </tr> '\
+                     f'<tr><td>tax {tax}%: </td><td>{tax_val} </td> </tr>'\
+                    f'</table>'
 
-            pr = f'{cust} \n {data} \n \n {summry}'
+            # pr = f'{cust} \n {data} \n \n {summry}'
 
 # ///////////////////////////////////////////////////
-            htm = """
-            <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>Document</title>
-                </head>
-                <body  style="margin-left: 0;" >
-                   <section style="color:red;" 
-                    //company name and logo
-                   <h1 class = head > Atta Mobile Phone </h1>
-                    
-                    {customer}
-                    <div style = 'border-collapse: collapse;'>
-                    {data}
-                    </div>
-                    <div style="margin-left:120px;" class = 'summary '>
-                    {summry}
-                    </div>
-                    </section>
-                </body>
-                </html>
+            htm_string = '''
+        <!DOCTYPE html>
+            <html lang="en">
             
-            """
+            <head>
+                <meta charset="UTF-8">
+                <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Document</title>
+            <style>
+                {style}
+            </style>
+            </head>
+            
+            <body>
+                <div class="container">
+                    <div class='header'>
+                        <div class='header_logo-box'>
+                            <span><img src={logo} class='logo-image'></span>
+                        </div>
+                        <div class="campany_name">
+                            <span>Atta Mobile Phone & Accessories <span>
+                        </div>
+                    </div>
+                    <h3>Invoice</h3>
+                    
+                    <div class="invoice-details">
+                       {customer}
+                    </div>
+                    
+                    <div>
+                        {data}
+                    </div>
+            
+                    <div class="summary clearfix">
+                        {summry}
+                    </div>
+            
+                    <p class="thanks">- Thank you for shopping us -</p>
+                    
+                    <div>
+                        <div class='bar-box'>
+                            <img src=bar.jpg class='bar-image'>
+                        </div>
+                        <p class="powered">powered by Lakyphone Pos</p>
+                    </div>
+            </body>
+
+</html>
+        '''
+
             data_str = str(data.to_html(classes='mystyle'))
+            # QPixmap(u"{0}".format('./eye.png'))
+            logo = "logo.png"
+            # print(data_str)
 
-            htm = htm.format( data= data_str, summry = summry, customer = cust)
-#///////////////////////////////////////////////////
-            # print(htm)
-            # from weasyprint import  HTML
-            # HTML(string=htm,encoding="utf8").write_pdf('hjhj')
-            #
-            pr = QTextDocument()
-            pr.setDefaultStyleSheet("""
-            h1{
-            font-size: 24px;
-    font-weight: 700;
-    text-transform: uppercase;
-            }
-            table {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-th, td {
-    padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}""")
-            pr.setHtml(htm)
-            # print(pr.toHtml())
+            htm_string= htm_string.format(style = self.pos_css(), data= data_str, summry = summry, customer = cust , logo = logo)
+            return htm_string
 
 
-            # pr.setDocumentLayout()
-            # pr.setPageSize(QSizeF(80,195 ))
-            # pr.setDocumentMargin(0)
+    def file_printer_windows(self):
+        self.easyPrint()
+        win32api.ShellExecute(0, "print", 'ss.pdf', None, ".", 0)
 
-            # pr.setPageSize(QSize(1, 1))
-            # size = QSize(10, 6),
-            # pr.setPageSize(size)
+    def file_printer_qt(self):
+        pass
 
-            # printt = QPrinter(mode=QPrinter.PrinterResolution)
-            printt = QPrinter()
-            printt.setResolution(96)
-            printt.setPageSize(QPageSize.Letter)
-            printt.setPageMargins(QMarginsF(0, 0, 0, 10), QPageLayout.Millimeter)
+        # pr = QTextDocument()
+        # # pr.setDefaultStyleSheet(self.pos_css())
+        #
+        #
+        # pr.setHtml(htm)
+        # print(htm)
+        # f=QTextDocument()
+        #
+        #
+        # # pr.setDocumentLayout()
+        # # pr.setPageSize(QSizeF(80,195 ))
+        # # pr.setDocumentMargin(0)
+        #
+        # # pr.setPageSize(QSize(1, 1))
+        # # size = QSize(10, 6),
+        # # pr.setPageSize(size)
+        #
+        # # # printt = QPrinter(mode=QPrinter.PrinterResolution)
+        # printt = QPrinter()
+        # # printt.setResolution(96)
+        # # printt.setPageSize(QPageSize.A7)
+        # # printt.setPageMargins(QMarginsF(0, 0, 0, 10), QPageLayout.Millimeter)
+        # #
+        # # pr.setPageSize(QSizeF(8.5*96, 11*96))
+        # # # pr.setPageSize(QSizeF(7*96, 11*96))
+        # #
+        # # pr.setDocumentMargin(0)
+        #
+        #
+        # # printt.setFullPage(True)
+        #
+        # # page = printt.pageLayout()
+        # # page.setMode(QPageLayout.FullPageMode)
+        # # page.setMinimumMargins(QMarginsF(0, 0, 0, 0))
+        # # page.setMargins(QMarginsF(0, 0, 0, 10))
+        # # page.setLeftMargin(0)
+        # #
+        # # printt.setPageLayout(page)
+        #
+        # # printt.setPageSize(QPageSize.Letter)
+        # # printt.setPageMargins(QMarginsF(0,0,0,0))
+        #
+        #
+        # #printt.setLeftMargin(0)
+        # # printt.setPageMargins(QMarginsF(-10,0,0,1),QPageLayout.Millimeter)
+        #
+        # # printt.setPageSize()
+        #
+        # dialog = QPrintPreviewDialog(printt, self)
+        # dialog.paintRequested.connect(lambda:pr.print_(printt))
+        # dialog.show()
+        # if dialog.exec_() ==QPrintDialog.Accepted:
+        #     pr =QTextDocument(pr,self)
+        #     pr.setDocumentMargin(0)
+        #     pr.print_(printt)
 
-            # pr.setPageSize(QSizeF(8.5*96, 11*96))
-            pr.setPageSize(QSizeF(7*96, 11*96))
+    def pos_css(self):
+        return  """
+    * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-            pr.setDocumentMargin(0)
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            max-width: 279px;
+            font-size: 1rem;
+        }
+     @page{
+    margin-left:0px;
+        }
+      
 
+        .header {
+            display: flex;
+            background-color: rgb(239, 250, 255);
+            min-height: 100px;
+            align-items: center;
+            /* taken the padding off the flex container to see if Atta Mobile Phones will fully show*/
+            /* padding: 0.3em; */
+            /**border-bottom: 2px solid black;**/
+        }
 
-            # printt.setFullPage(True)
+          .header_logo-box {
+              flex-basis: 40%;
+        }
 
-            # page = printt.pageLayout()
-            # page.setMode(QPageLayout.FullPageMode)
-            # page.setMinimumMargins(QMarginsF(0, 0, 0, 0))
-            # page.setMargins(QMarginsF(0, 0, 0, 10))
-            # page.setLeftMargin(0)
-            #
+        .logo-image {
+            max-width: 100%;
+            height: 100px;
+        }
 
-            #
-            #
-            # printt.setPageLayout(page)
+        h3, .bar-box, .thanks {
+            text-align: center;
+        }
 
-            # printt.setPageSize(QPageSize.Letter)
-            # printt.setPageMargins(QMarginsF(0,0,0,0))
+        h3, .campany_name {
+            text-transform: uppercase;
+        }
 
+        .campany_name {
+            /* Reducing the font-size from 0.9 to 0.7rem to check if it will fully show*/
+            font-size: 0.7rem;
+            padding-left: 0.9rem;
+            font-weight: 900;
+        }
 
-            #printt.setLeftMargin(0)
-            # printt.setPageMargins(QMarginsF(-10,0,0,1),QPageLayout.Millimeter)
+        h3 {
+            font-size: 1rem;
+            margin: 0.8rem 0 0.5rem 0;
+            font-weight: 600;
+        }
 
-            # printt.setPageSize()
+        .invoice-details {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 0.8rem;
+        }
 
-            dialog = QPrintPreviewDialog(printt, self)
-            dialog.paintRequested.connect(lambda :pr.print_(printt))
-            dialog.show()
-            if dialog.exec_() ==QPrintDialog.Accepted:
+        .invoice-details span {
+            font-weight: 600;
+        }
 
+        table.mystyle {
+            width: 100%;
+            border-collapse: collapse;
+        }
 
-                pr =QTextDocument(pr,self)
-                pr.setDocumentMargin(0)
-                pr.print_(printt)
+        .mystyle th, .mystyle td {
+            border: 1px solid black;
+        }
 
+        th,
+        td {
+            padding: 0.3em;
+            text-align: left;
+            font-size: 0.7rem;
+        }
+
+        .summary {
+            /* display: flex; */
+            /* justify-content: space-between; */
+            /* align-items: center; */
+            margin: 0.8rem 0;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px dotted black;
+        }
+
+        .summary .total {
+            /* flex-basis: 50%; */
+            float: left;
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .clearfix::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+        .summary table {
+            float: right;
+        }
+
+        .total p:first-of-type {
+            margin-right: 0.3rem;
+            text-transform: uppercase;
+            font-size: small;
+            font-weight: 600;
+        }
+
+        .total p:last-of-type {
+            font-size: 1.2rem;
+            text-decoration: underline;
+        }
+
+        .bar-box {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .bar-image {
+            max-width: 100%;
+            height: 60px;
+        }
+
+        .thanks {
+            margin-top: 15px;
+            font-size: 0.8rem;
+            font-style: italic;
+        }
+
+        .powered {
+            text-align: right;
+            font-size: 0.7rem;
+            font-style: italic;
+            font-family: 'Lucida Sans', Verdana, sans-serif;
+        }
+        
+        """
 
     def feed_combo(self, Qobj, feed : list= None ):
         items = feed

@@ -456,7 +456,7 @@ class PhoneStock:
     def printer_feed(self, transcode):
         con = self.con.connect()
         cur = con.cursor()
-        st = "SELECT customer.customer_name, customer.customer_contact, sale_phone.phone_type, sale_phone.model , phone_prices.quantity, phone_prices.sp, phone_prices.tax, phone_prices.dates, phone_transaction.discount " \
+        st = "SELECT customer.customer_name, customer.customer_contact, sale_phone.phone_type, sale_phone.model , phone_prices.quantity, phone_prices.sp, phone_prices.tax, phone_prices.dates, phone_transaction.discount, phone_transaction.trans_code " \
             "FROM lakydb.sale_phone right join  lakydb.phone_transaction " \
             "on  sale_phone.phone_transaction_phone_transaction_id = phone_transaction.phone_transaction_id  " \
             "right join  lakydb.customer " \
@@ -892,14 +892,6 @@ class Phone:
 
     def __len__(self):
         return len(self.caches_retail)
-
-
-    def search(self, search_key, item):
-        pass
-
-    def printout(self):
-        pass
-
 
     def highly_purchase(self):
         statement = "SELECT Sale_phone.model as 'Model', sum(phone_prices.quantity) as 'Purchases' from " \
