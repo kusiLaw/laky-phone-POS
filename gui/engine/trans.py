@@ -7,7 +7,7 @@ class Transcode:
         return f'{self.timeformat()}'
 
     def timeformat(self):
-        return datetime.now().strftime("%f-%S%M-%d%m%y")
+        return datetime.now().strftime("%f-%S%M-%d%m%y")[4:]
 
     # def getadder(self):
     #     return get_mac_address()

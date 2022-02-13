@@ -15,6 +15,7 @@ import sys
 from time import perf_counter
 import numpy as np
 import pandas as pd
+from barcode  import  UPCA
 
 from decimal import Decimal, InvalidOperation
 # IMPORT QT CORE
@@ -40,10 +41,10 @@ from gui.engine.discriptor import *
 from gui.engine.my_db import My_db
 from weasyprint import HTML
 
-from PySide6.QtPrintSupport import QPrinter, QPrintDialog, QPrintPreviewDialog
-from PySide6.QtGui import QTextDocument,QPageSize, QPageLayout
-from PySide6.QtCore import QSize,QMarginsF, QSizeF,QFile
-from PySide6.QtWidgets import QTextBrowser
+# from PySide6.QtPrintSupport import QPrinter, QPrintDialog, QPrintPreviewDialog
+# from PySide6.QtGui import QTextDocument,QPageSize, QPageLayout
+# from PySide6.QtCore import QSize,QMarginsF, QSizeF,QFile
+# from PySide6.QtWidgets import QTextBrowser
 
 
 # ADJUST QT FONT DPI FOR HIGHT SCALE AN 4K MONITOR
@@ -75,7 +76,7 @@ def test_coonection():
 
     except FileNotFoundError as ex:
 
-        print("23432353*****************************************************")
+        # print("23432353*****************************************************")
         return FileNotFoundError(ex),
     except mysql.connector.errors.ProgrammingError as ex:
         return  mysql.connector.errors.ProgrammingError('Database access denied. Please check ppassword, username or server')
@@ -833,7 +834,7 @@ class MainWindow(QMainWindow):
             cust = f'<p> <span> Name : </span> {results[0][0] or None} <br>'\
                 f'<span> Contact :</span> {results[0][1]or None}  <br>'\
                 f'<span> Date: </span> {results[0][7]or None}  <br>'\
-                f'<span>Transaction Code : </span> {results[0][9]or None} </p>'
+                f'<span>Invoice ID: </span> {results[0][9]or None} </p>'
 
             total = round(sum([float(result[5]) for result in results]),2)
 
@@ -860,11 +861,17 @@ class MainWindow(QMainWindow):
                 # ground_total = total + tax
 
             ground_total += tax_val
+            # spliter = str(round(ground_total,2)).split('.')
+            # point = spliter[1]
+            # if int(point) < 10: #single val
+            #     point  = str(point).join('0')
+            #     ground_total = str(round(ground_total,2))
+            #     ground_total.replace(ground_total[ground_total.find('.') + 1:], point)
+            # # print(tax , total)
 
-            # print(tax , total)
 
             summry = f'<div class="total">'\
-                f'<p>Total:</p> <p>{ground_total} </p></div>'\
+                f'<p class= "margin-total">Total:</p> <p>₵:{ground_total} </p></div>'\
                      f'<table><tr><td>Sub-Total :</td><td> {total}</td> </tr>'\
                      f'<tr><td> dis {dis}%:</td><td>{dis_applied} </td> </tr> '\
                      f'<tr><td>tax {tax}%: </td><td>{tax_val} </td> </tr>'\
@@ -894,7 +901,7 @@ class MainWindow(QMainWindow):
                             <span><img src={logo} class='logo-image'></span>
                         </div>
                         <div class="campany_name">
-                            <span>Atta Mobile Phone & Accessories <span>
+                            <span>Cellular Line Phones & Accessories <span>
                         </div>
                     </div>
                     <h3>Invoice</h3>
@@ -910,12 +917,12 @@ class MainWindow(QMainWindow):
                     <div class="summary clearfix">
                         {summry}
                     </div>
-            
-                    <p class="thanks">- Thank you for shopping us -</p>
+                    <p class="loc">Loc: Circle opp Vodafone Accra. <br> Tel:+233244707570</p>
+                    <p class="thanks">- Thank you for shopping with us -</p>
                     
                     <div>
                         <div class='bar-box'>
-                            <img src=bar.jpg class='bar-image'>
+                            <img src={barcode} class='bar-image'>
                         </div>
                         <p class="powered">powered by Lakyphone Pos</p>
                     </div>
@@ -927,9 +934,17 @@ class MainWindow(QMainWindow):
             data_str = str(data.to_html(classes='mystyle'))
             # QPixmap(u"{0}".format('./eye.png'))
             logo = "logo.png"
-            # print(data_str)
-
-            htm_string= htm_string.format(style = self.pos_css(), data= data_str, summry = summry, customer = cust , logo = logo)
+            if results[0][9]:
+                bar = str(results[0][9]).replace('-','')
+                bar = UPCA(bar)
+                bar =bar.save('bar')
+                htm_string= htm_string.format(style = self.pos_css(),
+                                              data= data_str, summry = summry, customer = cust ,
+                                              logo = logo, barcode = bar)
+            else:
+                htm_string = htm_string.format(style=self.pos_css(),
+                                               data=data_str, summry=summry, customer=cust,
+                                               logo=logo)
             return htm_string
 
 
@@ -1006,7 +1021,7 @@ class MainWindow(QMainWindow):
 
         body {
             font-family: Arial, Helvetica, sans-serif;
-            max-width: 279px;
+            max-width: 270px;
             font-size: 1rem;
         }
      @page{
@@ -1016,7 +1031,7 @@ class MainWindow(QMainWindow):
 
         .header {
             display: flex;
-            background-color: rgb(239, 250, 255);
+           
             min-height: 100px;
             align-items: center;
             /* taken the padding off the flex container to see if Atta Mobile Phones will fully show*/
@@ -1044,7 +1059,7 @@ class MainWindow(QMainWindow):
         .campany_name {
             /* Reducing the font-size from 0.9 to 0.7rem to check if it will fully show*/
             font-size: 0.7rem;
-            padding-left: 0.9rem;
+            padding-left: 1rem;
             font-weight: 900;
         }
 
@@ -1055,9 +1070,9 @@ class MainWindow(QMainWindow):
         }
 
         .invoice-details {
-            font-size: 0.9rem;
+            font-size: 0.7rem;
             line-height: 1.5;
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.9rem;
         }
 
         .invoice-details span {
@@ -1070,7 +1085,7 @@ class MainWindow(QMainWindow):
         }
 
         .mystyle th, .mystyle td {
-            border: 1px solid black;
+            border-bottom: 1px solid black;
         }
 
         th,
@@ -1105,17 +1120,22 @@ class MainWindow(QMainWindow):
 
         .summary table {
             float: right;
+              margin-right: 0.7rem;
         }
 
         .total p:first-of-type {
-            margin-right: 0.3rem;
+            
             text-transform: uppercase;
             font-size: small;
-            font-weight: 600;
+            font-weight: 500;
         }
-
+        .margin-total{
+        margin-right: 1.5rem;
+        }
         .total p:last-of-type {
-            font-size: 1.2rem;
+            margin-left: 0.3rem;
+             padding-left: 0.6rem;
+            font-size: 1rem;
             text-decoration: underline;
         }
 
@@ -1129,16 +1149,25 @@ class MainWindow(QMainWindow):
             height: 60px;
         }
 
+        .loc{
+            font-size: 0.7rem;
+            text-align: center;
+
+        }
+
         .thanks {
             margin-top: 15px;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             font-style: italic;
+            margin-bottom: 0.7rem;
         }
 
         .powered {
             text-align: right;
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             font-style: italic;
+             margin-right: 1rem;
+            margin-top: 0.5rem;
             font-family: 'Lucida Sans', Verdana, sans-serif;
         }
         

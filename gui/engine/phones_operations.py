@@ -43,8 +43,8 @@ class PhoneStock:
         self.st_name = name
         self.st_ph_model = model
         self.suplier = suplier
-        self.cp = cp
-        self.sp = sp
+        self.cp =  round(float(cp),2)
+        self.sp = round(float(sp),2)
         self.qty = qty
         self.dat = dat
         self.code_list = code_list
