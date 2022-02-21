@@ -41,7 +41,8 @@ class MessageBox(QMessageBox):
         cls.setIcon(icon)
         cls.setWindowTitle(title)
         cls.setText(text)
-        cls.setWindowIcon(QPixmap(windicon))
+        if not windicon is None:
+            cls.setWindowIcon(QPixmap(windicon))
 
         if button:
             cls.setStandardButtons(button)

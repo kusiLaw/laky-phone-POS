@@ -58,6 +58,8 @@ class PhoneStock:
         su_lastid = None
         sply_lastid = None
 
+        print(self.sp,self.cp )
+
         try:
             cur.execute("use lakydb;", tuple())
             try: # if duplicate key, get it id

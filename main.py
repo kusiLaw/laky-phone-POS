@@ -1,3 +1,29 @@
+# IMPORT QT CORE
+# ///////////////////////////////////////////////////////////////
+from PySide6.QtWidgets import *
+from PySide6.QtCore import *
+from PySide6.QtGui import *
+from PySide6 import QtSvgWidgets, QtSvg
+from PySide6.QtSvgWidgets import QSvgWidget
+# from PySide6.QtSvgWidgets import *
+
+#aalll
+from enum import Enum, unique
+import json
+import datetime
+import bcrypt
+
+from decimal import Decimal
+import decimal
+import re
+import  mysql.connector
+from mysql.connector import errorcode
+import sqlite3
+from mysql.connector import errorcode, errors
+from collections.abc import Sequence
+from decimal import Decimal
+# from qt_core import *
+from datetime import datetime
 
 # IMPORT PACKAGES AND MODULES
 # ///////////////////////////////////////////////////////////////
@@ -18,10 +44,7 @@ import pandas as pd
 from barcode  import  UPCA
 
 from decimal import Decimal, InvalidOperation
-# IMPORT QT CORE
-# ///////////////////////////////////////////////////////////////
-from qt_core import *
-from datetime import datetime
+
 # IMPORT SETTINGS
 # ///////////////////////////////////////////////////////////////
 from gui.core.json_settings import Settings
@@ -45,6 +68,9 @@ from weasyprint import HTML
 # from PySide6.QtGui import QTextDocument,QPageSize, QPageLayout
 # from PySide6.QtCore import QSize,QMarginsF, QSizeF,QFile
 # from PySide6.QtWidgets import QTextBrowser
+
+for key,val in dict(globals()).items():
+    print(key, '=', val)
 
 
 # ADJUST QT FONT DPI FOR HIGHT SCALE AN 4K MONITOR
@@ -483,8 +509,8 @@ class MainWindow(QMainWindow):
                                  quantity = self.quantity.text() , use_retails= use_retail)
 
 
-                self.store_sp = Decimal(0)  # to sum the tatol saling perice in the cart(dict)
-                self.store_cp = Decimal(0)  # to sum the tatol cost perice in the cart(dict) , to show on interface
+                self.store_sp = 0  # to sum the tatol saling perice in the cart(dict)
+                self.store_cp = 0  # to sum the tatol cost perice in the cart(dict) , to show on interface
                 self.store_qty = 0
                 # sum the total price in the dict
 
@@ -492,7 +518,9 @@ class MainWindow(QMainWindow):
                     self.store_sp += item['price']
                     self.store_cp += item['cost_price']
                     self.store_qty += item['quantity']
-                print(self.store_cp)
+                # print(self.store_cp)
+                self.store_cp = round(self.store_cp, 2)
+                self.store_sp = round(self.store_sp, 2)
             else :
                 MessageBox(f"Saling price can not be lesser than Price of {round(float(self.cost_price) * int(self.quantity.text().strip()),2)} \n Thank you", title= "Invalid Saling Price",)
                 return
@@ -534,6 +562,8 @@ class MainWindow(QMainWindow):
             self.store_cp += item['cost_price']
             self.store_qty += item['quantity']
 
+        self.store_cp = round(self.store_cp, 2)
+        self.store_sp = round(self.store_sp, 2)
 
         self.load_phone_cart()
 
@@ -861,17 +891,25 @@ class MainWindow(QMainWindow):
                 # ground_total = total + tax
 
             ground_total += tax_val
-            # spliter = str(round(ground_total,2)).split('.')
-            # point = spliter[1]
-            # if int(point) < 10: #single val
-            #     point  = str(point).join('0')
-            #     ground_total = str(round(ground_total,2))
-            #     ground_total.replace(ground_total[ground_total.find('.') + 1:], point)
-            # # print(tax , total)
+
+            spliter = str(round(ground_total,2)).split('.')
+            point = spliter[1]
+            print(type(point),spliter)
+            if int(point) < 10 and len(point) < 2: #single val, and eliminate .01
+                print('lesrr',int(point), point)
+                point = str(point)
+                point  =   point + '0'
+                print('point zero', point, ground_total)
+                ground_total = spliter[0] +'.'+ point
+                print('lesrr', ground_total)
+
+                # ground_total = str(round(ground_total,2))
+                # ground_total = ground_total.replace(ground_total[ground_total.find('.') + 1:], point)
+            # print(tax , total)
 
 
             summry = f'<div class="total">'\
-                f'<p class= "margin-total">Total:</p> <p>₵:{ground_total} </p></div>'\
+                f'<p class= "margin-total">Total: ₵{ground_total} </p></div>'\
                      f'<table><tr><td>Sub-Total :</td><td> {total}</td> </tr>'\
                      f'<tr><td> dis {dis}%:</td><td>{dis_applied} </td> </tr> '\
                      f'<tr><td>tax {tax}%: </td><td>{tax_val} </td> </tr>'\
@@ -1110,6 +1148,7 @@ class MainWindow(QMainWindow):
             margin-top: 1.5rem;
             display: flex;
             align-items: center;
+
         }
 
         .clearfix::after {
@@ -1121,23 +1160,16 @@ class MainWindow(QMainWindow):
         .summary table {
             float: right;
               margin-right: 0.7rem;
+
         }
 
         .total p:first-of-type {
-            
+
             text-transform: uppercase;
             font-size: small;
             font-weight: 500;
         }
-        .margin-total{
-        margin-right: 1.5rem;
-        }
-        .total p:last-of-type {
-            margin-left: 0.3rem;
-             padding-left: 0.6rem;
-            font-size: 1rem;
-            text-decoration: underline;
-        }
+         
 
         .bar-box {
             width: 80%;
