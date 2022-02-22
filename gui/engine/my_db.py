@@ -77,27 +77,15 @@ class My_db():
             except mysql.connector.Error as err:
                 # print(err)
                 if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-                    raise mysql.connector.errors.ProgrammingError(err.msg)
+                    raise mysql.connector.errors.ProgrammingError('Access denied,Please check username or password')
                 if err.errno == 2003:
-                    raise mysql.connector.errors.ProgrammingError("Can't connect to MySQL server" )
+                    raise mysql.connector.errors.ProgrammingError("Can't connect to MySQL server ")
 
                 elif err.errno == errorcode.ER_BAD_DB_ERROR:
                     # print("Database does not exist")
-                    self.con = mysql.connector.connect(
-                        host=self.initial_args["mysql"]["hostname"],
-                        user=self.initial_args["mysql"]['user'],
-                        password=self.initial_args["mysql"]['password'],
+                    #to avoid long delay starting program creating database is seperated
+                    raise mysql.connector.errors.ProgrammingError("LakyPOS database not found.  Please press 'create db', wait for some minutes and test connection again")
 
-                    )
-                    a = self.con.cursor()
-                    for result in a.execute(self.create_tables(), multi=True):
-                        print("Number of rows affected by statement '{}': {}".format(
-                            result.statement, result.rowcount))
-
-                        # if result.with_rows:
-                    # a.executemany(self.create_tables())
-                    # print(a)
-                    # a.close()
             except:
                 raise mysql.connector.errors.ProgrammingError('unknown database error occured')
 
@@ -109,8 +97,38 @@ class My_db():
             # # TODO: password should be well handled
 
         else:
-            raise ValueError("Sorry databese engine not supported")
+            raise ValueError("Sorry database engine not supported")
             # raise NotImplemented("Database specified currently not supported")
+
+    def create_table(self):
+        if self.initial_args["Default"] == "mysql":
+
+            try:
+                self.con = mysql.connector.connect(
+                    host=self.initial_args["mysql"]["hostname"],
+                    user=self.initial_args["mysql"]['user'],
+                    password=self.initial_args["mysql"]['password'],
+
+                )
+                a = self.con.cursor()
+                for result in a.execute(self.create_tables(), multi=True):
+                    print("Number of rows affected by statement '{}': {}".format(
+                        result.statement, result.rowcount))
+
+            except mysql.connector.Error as err:
+                # print(err)
+                if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+                    raise mysql.connector.errors.ProgrammingError('Access denied,Please check username or password')
+                if err.errno == 2003:
+                    raise mysql.connector.errors.ProgrammingError("Can't connect to MySQL server ")
+
+            except:
+                raise mysql.connector.errors.ProgrammingError('unknown database error occured')
+
+            else:
+
+                return True
+
 
 
     # @classmethod
@@ -158,6 +176,7 @@ class My_db():
         # pass
 
     def create_tables(self):
+
         exec_str = """
    CREATE SCHEMA IF NOT EXISTS `lakydb` DEFAULT CHARACTER SET utf8 ;
 USE `lakydb` ;

@@ -105,7 +105,7 @@ def test_coonection():
         # print("23432353*****************************************************")
         return FileNotFoundError(ex),
     except mysql.connector.errors.ProgrammingError as ex:
-        return  mysql.connector.errors.ProgrammingError('Database access denied. Please check ppassword, username or server')
+        return  mysql.connector.errors.ProgrammingError(str(ex))
     except ValueError as e:
         return ValueError(e)
     except mysql.connector.errors.DatabaseError:
@@ -1733,7 +1733,9 @@ class SplashScreen(QMainWindow):
                 window =MainWindow()
                 window.show()
                 MainFunctions.set_page(window, window.ui.load_pages.database)
-                MessageBox("Error connecting database, Please check setings or you may restore and test connection")
+                # MessageBox("Error connecting database, Please check setings or you may restore and test connection")
+                MessageBox(str(result))
+
             else:
                 #no error
                 #check activation
