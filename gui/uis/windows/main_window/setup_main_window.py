@@ -1454,7 +1454,7 @@ class SetupMainWindow:
         self.ui.load_pages.db_restore_frame.addWidget(self.db_restore_btn)
 
         self.db_exit_btn = PyPushButton2(
-            text="Exit",
+            text="Create db",
             radius=8,
             color=self.themes["app_color"]["text_foreground"],
             bg_color=self.themes["app_color"]["dark_one"],

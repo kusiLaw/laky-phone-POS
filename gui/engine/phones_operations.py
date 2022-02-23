@@ -1027,7 +1027,7 @@ class Active_User(PhoneStock, Phone):
         con.close()
 
     def create_user(self,fname, lname, username, password, email, role,
-                   can_take_stock,can_manage_user, can_view_privacy, managing_control, can_view_chart):  # Worked
+                   can_take_stock,can_manage_user, can_view_privacy, managing_control, can_view_chart, inner_call =False):  # Worked
 
         # self.role_check()
 

@@ -173,7 +173,7 @@ class MainWindow(QMainWindow):
         self.showcomponents()
 
         #database settings
-        self.db_exit_btn.clicked.connect(lambda :exit())
+        self.db_exit_btn.clicked.connect(lambda :self.createdb())
         self.db_restore_btn.clicked.connect(lambda :self.restore_db_init())
         self.db_save_btn.clicked.connect(lambda :self.save_db_init())
         self.test_connection.clicked.connect(lambda :self.db_test_connection())
@@ -1380,6 +1380,20 @@ class MainWindow(QMainWindow):
             except:
                 self.ui.load_pages.error_indicator.setText("unknown error")
 
+    def createdb(self):
+        try:
+            MessageBox(f"This proccess may take 1-2 minutes to complete, allow the process to complete", title="Create Database")
+
+            db = My_db()
+            db.create_table()
+
+            MessageBox(f"Created successfully, Please test connection\n Note: login with username: laky , password: 12345. Delete defualt account after login", title="Create Database")
+            self.ui.load_pages.error_indicator.setText('Created successfully, Please test connection')
+
+        except ValueError as e:
+            self.ui.load_pages.error_indicator.setText(str(e))
+        # except:
+        #     self.ui.load_pages.error_indicator.setText('unknown error')
 
 
     def save_db_init(self):
@@ -1387,7 +1401,8 @@ class MainWindow(QMainWindow):
             MessageBox(f"password can cont be empty", title="Restore")
             return
         try:
-            user.con.save_changes( host = self.host_name.currentText(),
+            db = My_db()
+            db.save_changes( host = self.host_name.currentText(),
                                 user = self.dbuser_name.currentText(),
                                 password = self.db_user_passsword.text() ,
                                 port= self.dbport.currentText(),
