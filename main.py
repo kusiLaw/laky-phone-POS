@@ -237,8 +237,8 @@ class MainWindow(QMainWindow):
 
 
 
-        self.user_name.setText('laky')
-        self.user_passsword.setText('11111')
+        self.user_name.setText('lakypos')
+        self.user_passsword.setText('12345')
     def login(self):
         if user.login(str(self.user_name.text()), str(self.user_passsword.text())):
             self.showcomponents(True)
@@ -690,13 +690,15 @@ class MainWindow(QMainWindow):
 
         while (self.dash_stock_analysis.rowCount() > 0):
             self.dash_stock_analysis.removeRow(0)
+
         if result:
             for tup in result.items():
+
 
                 cart_row_number = self.dash_stock_analysis.rowCount()
                 self.dash_stock_analysis.insertRow(cart_row_number)  # Insert row
                 self.dash_stock_analysis.setItem(cart_row_number, 0, QTableWidgetItem(str(tup[0])))  # Add name
-                self.dash_stock_analysis.setItem(cart_row_number, 1, QTableWidgetItem(str(int(tup[1]))))  # Add nick
+                self.dash_stock_analysis.setItem(cart_row_number, 1, QTableWidgetItem(str(int(tup[1] or '0'))))  # Add nick
 
 
                 self.dash_stock_analysis.setRowHeight(cart_row_number, 20)
@@ -712,6 +714,7 @@ class MainWindow(QMainWindow):
                 self.stock_sale_progress.progress_color = self.themes["app_color"]["red"]
                 self.stock_sale_progress.text_color = self.themes["app_color"]["red"]
                 self.stock_sale_progress.set_value(0)
+                result = 0 # error division
 
             # result =100.5855
             if result >= 100:
@@ -746,7 +749,7 @@ class MainWindow(QMainWindow):
             cart_row_number = self.dash_avg_analysis.rowCount()
             self.dash_avg_analysis.insertRow(cart_row_number)  # Insert row
             self.dash_avg_analysis.setItem(cart_row_number, 0, QTableWidgetItem(str( result.get('yr', str(datetime.today().year))))) # Add name
-            self.dash_avg_analysis.setItem(cart_row_number, 1, QTableWidgetItem(str(int(result.get('avg', "0")))))  # Add nick
+            self.dash_avg_analysis.setItem(cart_row_number, 1, QTableWidgetItem(str(int(result.get('avg', "0") or 0))))  # Add nick
 
             cart_row_number = self.dash_avg_analysis.rowCount()
             self.dash_avg_analysis.insertRow(cart_row_number)
@@ -755,8 +758,8 @@ class MainWindow(QMainWindow):
 
             self.dash_avg_analysis.setRowHeight(cart_row_number, 20)
 
-            self.ui.load_pages.todays_sales.setText(str(f'¢ {Decimal(result.get("today sales",  0) or 0.0) }'))
-            quater_sale_color_temp= round(float(result.get('avg money', 1 )) /4)
+            self.ui.load_pages.todays_sales.setText(str(f'¢ {Decimal(result.get("today sales",  "0.00") or "0.00") }'))
+            quater_sale_color_temp= round(float(result.get('avg money', 1 ) or 0) /4 or 0, 2) # or 0 again to avoid zero division error
 
 
             if quater_sale_color_temp > Decimal(result.get('today sales', 0 ) or 0) :
@@ -767,7 +770,7 @@ class MainWindow(QMainWindow):
                                                           f'text-align: center;'
                                                           f'text-transform: uppercase;')
 
-            elif   quater_sale_color_temp < Decimal(result.get('today sales', 0 )) and Decimal(result.get('today sales', 0 )) < result.get('avg money', 1 ) :
+            elif   quater_sale_color_temp < Decimal(result.get('today sales', 0 ) or 0) and Decimal(result.get('today sales', 0 )or 0) < result.get('avg money', 1 ) or 1 :
                 # below quater
                 self.ui.load_pages.todays_sales.setStyleSheet(f'color: {self.themes["app_color"]["context_color"]};'
                                                               f'font-size: 55px;'
