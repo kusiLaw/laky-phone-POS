@@ -372,15 +372,15 @@ class MainWindow(QMainWindow):
 
 
             self.order_id = self.remove_white_spaces(self.stock_prod_code.currentText(), space='') or "n/a"
-            self.tax = int(self.stock_tax.text().strip()) or 0
+            self.tax = int(self.stock_tax.text().strip() or 0)
 
             #todo: delete this
             self.stock_sn_list.clear()
-            # for sn in ['t-32344523i2e', 't-32344523i2i', 't-32344523i2a', 't-32344523i2f']:
-            #     self.stock_sn_list.insertItem(0, sn)
-
-            sn_list = [self.stock_sn_list.item(x).text() for x in range(self.stock_sn_list.count())]
-
+            # # for sn in ['t-32344523i2e', 't-32344523i2i', 't-32344523i2a', 't-32344523i2f']:
+            # #     self.stock_sn_list.insertItem(0, sn)
+            #
+            # sn_list = [self.stock_sn_list.item(x).text() for x in range(self.stock_sn_list.count())]
+            sn_list = []
             # print("exceptions pass")
 
         except (ValueError )as ex:
@@ -596,13 +596,14 @@ class MainWindow(QMainWindow):
 
             return
         if flag == 'phone':
-            # print('clearing....')
+            print('clearing....')
             self.customerName.setText("")
             self.contactName.setText("")
             self.phone_sn.setCurrentText("")
             self.phone_price.setText("")
             # self.phone_type.setCurrentText("")
-            self.phone_model.setCurrentText("5555")
+            self.phone_type.setCurrentText("")
+            self.phone_model.setCurrentText("")
 
             # self.phone_price.setText(str(dic.get('sp', "")))
             # self.phone_tax.setText(str(dic.get('tax', "")))
@@ -1455,9 +1456,9 @@ class MainWindow(QMainWindow):
            # feed form with data from db
             self.load_sale_tables()
             self.feed_combo(self.phone_type,user.feed_type())
-            self.clearforms(flag='phone')
             self.select_table_row(self.phone_cart)
             self.select_table_row(self.table_widget)
+            # self.clearforms(flag='phone')
         # service page
         # if btn.objectName() == "service_btn":
         #     self.ui.left_menu.select_only_one(btn.objectName())
