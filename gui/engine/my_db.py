@@ -89,9 +89,9 @@ class My_db():
                     # print("Database does not exist")
                     #to avoid long delay starting program creating database is seperated
                     raise mysql.connector.errors.ProgrammingError("LakyPOS database not found.  Please press 'create db', wait for some minutes and test connection again")
-
+                return
             except:
-                raise mysql.connector.errors.ProgrammingError('unknown database error occured')
+                raise mysql.connector.errors.ProgrammingError('Unknown database error occured.\nGuidelines:\n step 1: Check server, username or password if correct. \n step 2:Press "create db", wait for some minutes and test connection again. \n If problem exist, please contact customer care')
 
 
             else:

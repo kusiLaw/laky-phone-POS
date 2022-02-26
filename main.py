@@ -17,9 +17,8 @@ from decimal import Decimal
 import decimal
 import re
 import  mysql.connector
-from mysql.connector import errorcode
-import sqlite3
 from mysql.connector import errorcode, errors
+import sqlite3
 from collections.abc import Sequence
 from decimal import Decimal
 # from qt_core import *
@@ -237,8 +236,8 @@ class MainWindow(QMainWindow):
 
 
 
-        self.user_name.setText('lakypos')
-        self.user_passsword.setText('12345')
+        # self.user_name.setText('lakypos')
+        # self.user_passsword.setText('12345')
     def login(self):
         if user.login(str(self.user_name.text()), str(self.user_passsword.text())):
             self.showcomponents(True)
@@ -1391,7 +1390,7 @@ class MainWindow(QMainWindow):
             db = My_db()
             db.create_table()
 
-            MessageBox(f"Created successfully, Please test connection\n Note: login with username: laky , password: 12345. Delete defualt account after login", title="Create Database")
+            MessageBox(f"Created successfully, Please test connection\n Note: login with username: laky , password: 12345. Delete this account or change password after login", title="Create Database")
             self.ui.load_pages.error_indicator.setText('Created successfully, Please test connection')
 
         except ValueError as e:
