@@ -51,7 +51,7 @@ Give a star :star: if you like this project!
 
 ### Acknowledgments
 Thanks to Microverse \
-Original design idea by [Cindy Shin in Behance](https://www.behance.net/gallery/29845175/CC-Global-Summit-2015).
+Original design idea by [Wanderson]([https://www.behance.net/gallery/29845175/CC-Global-Summit-2015](https://www.patreon.com/WandersonIsMyName)).
 
 > **Warning**: this project was created using PySide6 and Python 3.9, using previous versions can cause compatibility problems.
 
