@@ -5,7 +5,7 @@
 
 
 # LakyPhones Pos
-This is a Point of Sales App. The project was develop specifically for mobile phone sales shop . 
+This is a Point of Sales App. The project was developed specifically for a mobile phone sales shop. It has a Dashboard where daily activities are statistically displayed. It also Stocks and can keep track of individual storage and more functionalities
 
 ### Built With
 - Python
@@ -14,15 +14,18 @@ This is a Point of Sales App. The project was develop specifically for mobile ph
 - MySql
 
 ### Live Demo
-[web-dev-course-live-demo-link]()
+[web-dev-course-live-demo-link]( https://kusilaw.github.io/laky_phone_pos/)
 
-### Live Video
+
 
 ### Getting Started 
 To get a local copy up and running follow these simple example steps
+- install pyside 6
+- install MySqlserver
+- python main.py
 
 #### Prerequisite:  
-  - Vscode editor 
+  - Pycharm  
   - Knowldege About Python, Pyside 6, CSS, MySql
   - MySql - server
   - A web browser(chrome, etc)
