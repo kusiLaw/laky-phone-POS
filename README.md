@@ -1,11 +1,10 @@
 
-
+# LakyPhones Pos
+This is a Point of Sales App. The project was developed specifically for a mobile phone sales shop. It has a Dashboard where daily activities are statistically displayed. It also Stocks and can keep track of individual storage and more functionalities. Built with Pyside-6
 
 ![dash](https://user-images.githubusercontent.com/52538840/171647443-950f3e8c-9081-4871-b78a-11304f5e6507.jpg)
 
 
-# LakyPhones Pos
-This is a Point of Sales App. The project was developed specifically for a mobile phone sales shop. It has a Dashboard where daily activities are statistically displayed. It also Stocks and can keep track of individual storage and more functionalities. Built with Pyside-6
 
 ### Built With
 - Python
