@@ -1,12 +1,12 @@
 
-# LakyPhones Pos
+## LakyPhones Pos
 This is a Point of Sales App. This project is my first app after diving deeper into python and with little knowledge of PySide. The project was developed specifically for a mobile phone sales shop(it can be used in similar certain), after eight (8) years of working experience as a mobile phone technician. It has a robust, scalable, and powerful app with a modern design (Dracula theme)
 
-Feature
-The dashboard is where daily activities are statistically displayed, user information, and stocks with a lesser quantity
-The sidebar can be expanded and collapsed. It contains the shortcut button to various interfaces, signout, and settings 
-The sales interface is the main interface where the sales activities happen. It has CRUD buttons, a table, and a print receipt button. Item can be bought in bulk or in single
-The stock allows the user to keep track of individual items or goods in relation to the supplier
+### Features
+- The dashboard is where daily activities are statistically displayed, user information, and stocks with a lesser quantity
+- The sidebar can be expanded and collapsed. It contains the shortcut button to various interfaces, signout, and settings 
+- The sales interface is the main interface where the sales activities happen. It has CRUD buttons, a table, and a print receipt button. - Item can be bought in bulk or in single
+- The stock allows the user to keep track of individual items or goods in relation to the supplier
 
 
 ![dash](https://user-images.githubusercontent.com/52538840/171647443-950f3e8c-9081-4871-b78a-11304f5e6507.jpg)
