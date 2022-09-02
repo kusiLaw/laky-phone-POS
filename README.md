@@ -26,9 +26,13 @@ This is a Point of Sales App. This project is my first app after diving deeper i
 
 ### Getting Started 
 To get a local copy up and running follow these simple example steps
-- install pyside 6
-- install MySqlserver
-- python main.py
+- install [MySqlserver](https://dev.mysql.com/downloads/installer/)
+```console
+lawrence@lawrence:~$ git clone "git@github.com:kusiLaw/laky-phone-POS.git"
+lawrence@lawrence:~$ pip install pyside
+lawrence@lawrence:~$ python main.py
+```
+
 
 #### Prerequisite:  
   - Pycharm  
