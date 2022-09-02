@@ -1,6 +1,6 @@
 
 ## LakyPhones Pos
-This is a Point of Sales App. This project is my first app after diving deeper into python and with little knowledge of PySide. The project was developed specifically for a mobile phone sales shop(it can be used in similar certain), after eight (8) years of working experience as a mobile phone technician. It has a robust, scalable, and powerful app with a modern design (Dracula theme)
+This is a Point of Sales App. This project is my first app after diving deeper into python and with little knowledge of PySide. The project was developed specifically for a mobile phone sales shop(it can be used in similar certain), after eight (8) years of working experience as a mobile phone technician. It has a robust, scalable, and powerful app with a modern design (Dracula theme). Built with python
 
 ### Features
 - The dashboard is where daily activities are statistically displayed, user information, and stocks with a lesser quantity
