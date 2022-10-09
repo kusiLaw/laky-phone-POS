@@ -20,7 +20,7 @@ This is a Point of Sales App. This project is my first app after diving deeper i
 - MySql
 
 ### Live Demo
-[web-dev-course-live-demo-link]( https://kusilaw.github.io/laky_phone_pos/)
+[live-demo-link](https://kusilaw.github.io/laky-phone-POS/)
 
 
 
