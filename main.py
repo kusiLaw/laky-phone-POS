@@ -238,6 +238,7 @@ class MainWindow(QMainWindow):
 
         # self.user_name.setText('lakypos')
         # self.user_passsword.setText('12345')
+
     def login(self):
         if user.login(str(self.user_name.text()), str(self.user_passsword.text())):
             self.showcomponents(True)
@@ -844,6 +845,7 @@ class MainWindow(QMainWindow):
 
     def update_stock(self):
         pass
+
     def delete_stock(self):
         pass
 
