@@ -8,9 +8,11 @@ This is a Point of Sales App. This project is my first app after diving deeper i
 - The sales interface is the main interface where the sales activities happen. It has CRUD buttons, a table, and a print receipt button. - Item can be bought in bulk or in single
 - The stock allows the user to keep track of individual items or goods from the supplier
 
+![pos_2](https://github.com/kusiLaw/laky-phone-POS/assets/52538840/7f28bb22-96c7-46a9-b47f-8daabcba095b)
 
-![dash](https://user-images.githubusercontent.com/52538840/171647443-950f3e8c-9081-4871-b78a-11304f5e6507.jpg)
+![lakypos_2](https://github.com/kusiLaw/laky-phone-POS/assets/52538840/86e84866-850a-4c5b-aad7-4f9f4502b1c7)
 
+![lakypos_5](https://github.com/kusiLaw/laky-phone-POS/assets/52538840/3f429509-5e87-425e-a10f-a1ea4003c423)
 
 
 ### Built With
