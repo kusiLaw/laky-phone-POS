@@ -14,6 +14,8 @@ This is a Point of Sales App. This project is my first app after diving deeper i
 
 ![lakypos_5](https://github.com/kusiLaw/laky-phone-POS/assets/52538840/3f429509-5e87-425e-a10f-a1ea4003c423)
 
+![IMG_20220214_061707 (1)](https://github.com/kusiLaw/laky-phone-POS/assets/52538840/b9f29be6-e64e-439d-9a08-e900402b18bf)
+
 
 ### Built With
 - Python
@@ -60,7 +62,6 @@ Give a star :star: if you like this project!
 
 
 ### Acknowledgments
-Thanks to Microverse \
 Original design idea by [Wanderson]([https://www.behance.net/gallery/29845175/CC-Global-Summit-2015](https://www.patreon.com/WandersonIsMyName)).
 
 > **Warning**: this project was created using PySide and Python 3.9, using previous versions can cause compatibility problems.
